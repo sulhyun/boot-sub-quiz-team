@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class HomeController {
 	
+	
 	@GetMapping("/")
 	public String home(Model model) {
 		model.addAttribute("name", "홍길동");
