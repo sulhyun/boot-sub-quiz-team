@@ -20,7 +20,7 @@ public class MemberVO {
 	private String mb_addr;			// 회원 기본주소
 	private String mb_addr2;		// 회원 상세주소
 	private int mb_birth;			// 회원 생년월일
-	private String mb_level;		// 회원 레벨
+	private int mb_level;			// 회원 레벨
 	private Date mb_datetime;		// 회원 가입일
 	private Date mb_edit_date;		// 회원	수정일
 	private Date amb_out_date;		// 회원 탈퇴일
@@ -30,8 +30,10 @@ public class MemberVO {
 	
 	public String getMb_auth() {
 		String auth = "GUEST";
-		String lev = this.mb_level;
-		if(lev.equals("USER")) {
+		int lev = this.mb_level;
+		if(lev == 4) {
+			auth = "QUIZ";
+		} else if(lev < 4) {
 			auth = "USER";
 		} else {
 			auth = "ADMIN";

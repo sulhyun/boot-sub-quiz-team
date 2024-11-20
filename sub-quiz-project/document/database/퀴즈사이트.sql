@@ -32,7 +32,7 @@ CREATE TABLE `member` (
 	`mb_addr`	varchar(255)	NULL,
 	`mb_addr2`	varchar(255)	NULL,
 	`mb_birth`	int(11)	NULL,
-	`mb_level`	varchar(50)	NULL,
+	`mb_level`	int(11)	NULL,
 	`mb_datetime`	datetime	NULL,
 	`mb_edit_date`	datetime	NULL,
 	`mb_out_date`	datetime	NULL,
