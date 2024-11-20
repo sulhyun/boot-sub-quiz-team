@@ -4,11 +4,115 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	layout:decorate="~{layout/layout.html}">
 <head>
+	<style>
+		/*기본 바디 및 태그 설정*/
+		body{
+			margin: 0;
+			padding: 0;
+			background: #f3f3f3;
+			height: 100%;
+		}
+		/*list-style none를 통해 ul태그 리스트 스타일 삭제*/
+		ul{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		/*------------헤더 설정------------*/
+
+		/*헤더 고정을 위해 fixed 사용 width와 height를 이용해 영역 설정*/
+		#hd_top{
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 70px;
+		}
+		/*logo와 nav 맞추기 위해 float 사용*/
+		#logo{
+			float: left;
+			padding: 25px 0 0 50px;
+		}
+		#nav{
+			float: right;
+			padding: 25px 30px 0 0;
+		}
+		.nav_li{
+			float: left;
+			margin-left: 3px;
+		}
+
+		#chat{
+			display: none;
+		}
+
+		/*------------ 메인 설정 ------------*/
+
+		/*기본 container 설정 헤더랑 안겹치게 위치 설정*/
+		#container{
+			margin-top: 70px;
+		}
+		/*영역설정을 위한 용도 추후 css수정필요*/
+		#m_intro{
+			background-color: rgb(245, 144, 75);
+			width: 70%;
+			height: 849px;
+			float: left;
+		}
+		#m_community{
+			background-color: rgb(2, 215, 197);
+			width: 30%;
+			height: 283px;
+			float: right;
+		}
+		#m_quiz{
+			background-color: rgb(255, 201, 27);
+			width: 30%;
+			height: 283px;
+			float: right;
+		}
+		#m_event{
+			background-color: rgb(172, 142, 248);
+			width: 30%;
+			height: 283px;
+			float: right;
+		}
+
+		/*------------ 푸터 설정 ------------*/
+		#ft{
+			padding: 0;
+		}
+	</style>
 <meta charset="UTF-8">
 <title>메인</title>
 </head>
 <body>
-	<h1>Hello World</h1>
-	<p th:text="${name}"></p>
+	<header>
+		<!--헤더 탑을 이용하여 헤더의 위치를 잡고 안에 내용 작성-->
+		<div id="hd_top">
+			<!--로그인 후 보이기로 변경해야함 css 수정 필요-->
+			<button type="button" id="chat">채팅</button>
+			<!--아이콘으로 변경해야함-->
+			<div id="logo"><a href="">Quiz(a태그 사용) 아이콘 사용</a></div>
+			<!--헤더 메인 navbar 마이페이지는 로그인 후 나타나게 변경-->
+			<div id="nav">
+				<ul class="nav_ul">
+					<li class="nav_li"><a href="">마이페이지버튼</a></li>
+					<li class="nav_li"><a href="">로그인 버튼</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+	<main>
+		<div id="container">
+			<div id="m_intro"></div>
+			<div id="m_community"></div>
+			<div id="m_quiz"></div>
+			<div id="m_event"></div>
+		</div>
+	</main>
+	<aside id="sidebar"></aside>
+	<!--푸터 내용 설정해야함~-->
+	<footer id="ft"></footer>
 </body>
 </html>
