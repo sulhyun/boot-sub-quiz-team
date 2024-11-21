@@ -7,7 +7,31 @@
 </head>
 <body>
     <header th:fragment="header">
-        <h1>헤더</h1>
-    </header>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        	<div class="container-fluid">
+				<!-- Brand/logo -->
+				<a class="navbar-brand" href="#">Logo</a>
+	
+				<!-- Links -->
+				<div class="nav justify-content-end">
+		  			<ul class="navbar-nav">
+		  				<th:block sec:authorize="isAnonymous()">
+			  				<li class="nav-item">
+			     				<a class="nav-link" href="/member/join">회원 가입</a>
+			    			</li>
+			    			<li class="nav-item">
+			      				<a class="nav-link" href="/login">로그인</a>
+			    			</li>
+		  				</th:block>
+		  				<th:block sec:authorize="isAuthenticated()">
+			    			<li class="nav-item">
+			      				<a class="nav-link" href="#">로그아웃</a>
+			    			</li>
+		  				</th:block>
+		  			</ul>
+	  			</div>
+  			</div>
+		</nav>
+	</header>
 </body>
 </html>
