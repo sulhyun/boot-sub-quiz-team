@@ -14,9 +14,9 @@ public class MemberController {
 
 	private MemberService memberService;
 	
-	@GetMapping("/join")
+	@GetMapping("/signup")
 	public String join() {
 		
-		return "member/join";
+		return "member/signup";
 	}
 }

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+	<style type="text/css">
+		.join-wrapper{
+		    width: 600px;
+		    margin: auto;
+		    padding: 0 20px;
+		    margin-bottom: 20px;
+		}
+	</style>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div class="join-wrapper">
+			<h2 class="text-center mt-5 mb-3">회원가입</h2>
+			<form method="post" id="form" action="/member/signup">
+				<div class="form-group">
+					<label for="id">아아디</label>
+					<input type="text" class="form-control" id="id" name="mb_id">
+				</div>
+				<div class="form-group">
+					<label for="pw">비밀번호</label>
+					<input type="password" class="form-control" id="pw" name="mb_pw">
+				</div>
+				<div class="form-group">
+					<label for="pw2">비밀번호 재확인</label>
+					<input type="password" class="form-control" id="pw2" name="mb_pw2">
+				</div>
+				<div class="form-group">
+					<label for="name">이름</label>
+					<input type="text" class="form-control" id="name" name="mb_name">
+				</div>
+				<div class="form-group">
+					<label for="nick">닉네임</label>
+					<input type="text" class="form-control" id="nick" name="mb_nick">
+				</div>
+				<div class="form-group">
+					<label for="ph">전화번호</label>
+					<input type="text" class="form-control" id="ph" name="mb_ph" oninput="autoHyphen(this)">
+				</div>
+				<div class="form-group">
+					<label for="email">이메일</label>
+					<input type="email" class="form-control" id="email" name="mb_email">
+				</div>
+				<div class="form-group">
+					<label for="zip_btn">주소</label>
+				    <input type="text" class="form-control" id="zip" name="mb_zip" maxlength="10" placeholder="우편번호">
+				    <input type="button" class="btn btn-primary" id="zip_btn" onclick="execDaumPostcode()" value="우편번호 찾기">
+				    <input type="text" class="form-control" id="addr" name="mb_addr" maxlength="40" placeholder="기본 주소를 입력하세요" required>
+				    <div class="invalid-feedback">주소를 입력해주시기 바랍니다!</div>
+				    <input type="text" class="form-control" id="addr2" name="mb_addr2" maxlength="40" placeholder="상세 주소를 입력하세요">
+				</div>
+			</form>
+		</div>
+		<script type="text/javascript">
+			const autoHyphen = (target) => {
+				target.value = target.value
+					.replace(/[^0-9]/g, '')
+					.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+			} // 전화번호 하이픈 자동 생성
+		</script>
+		
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	    <script>
+		    function execDaumPostcode() {
+		        new daum.Postcode({
+		            oncomplete: function(data) {
+		                // 팝업을 통한 검색 결과 항목 클릭 시 실행
+		                var addr = ''; // 주소_결과값이 없을 경우 공백 
+		                var extraAddr = ''; // 참고항목
+		
+		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		                if (data.userSelectedType === 'R') { // 도로명 주소를 선택
+		                    addr = data.roadAddress;
+		                } else { // 지번 주소를 선택
+		                    addr = data.jibunAddress;
+		                }
+		
+		                if(data.userSelectedType === 'R'){
+		                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                        extraAddr += data.bname;
+		                    }
+		                    if(data.buildingName !== '' && data.apartment === 'Y'){
+		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                    }
+		                    if(extraAddr !== ''){
+		                        extraAddr = ' (' + extraAddr + ')';
+		                    }
+		                } else {
+		                    document.getElementById("addr").value = '';
+		                }
+		
+		                // 선택된 우편번호와 주소 정보를 input 박스에 넣는다.
+		                document.getElementById('zip').value = data.zonecode;
+		                document.getElementById("addr").value = addr;
+		                document.getElementById("addr").value += extraAddr;
+		                document.getElementById("addr2").focus(); // 우편번호 + 주소 입력이 완료되었음으로 상세주소로 포커스 이동
+		            }
+		        }).open();
+		    }
+		</script>
+	</main>
+</body>
+</html>
