@@ -1,2 +1,3 @@
 sub-quiz-project/src/main/resources/application.properties
 *.properties
+/.metadata/
