@@ -7,36 +7,20 @@
 </head>
 <body>
     <header th:fragment="header">
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        	<div class="container-fluid">
-				<!-- Brand/logo -->
-				<a class="navbar-brand" href="#">Logo</a>
-	
-				<!-- Links -->
-				<div class="nav justify-content-end">
-		  			<ul class="navbar-nav">
-		  				<th:block sec:authorize="isAnonymous()">
-			  				<li class="nav-item">
-			     				<a class="nav-link" href="/member/join">회원 가입</a>
-			    			</li>
-			    			<li class="nav-item">
-			      				<a class="nav-link" href="/login">로그인</a>
-			    			</li>
-		  				</th:block>
-		  				<th:block sec:authorize="isAuthenticated()">
-			    			<li class="nav-item">
-			      				<a class="nav-link" href="#">로그아웃</a>
-			    			</li>
-		  				</th:block>
-		  				<th:block sec:authorize="isAnonymous()">
-			    			<li class="nav-item">
-			      				<a class="nav-link" href="#">관리자페이지</a>
-			    			</li>
-		  				</th:block>
-		  			</ul>
-	  			</div>
-  			</div>
-		</nav>
+		<!--헤더 탑을 이용하여 헤더의 위치를 잡고 안에 내용 작성-->
+		<div id="hd_top">
+			<!--로그인 후 보이기로 변경해야함 css 수정 필요-->
+			<button type="button" id="chat">채팅</button>
+			<!--아이콘으로 변경해야함-->
+			<div id="logo"><a href="">Quiz(a태그 사용) 아이콘 사용</a></div>
+			<!--헤더 메인 navbar 마이페이지는 로그인 후 나타나게 변경-->
+			<div id="nav">
+				<ul class="nav_ul">
+					<li class="nav_li"><a href="">마이페이지버튼</a></li>
+					<li class="nav_li"><a href="">로그인 버튼</a></li>
+				</ul>
+			</div>
+		</div>
 	</header>
 </body>
 </html>
