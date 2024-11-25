@@ -1,0 +1,48 @@
+/*기본 바디 및 태그 설정*/
+body {
+	margin: 0;
+	padding: 0;
+	background: #f3f3f3;
+	height: 100%;
+}
+/*list-style none를 통해 ul태그 리스트 스타일 삭제*/
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/*------------ 헤더 설정 ------------*/
+/*헤더 고정을 위해 fixed 사용 width와 height를 이용해 영역 설정*/
+#hd_top {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 80px;
+	background-color: #e7e7e7;
+}
+/*logo와 nav 맞추기 위해 float 사용*/
+#logo {
+	float: left;
+	padding: 25px 0 0 50px;
+}
+
+#nav {
+	float: right;
+	padding: 25px 30px 0 0;
+}
+
+.nav_li {
+	float: left;
+	margin-left: 3px;
+}
+
+#chat {
+	display: none;
+}
+
+/*------------ 푸터 설정 ------------*/
+#ft {
+	padding: 0;
+}
