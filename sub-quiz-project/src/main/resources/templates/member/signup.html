@@ -7,55 +7,97 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 	<style type="text/css">
-		.join-wrapper{
-		    width: 600px;
-		    margin: auto;
-		    padding: 0 20px;
-		    margin-bottom: 20px;
-		}
+		.join-wrapper{width: 600px; margin: auto;padding: 0 20px;margin-bottom: 20px;margin-top: 60px;}
+		.title-box{margin-bottom: 40px;}
+		.title-text{font-size: 17px;}
+		button[type="submit"]:hover{color: white;}
+		input[type="button"]:hover{color: white;}
+		button[type="button"]:hover{color: white;}
+		.email-text{font-size: 20px;}
 	</style>
 </head>
 <body>
 	<main layout:fragment="content">
 		<div class="join-wrapper">
-			<h2 class="text-center mt-5 mb-3">회원가입</h2>
+			<div class="title-box">
+				<h2>회원가입</h2>
+				<p class="title-text">가입을 통해 다양한 서비스를 경험하세요!!</p>
+			</div>
 			<form method="post" id="form" action="/member/signup">
 				<div class="form-group">
-					<label for="id">아아디</label>
-					<input type="text" class="form-control" id="id" name="mb_id">
+					<label for="id"><b>아아디</b></label>
+					<span class="error-message text-danger" id="error-id"></span>
+					<div class="input-group">
+						<input type="text" class="form-control" id="id" name="mb_id" placeholder="아이디 입력 (6~20)자">
+						<div class="input-group-append">
+							<button type="button" class="btn btn-outline-warning">중복검사</button>
+						</div>
+					</div>
 				</div>
 				<div class="form-group">
-					<label for="pw">비밀번호</label>
-					<input type="password" class="form-control" id="pw" name="mb_pw">
+					<label for="pw"><b>비밀번호</b></label>
+					<span class="error-message text-danger" id="error-pw"></span>
+					<input type="password" class="form-control" id="pw" name="mb_pw" placeholder="비밀번호 입력 (영문, 숫자, 특수문자 포함 6~20)자">
 				</div>
 				<div class="form-group">
-					<label for="pw2">비밀번호 재확인</label>
-					<input type="password" class="form-control" id="pw2" name="mb_pw2">
+					<label for="pw2"><b>비밀번호 재확인</b></label>
+					<span class="error-message text-danger" id="error-pw2"></span>
+					<input type="password" class="form-control" id="pw2" name="mb_pw2" placeholder="비밀번호 재입력">
 				</div>
 				<div class="form-group">
-					<label for="name">이름</label>
-					<input type="text" class="form-control" id="name" name="mb_name">
+					<label for="name"><b>이름</b></label>
+					<span class="error-message text-danger" id="error-name"></span>
+					<input type="text" class="form-control" id="name" name="mb_name" placeholder="이름 입력">
 				</div>
 				<div class="form-group">
-					<label for="nick">닉네임</label>
-					<input type="text" class="form-control" id="nick" name="mb_nick">
+					<label for="nick"><b>닉네임</b></label>
+					<span class="error-message text-danger" id="error-nick"></span>
+					<input type="text" class="form-control" id="nick" name="mb_nick" placeholder="닉네임 입력">
 				</div>
 				<div class="form-group">
-					<label for="ph">전화번호</label>
-					<input type="text" class="form-control" id="ph" name="mb_ph" oninput="autoHyphen(this)">
+					<label for="ph"><b>전화번호</b></label>
+					<span class="error-message text-danger" id="error-ph"></span>
+					<input type="text" class="form-control" id="ph" name="mb_ph" oninput="autoHyphen(this)" placeholder="휴대폰 번호 입력 ('-'제외 11자리)">
 				</div>
 				<div class="form-group">
-					<label for="email">이메일</label>
-					<input type="email" class="form-control" id="email" name="mb_email">
+					<label for="email"><b>이메일</b></label>
+					<div class="input-group">
+						<input type="text" class="form-control" id="email" placeholder="이메일 입력">
+						<span class="email-text">@</span>
+				    	<input type="text" class="form-control mr-2" id="email-domain" placeholder="직접 입력">
+					    <select class="form-select" id="domain-list">
+							<option value="">직접 입력</option>
+							<option value="naver.com">naver.com</option>
+							<option value="google.com">google.com</option>
+							<option value="nate.com">nate.com</option>
+							<option value="kakao.com">kakao.com</option>
+						</select>
+					</div>
 				</div>
 				<div class="form-group">
-					<label for="zip_btn">주소</label>
-				    <input type="text" class="form-control" id="zip" name="mb_zip" maxlength="10" placeholder="우편번호">
-				    <input type="button" class="btn btn-primary" id="zip_btn" onclick="execDaumPostcode()" value="우편번호 찾기">
-				    <input type="text" class="form-control" id="addr" name="mb_addr" maxlength="40" placeholder="기본 주소를 입력하세요" required>
-				    <div class="invalid-feedback">주소를 입력해주시기 바랍니다!</div>
-				    <input type="text" class="form-control" id="addr2" name="mb_addr2" maxlength="40" placeholder="상세 주소를 입력하세요">
+				    <label for="zip_btn"><b>주소</b></label>
+				    <br>
+				    <input type="text" class="form-control mb-2" id="zip" name="mb_zip" maxlength="10" placeholder="우편번호" style="width: 50%; display: inline;" readonly>
+				    <input type="button" class="btn btn-outline-warning" id="zip_btn" onclick="execDaumPostcode()" value="우편번호 찾기">
+				    <br>
+				    <input type="text" class="form-control mb-2" id="addr" name="mb_addr" maxlength="40" placeholder="기본 주소를 입력" readonly>
+				    <input type="text" class="form-control" id="addr2" name="mb_addr2"  maxlength="40" placeholder="상세 주소를 입력">
 				</div>
+				<div class="form-group">
+					<label for="birth"><b>생년월일</b></label>
+					<div class="input-group">
+						<select class="form-control mr-2" id="birth-year">
+							<option value="">년도</option>
+						</select>
+						<select class="form-control mr-2" id="birth-month">
+							<option value="">월</option>
+						</select>
+						<select class="form-control" id="birth-day">
+							<option value="">일</option>
+						</select>
+					</div>		
+				</div>
+				<button type="submit" class="btn btn-outline-warning col-12">회원가입</button>
 			</form>
 		</div>
 		<script type="text/javascript">
@@ -64,6 +106,154 @@
 					.replace(/[^0-9]/g, '')
 					.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
 			} // 전화번호 하이픈 자동 생성
+			
+			document.getElementById('domain-list').addEventListener('change', function () {
+				const domainInput = document.getElementById('email-domain');
+				const selectedDomain = this.value;
+			
+				if (selectedDomain) {
+					domainInput.value = selectedDomain;
+					domainInput.readOnly = true;
+				} else {
+					domainInput.value = '';
+					domainInput.readOnly = false;
+				}
+			}); // 이메일 도메인 선택
+
+			$(document).ready(function() {
+				const birthYear = $('#birth-year');
+				const birthMonth = $('#birth-month');
+				const birthDay = $('#birth-day');
+			
+				let isYear = false;
+				let isMonth = false;
+			
+				// 현재 년도 가져오기
+				const currentYear = new Date().getFullYear();
+			
+				// 출생 연도 로드
+				birthYear.on('focus', function () {
+					if (!isYear) {
+						isYear = true;
+						for (let i = 1940; i <= currentYear; i++) {
+							const optionYear = $('<option>').val(i).text(i);
+							birthYear.append(optionYear);
+						}
+					}
+				});
+			
+				// 출생 월 로드
+				birthMonth.on('focus', function () {
+					if (!isMonth) {
+						isMonth = true;
+						for (let i = 1; i <= 12; i++) {
+							const optionMonth = $('<option>').val(i).text(i);
+							birthMonth.append(optionMonth);
+						}
+					}
+				});
+			
+ 				// 출생 일 업데이트 (년도와 월에 따라)
+				function updateDays() {
+					const selectedYear = parseInt(birthYear.val());
+					const selectedMonth = parseInt(birthMonth.val());
+			
+					// 월과 연도가 선택되지 않았을 경우 초기화
+					if (!selectedYear || !selectedMonth) {
+						birthDay.html('<option value="">일</option>').prop('disabled', true);
+						return;
+					}
+			
+					// 해당 월의 최대 일수 계산
+					const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+					birthDay.html('<option value="">일</option>'); // 기존 옵션 초기화
+			
+					for (let i = 1; i <= daysInMonth; i++) {
+						const dayOption = $('<option>').val(i).text(i);
+						birthDay.append(dayOption);
+					}
+					birthDay.prop('disabled', false);
+				}
+ 				
+ 				birthDay.prop('disabled', true);
+			
+				// 년도나 월 선택 시 일 업데이트
+				birthYear.on('change', updateDays);
+				birthMonth.on('change', updateDays);
+			}); // 생년월일 선택
+		</script>
+		
+		<script type="text/javascript">
+		var flag = false;
+		$('#form').validate({
+			rules : {
+				mb_id : {
+					required : true,
+					regex : /^\w{6,20}$/
+				},
+				mb_pw : {
+					required : true,
+					regex : /^[a-zA-Z0-9!@#$]{6,20}$/
+				},
+				mb_pw2 : {
+					equalTo : pw
+				},
+				mb_name : {
+					required : true
+				},
+				mb_nick : {
+					required : true
+				},
+				mb_ph : {
+					required : true,
+				},
+				
+			},
+			messages : {
+				mb_id : {
+					required : '필수 항목입니다.',
+					regex : '영어, 숫자만 가능하며, 6~20자이어야 합니다.'
+				},
+				mb_pw : {
+					required : '필수 항목입니다.',
+					regex : '영어, 숫자, 특수문자(!@#$)만 가능하며, 6~20자이어야 합니다.'
+				},
+				mb_pw2 : {
+					equalTo : '비번과 일치하지 않습니다.'
+				},
+				mb_name : {
+					required : '필수 항목입니다.'
+				},
+				mb_nick : {
+					required : ' 필수 항목입니다.'
+				},
+				mb_ph : {
+					required : '필수 항목입니다.'
+				}
+			},
+		    errorPlacement: function (error, element) {
+		        var errorId = 'error-' + element.attr('id');
+		        $('#' + errorId).html(error);
+		    },
+		    success: function (label, element) {
+		        var errorId = 'error-' + $(element).attr('id');
+		        $('#' + errorId).html('');
+		    },
+			submitHandler : function(){
+				var id = $('#id').val();
+				var res = checkId(id);
+				if(res == 0){
+					displayCheckId(res);
+					alert('이미 사용 중인 아이디입니다.');
+					return false;
+				}
+				return true;
+			}
+		});
+		$.validator.addMethod('regex', function(value, element, regex){
+			var re = new RegExp(regex);
+			return this.optional(element) || re.test(value);
+		}, "정규표현식을 확인하세요.");
 		</script>
 		
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
