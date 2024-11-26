@@ -4,8 +4,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import kr.spring.boot.model.util.UserRole;
@@ -19,7 +23,7 @@ public class SecurityConfig {
         http.csrf(csrf ->csrf.disable())
             .authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/post/insert/*").hasAuthority(UserRole.USER.name()) 	// '로그인 된 유저'만 이용 가능한 페이지
-                .requestMatchers("/admin/**").hasAnyAuthority(UserRole.ADMIN.name())	// '관리자'만 이용 가능한 페이지
+                //.requestMatchers("/admin/**").hasAnyAuthority(UserRole.ADMIN.name())	// '관리자'만 이용 가능한 페이지
                 .anyRequest().permitAll()  												// 그 외 요청은 인증 필요
             )
             .formLogin((form) -> form
@@ -40,5 +44,14 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password(passwordEncoder().encode("admin123"))
+                .authorities(UserRole.ADMIN.name())
+                .build(); 
+        return new InMemoryUserDetailsManager(admin);
     }
 }
