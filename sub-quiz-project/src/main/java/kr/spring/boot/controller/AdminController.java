@@ -1,10 +1,12 @@
 package kr.spring.boot.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.spring.boot.service.AdminService;
 import lombok.AllArgsConstructor;
 /*
  * 퀴즈 수정,등록,삭제
@@ -21,10 +23,12 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	@GetMapping("/adminHome")
+	@Autowired
+	private AdminService adminServic;
+	@GetMapping("/adminhome")
 	public String Admin(Model model) {
 		
-		return null;		
+		return "/admin/adminHome";		
 	}
 
 }
