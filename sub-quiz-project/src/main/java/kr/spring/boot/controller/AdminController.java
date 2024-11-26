@@ -24,7 +24,7 @@ import lombok.AllArgsConstructor;
 public class AdminController {
 	
 	@Autowired
-	private AdminService adminServic;
+	private AdminService adminService;
 	@GetMapping("/adminhome")
 	public String Admin(Model model) {
 		
