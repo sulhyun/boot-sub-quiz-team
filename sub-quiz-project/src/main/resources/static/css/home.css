@@ -1,0 +1,33 @@
+/*------------ 홈 설정 ------------*/
+/*기본 container 설정 헤더랑 안겹치게 위치 설정*/
+#container {
+	margin-top: 80px;
+}
+/*영역설정을 위한 용도 추후 css수정필요*/
+#m_intro {
+	background-color: rgb(245, 144, 75);
+	width: 63%;
+	height: 837px;
+	float: left;
+}
+
+#m_community {
+	background-color: rgb(2, 215, 197);
+	width: 37%;
+	height: 279px;
+	float: right;
+}
+
+#m_quiz {
+	background-color: rgb(255, 201, 27);
+	width: 37%;
+	height: 279px;
+	float: right;
+}
+
+#m_event {
+	background-color: rgb(172, 142, 248);
+	width: 37%;
+	height: 279px;
+	float: right;
+}
