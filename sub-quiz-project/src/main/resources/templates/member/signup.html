@@ -9,7 +9,6 @@
 	<style type="text/css">
 		.join-wrapper{width: 600px; margin: auto;padding: 0 20px;margin-bottom: 20px;margin-top: 60px;}
 		.title-box{margin-bottom: 40px;}
-		.title-text{font-size: 17px;}
 		button[type="submit"]:hover{color: white;}
 		input[type="button"]:hover{color: white;}
 		button[type="button"]:hover{color: white;}
@@ -21,7 +20,7 @@
 		<div class="join-wrapper">
 			<div class="title-box">
 				<h2>회원가입</h2>
-				<p class="title-text">가입을 통해 다양한 서비스를 경험하세요!!</p>
+				<p>가입을 통해 다양한 서비스를 경험하세요!!</p>
 			</div>
 			<form method="post" id="form" action="/member/signup">
 				<div class="form-group">
@@ -30,7 +29,7 @@
 					<div class="input-group">
 						<input type="text" class="form-control" id="id" name="mb_id" placeholder="아이디 입력 (6~20)자">
 						<div class="input-group-append">
-							<button type="button" class="btn btn-outline-warning">중복검사</button>
+							<button type="button" class="btn btn-outline-warning" onclick="checkId()">중복검사</button>
 						</div>
 					</div>
 				</div>
@@ -181,10 +180,33 @@
 				birthYear.on('change', updateDays);
 				birthMonth.on('change', updateDays);
 			}); // 생년월일 선택
+			
+			function checkId(){
+				const mb_id = $('#id').val().trim();
+				const errMsg = $('#error-id');
+				if(!/^\w{6,20}$/.test(mb_id)){
+					return;
+				}
+				$.ajax({
+					async : true, 
+					url : '/member/checkId', 
+					type : 'get', 
+					data : {mb_id : mb_id}, 
+					success : function (data){
+						if(data) {
+							errMsg.text("사용 가능한 아이디입니다.");
+						}else{
+							errMsg.text("이미 사용중인 아이디입니다.");
+						}
+					}, 
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
+			}
 		</script>
 		
 		<script type="text/javascript">
-		var flag = false;
 		$('#form').validate({
 			rules : {
 				mb_id : {
@@ -206,8 +228,7 @@
 				},
 				mb_ph : {
 					required : true,
-				},
-				
+				}
 			},
 			messages : {
 				mb_id : {
@@ -233,20 +254,13 @@
 			},
 		    errorPlacement: function (error, element) {
 		        var errorId = 'error-' + element.attr('id');
-		        $('#' + errorId).html(error);
+		        $('#' + errorId).html(error).removeClass("text-success").addClass("text-danger");
 		    },
 		    success: function (label, element) {
 		        var errorId = 'error-' + $(element).attr('id');
-		        $('#' + errorId).html('');
+		        $('#' + errorId).html('').removeClass("text-danger").addClass("text-success");
 		    },
 			submitHandler : function(){
-				var id = $('#id').val();
-				var res = checkId(id);
-				if(res == 0){
-					displayCheckId(res);
-					alert('이미 사용 중인 아이디입니다.');
-					return false;
-				}
 				return true;
 			}
 		});
