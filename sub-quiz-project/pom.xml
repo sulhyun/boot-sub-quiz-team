@@ -94,6 +94,13 @@
 			<groupId>org.thymeleaf.extras</groupId>
 	    	<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 	    </dependency>
+	    
+	    <!-- 이메일 사용 -->
+	    <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+	    
 	</dependencies>
 
 	<build>
