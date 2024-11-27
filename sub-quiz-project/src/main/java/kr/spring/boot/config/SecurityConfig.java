@@ -23,7 +23,7 @@ public class SecurityConfig {
         http.csrf(csrf ->csrf.disable())
             .authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/post/insert/*").hasAuthority(UserRole.USER.name()) 	// '로그인 된 유저'만 이용 가능한 페이지
-                //.requestMatchers("/admin/**").hasAnyAuthority(UserRole.ADMIN.name())	// '관리자'만 이용 가능한 페이지
+                .requestMatchers("/admin/**").hasAnyAuthority(UserRole.ADMIN.name())	// '관리자'만 이용 가능한 페이지
                 .anyRequest().permitAll()  												// 그 외 요청은 인증 필요
             )
             .formLogin((form) -> form

@@ -1,9 +1,3 @@
-/*------------ 홈 설정 ------------*/
-/*기본 container 설정 헤더랑 안겹치게 위치 설정*/
-#container {
-	margin-top: 80px;
-}
-/*영역설정을 위한 용도 추후 css수정필요*/
 #m_intro {
 	background-color: rgb(245, 144, 75);
 	width: 63%;
