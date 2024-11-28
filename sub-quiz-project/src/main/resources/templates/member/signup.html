@@ -76,7 +76,6 @@
 						</select>
 					</div>
 				</div>
-				<input type="checkbox" id="remember-check" name="emailing"> <span>이메일 수신 동의 확인</span>
 				<input type="button" class="btn btn-outline-info col-12" id="email-code" value="이메일 인증">
 				<div id="timer">타이머</div>
 				<div class="form-group">
@@ -209,6 +208,45 @@
 						console.log(jqXHR);
 					}
 				});
+			} // 아이디 중복검사
+			
+			$('#email-code').click(emailRegex);
+			function emailRegex(){
+				const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
+				const email = $('#email').val();
+				const domain = $('#email-domain').val();
+				const mail = email + '@' + domain;
+				if(pattern.test(mail) == false) {
+					alert('이메일 형식이 일치하지 않습니다.');
+					return;
+				}else{
+					$('#email').attr('readonly', true);
+					$('#email-domain').attr('readonly', true);
+					getEmailCode(mail);
+					alert("이메일을 전송하였습니다. 잠시만 기다려주세요.");
+					return;
+				}
+			}
+			
+			function getEmailCode(mail){			
+				$.ajax({
+					async : true,
+					url : '/mail/setCode',
+					type : 'post',
+					data : {evc_email : mail},
+					success: function(data){
+			            $('#email-code').after('<input type="button" id="codeCheck" value="이메일 코드 확인" >');
+			            $('#email-code').after('<input type="number" id="code"  placeholder="code">');
+			            $('#email-code').attr("disabled", true);
+			            $('#email-code').css("background-color", "gray");
+					},
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+						alert("이메일 전송 실패\n문제가 계속된다면 관리자한테 문의하세요.");
+						$('#email').attr('readonly', false);
+						$('#email-domain').attr('readonly', false);
+					}
+				})				
 			}
 		</script>
 		
