@@ -76,8 +76,11 @@
 						</select>
 					</div>
 				</div>
-				<input type="button" class="btn btn-outline-info col-12" id="email-code" value="이메일 인증">
-				<div id="timer">타이머</div>
+				<div class="form-group">
+					<input type="button" class="btn btn-outline-info col-12" id="email-code" value="이메일 인증">
+				</div>
+				<div class="form-group" id="code-input"></div>
+					<div id="timer">타이머</div>
 				<div class="form-group">
 				    <label for="zip_btn"><b>주소</b></label>
 				    <br>
@@ -106,10 +109,14 @@
 		</div>
 		<script type="text/javascript">
 			const autoHyphen = (target) => {
-				target.value = target.value
-					.replace(/[^0-9]/g, '')
-					.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
-			} // 전화번호 하이픈 자동 생성
+			    let ph = target.value.replace(/[^0-9]/g, '');
+			    if (ph.length > 11) {
+			        ph = ph.substring(0, 11);
+			    }
+			    target.value = ph
+			        .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+			        .replace(/(\-{1,2})$/g, "");
+			}; // 전화번호 하이픈 자동 생성
 			
 			document.getElementById('domain-list').addEventListener('change', function () {
 				const domainInput = document.getElementById('email-domain');
@@ -235,10 +242,10 @@
 					type : 'post',
 					data : {evc_email : mail},
 					success: function(data){
-			            $('#email-code').after('<input type="button" id="codeCheck" value="이메일 코드 확인" >');
-			            $('#email-code').after('<input type="number" id="code"  placeholder="code">');
+						displayInputCode();
 			            $('#email-code').attr("disabled", true);
-			            $('#email-code').css("background-color", "gray");
+			            $('#email-code').removeClass('btn-outline-info').addClass('btn-outline-dark');
+			            $('#email-code').css("background-color", "#d3d3d3");
 					},
 					error : function(jqXHR, textStatus, errorThrown){
 						console.log(jqXHR);
@@ -246,7 +253,18 @@
 						$('#email').attr('readonly', false);
 						$('#email-domain').attr('readonly', false);
 					}
-				})				
+				});	
+			}
+			function displayInputCode(){
+				str = `
+					<div class="input-group">
+						<input type="text" class="form-control" id="code"  placeholder="code">
+						<div class="input-group-append">
+							<input type="button" class="btn btn-outline-info" id="codeCheck" value="이메일 코드 확인" >
+						</div>
+					</div>
+				`;
+				$('#code-input').html(str);
 			}
 		</script>
 		
