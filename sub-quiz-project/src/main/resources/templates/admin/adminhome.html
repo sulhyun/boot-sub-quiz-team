@@ -1,29 +1,167 @@
 <!DOCTYPE html>
 <html 
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/layout.html}">
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+  layout:decorate="~{layout/layout.html}">
 <head>
-<meta charset="UTF-8">
-<title>퀴즈 게임 : 관리자 페이지</title>
+  <meta charset="UTF-8">
+  <title>퀴즈 게임 : 관리자 페이지</title>
+  <style>
+    #wrapper {
+      display: flex;
+    }
+    #sidebar {
+      width: 200px;
+      background-color: #333;
+      color: white;
+      padding: 15px;
+      height: 106%;
+      position: absolute;
+    }
+    #sidebar a {
+      display: block;
+      color: white;
+      padding: 10px;
+      text-decoration: none;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+    #sidebar a:hover {
+      background-color: #575757;
+    }
+    #main-content {
+      margin-left: 220px;
+      width: 100%;
+      padding: 20px;
+    }
+    .section {
+      margin-top: 10px;
+      margin-bottom: 40px;
+    }
+    .section h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #f1f1f1;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
 </head>
 <body>
-	<div>
-        <!-- Sidebar -->
-        <aside>
-            <h1>관리자 페이지</h1>
-            <nav>
-                <ul>
-                    <li><a href="#quiz-management">퀴즈 관리</a></li>
-                    <li><a href="#hint-management">힌트 관리</a></li>
-                    <li><a href="#quiz-category-management">퀴즈 카테고리 관리</a></li>
-                    <li><a href="#user-inquiries">사용자 문의 리스트</a></li>
-                    <li><a href="#member-management">회원 관리</a></li>
-                    <li><a href="#point-management">포인트 관리</a></li>
-                    <li><a href="#homepage-settings">홈페이지 기본 사항 관리</a></li>
-                </ul>
-            </nav>
-        </aside>
-    </div>
+<main layout:fragment="content">
+<div id="wrapper">
+  <div id="sidebar">
+  	<a href="#">홈페이지 기본 사항</a>
+    <a href="#">회원 관리</a>
+    <a href="#">퀴즈 관리</a>
+    <a href="#">퀴즈 카테고리</a>
+    <a href="#">사용자 문의 내용</a>
+    <a href="#">포인트 관리</a>
+    <a href="#">로그아웃</a>
+  </div>
+
+  <div id="main-content">
+    <section class="section">
+      <h2>전체 유저 수</h2>
+      <div>
+        <p>유저 수: 40</p>
+      </div>
+      <h2>공식 퀴즈 수</h2>
+      <div>
+        <p>퀴즈 수: 50</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>최근 문의 내역</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>문의날짜</th>
+            <th>사용자명</th>
+            <th>문의내용</th>
+            <th>관리자확인</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2024.11.28</td>
+            <td>아무개</td>
+            <td>불편내용</td>
+            <td>안 읽음</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>신고수 게시글 목록</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>작성일</th>
+            <th>등록자명</th>
+            <th>게시글내용</th>
+            <th>신고 갯수</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2024.11.28</td>
+            <td>아무개</td>
+            <td>아무내용</td>
+            <td>10</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section class="section">
+      <h2>회원 관리</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>회원 번호</th>
+            <th>이름</th>
+            <th>가입일</th>
+            <th>상태</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>홍길동</td>
+            <td>2024.11.28</td>
+            <td>활성</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>김철수</td>
+            <td>2024.11.10</td>
+            <td>비활성</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>
+</main>
 </body>
 </html>
