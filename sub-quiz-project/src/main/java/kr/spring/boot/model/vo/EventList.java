@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class Event_list {
+public class EventList {
 
 	private int el_num;			// 이벤트 참여자 기본키
 	private String mb_id;		// 회원 아이디

@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class Email_verificationVO {
+public class EmailVerificationVO {
 
 	private int evc_num;		// 이메일 인증 기본키
 	private String mb_email;	// 회원 이메일

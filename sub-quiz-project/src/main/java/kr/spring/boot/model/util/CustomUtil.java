@@ -13,9 +13,14 @@ import lombok.NoArgsConstructor;
 public class CustomUtil {
 
     //렌덤한 숫자 반환
-    public int getCustomNumber(int len){
+    public String getCustomNumber(int len){
         SecureRandom sr = new SecureRandom();
         int up = (int)Math.pow(10, len);
-        return sr.nextInt(up);
+        int num = sr.nextInt(up);
+        String code = String.valueOf(num);
+        while(code.length() < len) {
+        	code = "0" + code;
+        }
+        return code;
     }
 }
