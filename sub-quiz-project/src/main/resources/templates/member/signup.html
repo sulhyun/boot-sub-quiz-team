@@ -13,6 +13,9 @@
 		input[type="button"]:hover{color: white;}
 		button[type="button"]:hover{color: white;}
 		.email-text{font-size: 20px;}
+		.zip-num{width: 50%; display: inline;}
+		.zip-find{margin-bottom: 5px;}
+		#timer{color:red; margin-top: 10px;}
 	</style>
 </head>
 <body>
@@ -29,7 +32,7 @@
 					<div class="input-group">
 						<input type="text" class="form-control" id="id" name="mb_id" placeholder="아이디 입력 (6~20)자">
 						<div class="input-group-append">
-							<button type="button" class="btn btn-outline-warning" onclick="checkId()">중복검사</button>
+							<button type="button" class="btn btn-outline-info" onclick="checkId()">중복검사</button>
 						</div>
 					</div>
 				</div>
@@ -73,11 +76,14 @@
 						</select>
 					</div>
 				</div>
+				<input type="checkbox" id="remember-check" name="emailing"> <span>이메일 수신 동의 확인</span>
+				<input type="button" class="btn btn-outline-info col-12" id="email-code" value="이메일 인증">
+				<div id="timer">타이머</div>
 				<div class="form-group">
 				    <label for="zip_btn"><b>주소</b></label>
 				    <br>
-				    <input type="text" class="form-control mb-2" id="zip" name="mb_zip" maxlength="10" placeholder="우편번호" style="width: 50%; display: inline;" readonly>
-				    <input type="button" class="btn btn-outline-warning" id="zip_btn" onclick="execDaumPostcode()" value="우편번호 찾기">
+				    <input type="text" class="form-control mb-2 zip-num" id="zip" name="mb_zip" maxlength="10" placeholder="우편번호" readonly>
+				    <input type="button" class="btn btn-outline-info zip-find" id="zip_btn" onclick="execDaumPostcode()" value="우편번호 찾기">
 				    <br>
 				    <input type="text" class="form-control mb-2" id="addr" name="mb_addr" maxlength="40" placeholder="기본 주소를 입력" readonly>
 				    <input type="text" class="form-control" id="addr2" name="mb_addr2"  maxlength="40" placeholder="상세 주소를 입력">
@@ -96,7 +102,7 @@
 						</select>
 					</div>		
 				</div>
-				<button type="submit" class="btn btn-outline-warning col-12">회원가입</button>
+				<button type="submit" class="btn btn-outline-info col-12">회원가입</button>
 			</form>
 		</div>
 		<script type="text/javascript">
