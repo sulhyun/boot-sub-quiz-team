@@ -36,7 +36,7 @@
 						</div>
 					</div>
 				</div>
-				<input type="hidden" id="id2" name="mb_id2" value="n">
+				<input type="hidden" id="id-check" value="n">
 				<div class="form-group">
 					<label for="pw"><b>비밀번호</b></label>
 					<span class="error-message text-danger" id="error-pw"></span>
@@ -77,11 +77,10 @@
 						</select>
 					</div>
 				</div>
-				<div class="form-group">
-					<input type="button" class="btn btn-outline-info col-12" id="email-code" value="이메일 인증">
-				</div>
-				<div class="form-group" id="code-input"></div>
-					<div id="timer">타이머</div>
+				<input type="hidden" id="email-check" value="n">
+				<input type="button" class="btn btn-outline-info col-12" id="email-code" value="이메일 인증">
+				<div id="timer"></div>
+				<div id="code-input"></div>
 				<div class="form-group">
 				    <label for="zip_btn"><b>주소</b></label>
 				    <br>
@@ -191,7 +190,7 @@
 			function inputId() {
 				let errId = $('#error-id');
 				if(errId.text() != '사용 가능한 아이디입니다.') {
-					$('#id2').val('n');
+					$('#id-check').val('n');
 				}
 			} // 사용자가 아이디를 지우고 다시 입력하면 'n'으로 업데이트
 			
@@ -209,10 +208,10 @@
 					success : function (data){
 						if(data) {
 							errMsg.text("사용 가능한 아이디입니다.");
-							$('#id2').val('y');
+							$('#id-check').val('y');
 						}else{
 							errMsg.text("이미 사용중인 아이디입니다.");
-							$('#id2').val('n');
+							$('#id-check').val('n');
 						}
 					}, 
 					error : function(jqXHR, textStatus, errorThrown){
@@ -247,10 +246,13 @@
 					type : 'post',
 					data : {mb_email : mb_email},
 					success: function(data){
-						displayInputCode();
-			            $('#email-code').attr("disabled", true);
-			            $('#email-code').removeClass('btn-outline-info').addClass('btn-outline-dark');
-			            $('#email-code').css("background-color", "#d3d3d3");
+						if(data == true) {
+							displayInputCode();
+				            $('#email-code').attr("disabled", true);
+				            $('#email-code').removeClass('btn-outline-info').addClass('btn-outline-dark');
+				            $('#email-code').css("background-color", "#d3d3d3");
+				            startTimer(300, mb_email);
+						}
 					},
 					error : function(jqXHR, textStatus, errorThrown){
 						console.log(jqXHR);
@@ -281,6 +283,7 @@
 				const mb_email = email + '@' + domain;
 				const code = $('#code').val();
 				$.ajax({
+					async : true,
 					url : '/mail/getCode',
 					type : 'post',
 					data : 
@@ -289,13 +292,71 @@
 						code : code
 					},
 					success: function(data){
-						console.log('정상적으로 작동');
+						if(data == true) {
+							$('#code').attr("readonly", true);
+			                $('#code-check').remove();
+			                $('#email-check').val('y');
+			                alert('이메일 인증 성공!!');
+			                clearInterval(timerInterval);
+			                delEmailCode(mb_email);
+						}else{
+							alert('잘못된 코드입니다. 다시 확인해주세요.');
+						}
 					},
 					error : function(jqXHR, textStatus, errorThrown){
 						console.log(jqXHR);
 						alert("이메일 인증 실패\n문제가 계속된다면 관리자한테 문의하세요.");
 					}
 				});
+			} // 사용자가 입력한 코드가 DB에 있는 코드와 같은지 확인
+			
+			function delEmailCode(mb_email) {
+				$.ajax({
+					async : true,
+					url : '/mail/delCode',
+					type : 'post',
+					data : {mb_email : mb_email},
+					success: function(data){
+						console.log(data);	
+					},
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
+			} // 처리가 끝난 인증 코드는 필요 없기때문에 삭제
+			
+			var timerInterval;
+			
+			function startTimer(duration, mb_email){
+				let timer = duration, minutes, seconds;
+				timerInterval = setInterval(function(){
+					minutes = parseInt(timer / 60, 10);
+			        seconds = parseInt(timer % 60, 10);
+
+			        minutes = minutes < 10 ? "0" + minutes : minutes;
+			        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+			        $('#timer').text("이메일 전송 완료! 인증 가능 시간 " + minutes + ":" + seconds);
+			        
+			        if(--timer < 0) {
+			        	clearInterval(timerInterval);
+			        	$('#timer').text('인증 시간이 만료되었습니다.');
+			        	console.log(mb_email);
+			        	delEmailCode(mb_email);
+			        	alert("이메일 인증 시간이 만료되었습니다. 다시 시도해 주세요.");
+			        	// 버튼 활성화
+			        	$('#email-code').attr("disabled", false);
+			            $('#email-code').removeClass('btn-outline-dark').addClass('btn-outline-info');
+			            $('#email-code').removeAttr('style');
+			        	// 이메일 입력창 활성화
+			            $('#email').attr('readonly', false);
+						$('#email-domain').attr('readonly', false);
+						$('#domain-list').attr('disabled', false);
+						// 인증 코드 필드 제거
+						$('#code').remove();
+						$('#code-check').remove();
+			        }
+				}, 1000);
 			}
 		</script>
 		
@@ -355,8 +416,7 @@
 			        $('#' + errorId).html('').removeClass("text-danger").addClass("text-success");
 			    },
 				submitHandler : function(form){
-					let id2 = $('#id2').val();
-					console.log(mb_id2);
+					let id2 = $('#id-check').val();
 					if(id2 != 'y') {
 						alert('아이디 중복검사를 진행해 주세요.');
 						$('#id').focus();
@@ -369,6 +429,46 @@
 				var re = new RegExp(regex);
 				return this.optional(element) || re.test(value);
 			}, "정규표현식을 확인하세요.");
+		</script>
+		      		
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	    <script>
+		    function execDaumPostcode() {
+		        new daum.Postcode({
+		            oncomplete: function(data) {
+		                // 팝업을 통한 검색 결과 항목 클릭 시 실행
+		                var addr = ''; // 주소_결과값이 없을 경우 공백 
+		                var extraAddr = ''; // 참고항목
+		
+		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		                if (data.userSelectedType === 'R') { // 도로명 주소를 선택
+		                    addr = data.roadAddress;
+		                } else { // 지번 주소를 선택
+		                    addr = data.jibunAddress;
+		                }
+		
+		                if(data.userSelectedType === 'R'){
+		                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                        extraAddr += data.bname;
+		                    }
+		                    if(data.buildingName !== '' && data.apartment === 'Y'){
+		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                    }
+		                    if(extraAddr !== ''){
+		                        extraAddr = ' (' + extraAddr + ')';
+		                    }
+		                } else {
+		                    document.getElementById("addr").value = '';
+		                }
+		
+		                // 선택된 우편번호와 주소 정보를 input 박스에 넣는다.
+		                document.getElementById('zip').value = data.zonecode;
+		                document.getElementById("addr").value = addr;
+		                document.getElementById("addr").value += extraAddr;
+		                document.getElementById("addr2").focus(); // 우편번호 + 주소 입력이 완료되었음으로 상세주소로 포커스 이동
+		            }
+		        }).open();
+		    }
 		</script>
 	</main>
 </body>

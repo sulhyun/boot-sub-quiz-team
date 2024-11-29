@@ -32,14 +32,18 @@ public class MailController {
 			mailSend(mb_email, "퀴즈Q 인증 이메일", mail);
 		}
 		return res;
-	}
+	} // 인증 코드를 실제 이메일 주소에 전송하는 역할 + DB 저장
 
 	@ResponseBody
 	@PostMapping("/getCode")
 	public boolean getCode(@RequestParam String mb_email, @RequestParam String code) {
-		System.out.println(mb_email);
-		System.out.println(code);
-		return true;
+		return mailService.getMailCode(mb_email, code);
+	}
+	
+	@ResponseBody
+	@PostMapping("/delCode")
+	public boolean delCode(@RequestParam String mb_email) {
+		return mailService.delMailCode(mb_email);
 	}
 	
 	private boolean mailSend(String to, String title, String content) {
