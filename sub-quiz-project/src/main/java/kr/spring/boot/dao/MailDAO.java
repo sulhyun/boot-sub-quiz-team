@@ -4,6 +4,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface MailDAO {
 
-	boolean insertMailCode(@Param("evc_email")String evc_email, @Param("code")String code);
+	boolean insertMailCode(@Param("mb_email")String mb_email, @Param("code")String code);
 
 }

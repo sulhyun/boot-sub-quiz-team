@@ -36,6 +36,7 @@
 						</div>
 					</div>
 				</div>
+				<input type="hidden" id="id2" name="mb_id2" value="n">
 				<div class="form-group">
 					<label for="pw"><b>비밀번호</b></label>
 					<span class="error-message text-danger" id="error-pw"></span>
@@ -139,10 +140,8 @@
 				let isYear = false;
 				let isMonth = false;
 			
-				// 현재 년도 가져오기
 				const currentYear = new Date().getFullYear();
 			
-				// 출생 연도 로드
 				birthYear.on('focus', function () {
 					if (!isYear) {
 						isYear = true;
@@ -153,7 +152,6 @@
 					}
 				});
 			
-				// 출생 월 로드
 				birthMonth.on('focus', function () {
 					if (!isMonth) {
 						isMonth = true;
@@ -164,20 +162,17 @@
 					}
 				});
 			
- 				// 출생 일 업데이트 (년도와 월에 따라)
 				function updateDays() {
 					const selectedYear = parseInt(birthYear.val());
 					const selectedMonth = parseInt(birthMonth.val());
 			
-					// 월과 연도가 선택되지 않았을 경우 초기화
 					if (!selectedYear || !selectedMonth) {
 						birthDay.html('<option value="">일</option>').prop('disabled', true);
 						return;
 					}
 			
-					// 해당 월의 최대 일수 계산
 					const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
-					birthDay.html('<option value="">일</option>'); // 기존 옵션 초기화
+					birthDay.html('<option value="">일</option>');
 			
 					for (let i = 1; i <= daysInMonth; i++) {
 						const dayOption = $('<option>').val(i).text(i);
@@ -188,10 +183,17 @@
  				
  				birthDay.prop('disabled', true);
 			
-				// 년도나 월 선택 시 일 업데이트
 				birthYear.on('change', updateDays);
 				birthMonth.on('change', updateDays);
 			}); // 생년월일 선택
+			
+			$('#id').change(inputId);
+			function inputId() {
+				let errId = $('#error-id');
+				if(errId.text() != '사용 가능한 아이디입니다.') {
+					$('#id2').val('n');
+				}
+			} // 사용자가 아이디를 지우고 다시 입력하면 'n'으로 업데이트
 			
 			function checkId(){
 				const mb_id = $('#id').val().trim();
@@ -207,8 +209,10 @@
 					success : function (data){
 						if(data) {
 							errMsg.text("사용 가능한 아이디입니다.");
+							$('#id2').val('y');
 						}else{
 							errMsg.text("이미 사용중인 아이디입니다.");
+							$('#id2').val('n');
 						}
 					}, 
 					error : function(jqXHR, textStatus, errorThrown){
@@ -222,25 +226,26 @@
 				const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
 				const email = $('#email').val();
 				const domain = $('#email-domain').val();
-				const mail = email + '@' + domain;
-				if(pattern.test(mail) == false) {
+				const mb_email = email + '@' + domain;
+				if(pattern.test(mb_email) == false) {
 					alert('이메일 형식이 일치하지 않습니다.');
 					return;
 				}else{
 					$('#email').attr('readonly', true);
 					$('#email-domain').attr('readonly', true);
-					getEmailCode(mail);
+					$('#domain-list').attr('disabled', true);
+					getEmailCode(mb_email);
 					alert("이메일을 전송하였습니다. 잠시만 기다려주세요.");
 					return;
 				}
-			}
+			} // 이메일 정규표현식 확인 및 사용자한테 인증코드 보내기
 			
-			function getEmailCode(mail){			
+			function getEmailCode(mb_email){			
 				$.ajax({
 					async : true,
 					url : '/mail/setCode',
 					type : 'post',
-					data : {evc_email : mail},
+					data : {mb_email : mb_email},
 					success: function(data){
 						displayInputCode();
 			            $('#email-code').attr("disabled", true);
@@ -252,19 +257,45 @@
 						alert("이메일 전송 실패\n문제가 계속된다면 관리자한테 문의하세요.");
 						$('#email').attr('readonly', false);
 						$('#email-domain').attr('readonly', false);
+						$('#domain-list').attr('disabled', false);
 					}
 				});	
-			}
+			} // 이메일 인증 코드 보내는 Ajax
+			
 			function displayInputCode(){
 				str = `
 					<div class="input-group">
 						<input type="text" class="form-control" id="code"  placeholder="code">
 						<div class="input-group-append">
-							<input type="button" class="btn btn-outline-info" id="codeCheck" value="이메일 코드 확인" >
+							<input type="button" class="btn btn-outline-info" id="code-check" value="이메일 코드 확인" >
 						</div>
 					</div>
 				`;
 				$('#code-input').html(str);
+			} // 이메일 인증 코드 입력 및 확인 버튼 
+			
+			$(document).on('click', '#code-check', checkEmailCode); // 동적으로 추가된 요소이기 때문에 이벤트 리스너 사용
+			function checkEmailCode() {
+				const email = $('#email').val();
+				const domain = $('#email-domain').val();
+				const mb_email = email + '@' + domain;
+				const code = $('#code').val();
+				$.ajax({
+					url : '/mail/getCode',
+					type : 'post',
+					data : 
+					{
+						mb_email : mb_email,
+						code : code
+					},
+					success: function(data){
+						console.log('정상적으로 작동');
+					},
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+						alert("이메일 인증 실패\n문제가 계속된다면 관리자한테 문의하세요.");
+					}
+				});
 			}
 		</script>
 		
@@ -313,6 +344,7 @@
 					mb_ph : {
 						required : '필수 항목입니다.'
 					}
+					
 				},
 			    errorPlacement: function (error, element) {
 			        var errorId = 'error-' + element.attr('id');
@@ -322,54 +354,21 @@
 			        var errorId = 'error-' + $(element).attr('id');
 			        $('#' + errorId).html('').removeClass("text-danger").addClass("text-success");
 			    },
-				submitHandler : function(){
-					return true;
+				submitHandler : function(form){
+					let id2 = $('#id2').val();
+					console.log(mb_id2);
+					if(id2 != 'y') {
+						alert('아이디 중복검사를 진행해 주세요.');
+						$('#id').focus();
+						return false;
+					}
+					form.submit();
 				}
 			});
 			$.validator.addMethod('regex', function(value, element, regex){
 				var re = new RegExp(regex);
 				return this.optional(element) || re.test(value);
 			}, "정규표현식을 확인하세요.");
-		</script>
-		
-		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	    <script>
-		    function execDaumPostcode() {
-		        new daum.Postcode({
-		            oncomplete: function(data) {
-		                // 팝업을 통한 검색 결과 항목 클릭 시 실행
-		                var addr = ''; // 주소_결과값이 없을 경우 공백 
-		                var extraAddr = ''; // 참고항목
-		
-		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-		                if (data.userSelectedType === 'R') { // 도로명 주소를 선택
-		                    addr = data.roadAddress;
-		                } else { // 지번 주소를 선택
-		                    addr = data.jibunAddress;
-		                }
-		
-		                if(data.userSelectedType === 'R'){
-		                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-		                        extraAddr += data.bname;
-		                    }
-		                    if(data.buildingName !== '' && data.apartment === 'Y'){
-		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-		                    }
-		                    if(extraAddr !== ''){
-		                        extraAddr = ' (' + extraAddr + ')';
-		                    }
-		                } else {
-		                    document.getElementById("addr").value = '';
-		                }
-		
-		                // 선택된 우편번호와 주소 정보를 input 박스에 넣는다.
-		                document.getElementById('zip').value = data.zonecode;
-		                document.getElementById("addr").value = addr;
-		                document.getElementById("addr").value += extraAddr;
-		                document.getElementById("addr2").focus(); // 우편번호 + 주소 입력이 완료되었음으로 상세주소로 포커스 이동
-		            }
-		        }).open();
-		    }
 		</script>
 	</main>
 </body>

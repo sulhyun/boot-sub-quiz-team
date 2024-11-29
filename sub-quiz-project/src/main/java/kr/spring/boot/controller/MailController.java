@@ -24,17 +24,24 @@ public class MailController {
 	
 	@ResponseBody
 	@PostMapping("/setCode")
-	public boolean setCode(@RequestParam String evc_email) {
+	public boolean setCode(@RequestParam String mb_email) {
 		String code = customUtil.getCustomNumber(6);
-		System.out.println(code);
 		String mail = "안녕하세요.<br>퀴즈Q 회원 인증 메일입니다.<br>6자리 코드를 회원가입 창에서 입력해주세요. <p>인증코드 : <strong>" + code + "</strong></p>";
-		boolean res = mailService.setMailCode(evc_email, code);
+		boolean res = mailService.setMailCode(mb_email, code);
 		if(res) {
-			mailSend(evc_email, "퀴즈Q 인증 이메일", mail);
+			mailSend(mb_email, "퀴즈Q 인증 이메일", mail);
 		}
 		return res;
 	}
 
+	@ResponseBody
+	@PostMapping("/getCode")
+	public boolean getCode(@RequestParam String mb_email, @RequestParam String code) {
+		System.out.println(mb_email);
+		System.out.println(code);
+		return true;
+	}
+	
 	private boolean mailSend(String to, String title, String content) {
 	    String from = "quizQ@gmail.com";
 	    try{

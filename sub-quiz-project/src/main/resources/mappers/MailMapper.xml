@@ -3,6 +3,6 @@
 <mapper namespace="kr.spring.boot.dao.MailDAO">
 	<insert id="insertMailCode">
 		INSERT INTO EMAIL_VERIFICATION(MB_EMAIL, EVC_CODE)VALUES
-		(#{evc_email}, #{code})
+		(#{mb_email}, #{code})
 	</insert>
 </mapper>
