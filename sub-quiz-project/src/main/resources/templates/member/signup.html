@@ -65,7 +65,7 @@
 				<div class="form-group">
 					<label for="email"><b>이메일</b></label>
 					<div class="input-group">
-						<input type="text" class="form-control" id="email" placeholder="이메일 입력">
+						<input type="text" class="form-control" id="email-input" placeholder="이메일 입력">
 						<span class="email-text">@</span>
 				    	<input type="text" class="form-control mr-2" id="email-domain" placeholder="직접 입력">
 					    <select class="form-select" id="domain-list">
@@ -78,6 +78,7 @@
 					</div>
 				</div>
 				<input type="hidden" id="email-check" value="n">
+				<input type="hidden" id="email" name="mb_email">
 				<input type="button" class="btn btn-outline-info col-12" id="email-code" value="이메일 인증">
 				<div id="timer"></div>
 				<div id="code-input"></div>
@@ -104,6 +105,7 @@
 						</select>
 					</div>		
 				</div>
+				<input type="hidden" id="birth" name="mb_birth">
 				<button type="submit" class="btn btn-outline-info col-12">회원가입</button>
 			</form>
 		</div>
@@ -223,14 +225,14 @@
 			$('#email-code').click(emailRegex);
 			function emailRegex(){
 				const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
-				const email = $('#email').val();
+				const email = $('#email-input').val();
 				const domain = $('#email-domain').val();
 				const mb_email = email + '@' + domain;
 				if(pattern.test(mb_email) == false) {
 					alert('이메일 형식이 일치하지 않습니다.');
 					return;
 				}else{
-					$('#email').attr('readonly', true);
+					$('#email-input').attr('readonly', true);
 					$('#email-domain').attr('readonly', true);
 					$('#domain-list').attr('disabled', true);
 					getEmailCode(mb_email);
@@ -257,7 +259,7 @@
 					error : function(jqXHR, textStatus, errorThrown){
 						console.log(jqXHR);
 						alert("이메일 전송 실패\n문제가 계속된다면 관리자한테 문의하세요.");
-						$('#email').attr('readonly', false);
+						$('#email-input').attr('readonly', false);
 						$('#email-domain').attr('readonly', false);
 						$('#domain-list').attr('disabled', false);
 					}
@@ -278,7 +280,7 @@
 			
 			$(document).on('click', '#code-check', checkEmailCode); // 동적으로 추가된 요소이기 때문에 이벤트 리스너 사용
 			function checkEmailCode() {
-				const email = $('#email').val();
+				const email = $('#email-input').val();
 				const domain = $('#email-domain').val();
 				const mb_email = email + '@' + domain;
 				const code = $('#code').val();
@@ -349,7 +351,7 @@
 			            $('#email-code').removeClass('btn-outline-dark').addClass('btn-outline-info');
 			            $('#email-code').removeAttr('style');
 			        	// 이메일 입력창 활성화
-			            $('#email').attr('readonly', false);
+			            $('#email-input').attr('readonly', false);
 						$('#email-domain').attr('readonly', false);
 						$('#domain-list').attr('disabled', false);
 						// 인증 코드 필드 제거
@@ -417,11 +419,35 @@
 			    },
 				submitHandler : function(form){
 					let id2 = $('#id-check').val();
+					let email2 = $('#email-check').val();
 					if(id2 != 'y') {
 						alert('아이디 중복검사를 진행해 주세요.');
 						$('#id').focus();
 						return false;
 					}
+					if(email2 != 'y') {
+						alert("이메일 인증을 진해해 주세요.");
+						$('#email-input').focus();
+						return false;
+					}
+					// 이메일
+					const email = $('#email-input').val();
+					const domain = $('#email-domain').val();
+					const mb_email = email + '@' + domain;
+					
+					// 생년월일
+					const birthYear = $('#birth-year').val();
+					const birthMonth = $('#birth-month').val().padStart(2, '0');
+					const birthDay = $('#birth-day').val().padStart(2, '0');
+					const mb_birth = birthYear + '-' + birthMonth + '-' + birthDay;
+					
+					// 확인 후 지우기
+					console.log(mb_email);
+					console.log(mb_birth);
+					
+					// 히든 요소의 value값에 가공된 변수들 넣어주기
+					$('#email').val(mb_email);
+					$('#birth').val(mb_birth);
 					form.submit();
 				}
 			});
