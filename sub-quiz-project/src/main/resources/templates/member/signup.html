@@ -59,8 +59,8 @@
 				</div>
 				<div class="form-group">
 					<label for="ph"><b>전화번호</b></label>
-					<span class="error-message text-danger" id="error-ph"></span>
-					<input type="text" class="form-control" id="ph" name="mb_ph" oninput="autoHyphen(this)" placeholder="휴대폰 번호 입력 ('-'제외 11자리)">
+					<span class="error-message text-danger" id="error-hp"></span>
+					<input type="text" class="form-control" id="hp" name="mb_hp" oninput="autoHyphen(this)" placeholder="휴대폰 번호 입력 ('-'제외 11자리)">
 				</div>
 				<div class="form-group">
 					<label for="email"><b>이메일</b></label>
@@ -111,11 +111,11 @@
 		</div>
 		<script type="text/javascript">
 			const autoHyphen = (target) => {
-			    let ph = target.value.replace(/[^0-9]/g, '');
-			    if (ph.length > 11) {
-			        ph = ph.substring(0, 11);
+			    let hp = target.value.replace(/[^0-9]/g, '');
+			    if (hp.length > 11) {
+			        hp = hp.substring(0, 11);
 			    }
-			    target.value = ph
+			    target.value = hp
 			        .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
 			        .replace(/(\-{1,2})$/g, "");
 			}; // 전화번호 하이픈 자동 생성
@@ -325,7 +325,7 @@
 						console.log(jqXHR);
 					}
 				});
-			} // 처리가 끝난 인증 코드는 필요 없기때문에 삭제
+			} // 처리가 끝난 인증 코드 삭제
 			
 			var timerInterval;
 			
@@ -359,7 +359,7 @@
 						$('#code-check').remove();
 			        }
 				}, 1000);
-			}
+			} // 인증 코드 제한 시간
 		</script>
 		
 		<script type="text/javascript">
@@ -382,7 +382,7 @@
 					mb_nick : {
 						required : true
 					},
-					mb_ph : {
+					mb_hp : {
 						required : true,
 					}
 				},
@@ -404,7 +404,7 @@
 					mb_nick : {
 						required : ' 필수 항목입니다.'
 					},
-					mb_ph : {
+					mb_hp : {
 						required : '필수 항목입니다.'
 					}
 					
@@ -440,10 +440,6 @@
 					const birthMonth = $('#birth-month').val().padStart(2, '0');
 					const birthDay = $('#birth-day').val().padStart(2, '0');
 					const mb_birth = birthYear + '-' + birthMonth + '-' + birthDay;
-					
-					// 확인 후 지우기
-					console.log(mb_email);
-					console.log(mb_birth);
 					
 					// 히든 요소의 value값에 가공된 변수들 넣어주기
 					$('#email').val(mb_email);

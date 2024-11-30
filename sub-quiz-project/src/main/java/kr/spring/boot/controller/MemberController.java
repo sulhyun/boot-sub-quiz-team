@@ -34,6 +34,8 @@ public class MemberController {
 	public String signupPost(SignupDTO member) {
 		System.out.println("폼 정상적으로 서버 도착");
 		System.out.println(member);
+		System.out.println(member.getMb_hp());
+		System.out.println(member.getMb_birth());
 		return "redirect:/member/signup";
 	}
 }

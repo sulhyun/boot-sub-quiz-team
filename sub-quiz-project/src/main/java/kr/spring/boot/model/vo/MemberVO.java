@@ -2,8 +2,6 @@ package kr.spring.boot.model.vo;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,8 +19,7 @@ public class MemberVO {
 	private int mb_zip;				// 회원 우편번호
 	private String mb_addr;			// 회원 기본주소
 	private String mb_addr2;		// 회원 상세주소
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date mb_birth;			// 회원 생년월일
+	private String mb_birth;		// 회원 생년월일
 	private int mb_level;			// 회원 레벨
 	private Date mb_datetime;		// 회원 가입일
 	private Date mb_edit_date;		// 회원	수정일

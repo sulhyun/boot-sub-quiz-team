@@ -16,8 +16,8 @@ public class MailConfig {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587); // 구글은 587 사용
 
-        mailSender.setUsername("sulhyun4788@gmail.com"); 
-        mailSender.setPassword("khlf kgmd nbvf cbca"); //앱비밀번호는 직접 입력해서 쓰기  
+        mailSender.setUsername(""); 
+        mailSender.setPassword(""); //앱비밀번호는 직접 입력해서 쓰기  
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
