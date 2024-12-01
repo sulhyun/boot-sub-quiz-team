@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
 
 import kr.spring.boot.model.dto.SignupDTO;
 import kr.spring.boot.model.vo.MemberVO;
@@ -31,11 +32,9 @@ public class MemberController {
 	}
 	
 	@PostMapping("/signup")
-	public String signupPost(SignupDTO member) {
-		System.out.println("폼 정상적으로 서버 도착");
-		System.out.println(member);
-		System.out.println(member.getMb_hp());
-		System.out.println(member.getMb_birth());
+	public String signupPost(Model model, SignupDTO user) {
+		boolean res = memberService.signup(user);
+		
 		return "redirect:/member/signup";
 	}
 }

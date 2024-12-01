@@ -27,6 +27,7 @@ public class MemberVO {
 	private String mb_cookie;		// 회원 쿠키
 	private String mb_cookie_limit;	// 회원 쿠키만료
 	private int mb_point;			// 회원 포인트
+	private String mb_login_method;
 	
 	public String getMb_auth() {
 		String auth = "GUEST";
