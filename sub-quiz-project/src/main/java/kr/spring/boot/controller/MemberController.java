@@ -29,12 +29,24 @@ public class MemberController {
 		MemberVO user = memberService.selectMember(mb_id);
 		boolean res = (user == null) ? true : false; 
 		return ResponseEntity.ok(res);
-	}
+	} // 아이디 중복검사
 	
 	@PostMapping("/signup")
 	public String signupPost(Model model, SignupDTO user) {
 		boolean res = memberService.signup(user);
-		
-		return "redirect:/member/signup";
+		if(res) {
+			model.addAttribute("msg", "회원가입 성공!!");
+			model.addAttribute("url", "/");
+		}else {
+			model.addAttribute("msg", "회원가입 실패!!");
+			model.addAttribute("url", "/");
+		}
+		return "util/msg";
+	} // 회원가입
+	
+	@GetMapping("/login")
+	public String login() {
+		return "/member/login";
 	}
+	
 }
