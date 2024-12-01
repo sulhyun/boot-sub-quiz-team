@@ -1,9 +1,6 @@
 <header th:fragment="header">
 	<link href="/css/header.css" rel='stylesheet'>
-	<!--헤더 탑을 이용하여 헤더의 위치를 잡고 안에 내용 작성-->
 	<div id="hd_top">
-		<!--로그인 후 보이기로 변경해야함 css 수정 필요-->
-		<button type="button" id="chat">채팅</button>
 		<!--아이콘으로 변경해야함-->
 		<div id="logo">
 			<a href="/">Quiz</a>
@@ -14,15 +11,19 @@
 				<li class="nav_li">
 					<a href="/admin/adminhome">관리자페이지</a>
 				</li>
-				<li class="nav_li">
-					<a href="#">마이페이지버튼</a>
-				</li>
-				<li class="nav_li">
-					<a href="#">로그인</a>
-				</li>
-				<li class="nav_li">
-					<a href="/member/signup">회원가입</a>
-				</li>
+				<th:block sec:authorize="isAuthenticated()">
+					<li class="nav_li">
+						<a href="#">마이페이지</a>
+					</li>
+				</th:block>
+				<th:block sec:authorize="isAnonymous()">
+					<li class="nav_li" >
+						<a href="/member/login">로그인</a>
+					</li>
+					<li class="nav_li">
+						<a href="/member/signup">회원가입</a>
+					</li>
+				</th:block>
 			</ul>
 		</div>
 	</div>

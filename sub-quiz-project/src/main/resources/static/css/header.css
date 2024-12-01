@@ -34,6 +34,3 @@ a {
     border-radius: 5px; /* 둥근 모서리 */
     transition: background-color 0.3s ease; /* 호버 효과를 부드럽게 */
 }
-#chat {
-	display: none;
-}
