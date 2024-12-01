@@ -32,11 +32,8 @@ public class MemberController {
 	}
 	
 	@PostMapping("/signup")
-	public String signupPost(Model model, SignupDTO member) {
-		System.out.println("폼 정상적으로 서버 도착");
-		System.out.println(member);
-		System.out.println(member.getMb_hp());
-		System.out.println(member.getMb_birth());
+	public String signupPost(Model model, SignupDTO user) {
+		boolean res = memberService.signup(user);
 		
 		return "redirect:/member/signup";
 	}

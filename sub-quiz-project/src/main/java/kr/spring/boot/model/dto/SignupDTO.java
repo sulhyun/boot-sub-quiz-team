@@ -21,4 +21,5 @@ public class SignupDTO {
 	// 초기값 설정
 	private int mb_level = 1;		// 회원 레벨
 	private int mb_point = 500;		// 회원 포인트
+	private String mb_login_method = "internal";
 }
