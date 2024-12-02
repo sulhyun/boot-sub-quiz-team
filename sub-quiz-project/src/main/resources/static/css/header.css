@@ -31,6 +31,9 @@ a {
 	float: left;
 	padding: 25px 0 0 50px;
 }
+#logo a {
+	font-size: 25px
+}
 #nav {
 	float: right;
 	padding: 15px 15px 0 0;
