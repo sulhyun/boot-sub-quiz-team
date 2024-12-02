@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import kr.spring.boot.model.dto.LoginDTO;
 import kr.spring.boot.model.dto.SignupDTO;
 import kr.spring.boot.model.vo.MemberVO;
@@ -51,15 +54,18 @@ public class MemberController {
 	}
 	
 	@PostMapping("/login")
-	public String loginPost(Model model, LoginDTO user) {
+	public String loginPost(Model model, HttpServletRequest request, LoginDTO user) {
 		MemberVO member = memberService.login(user);
 		if(member == null) {
 			model.addAttribute("msg", "로그인 실패!!");
 			model.addAttribute("url", "/member/login");
 		}else {
+			HttpSession session = request.getSession();
+			session.setAttribute("user", member);
 			model.addAttribute("msg", "로그인 성공!!");
 			model.addAttribute("url", "/");
 		}
 		return "util/msg";
 	} // MemberDetailService에서 처리하기 때문에 필요없음..
+
 }

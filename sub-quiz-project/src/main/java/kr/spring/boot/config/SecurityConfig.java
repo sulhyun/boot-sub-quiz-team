@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/")						// 로그인 성공 후 리다이렉트할 기본 URL
             )
             .logout((logout) -> logout
-            		.logoutUrl("/logout")			// 로그아웃 요청을 처리할 URL을 설정
+            		.logoutUrl("/member/logout")	// 로그아웃 요청을 처리할 URL을 설정
             		.logoutSuccessUrl("/")			// 로그아웃 성공 후 리다이렉트할 기본 URL
             		.clearAuthentication(true)		// 로그아웃 시 인증 정보 제거
             		.invalidateHttpSession(true)	// 로그아웃 시 세션 무효화
