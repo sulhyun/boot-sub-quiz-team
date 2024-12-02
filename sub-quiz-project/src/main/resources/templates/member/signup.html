@@ -5,24 +5,14 @@
 	layout:decorate="~{layout/layout.html}">
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
-	<style type="text/css">
-		.join-wrapper{width: 600px; margin: auto;padding: 0 20px;margin-bottom: 20px;margin-top: 60px;}
-		.title-box{margin-bottom: 40px;}
-		button[type="submit"]:hover{color: white;}
-		input[type="button"]:hover{color: white;}
-		button[type="button"]:hover{color: white;}
-		.email-text{font-size: 20px;}
-		.zip-num{width: 50%; display: inline;}
-		.zip-find{margin-bottom: 5px;}
-		#timer{color:red; margin-top: 10px;}
-	</style>
+<title>퀴즈Q : 회원가입</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/signup.css}">
 </head>
 <body>
 	<main layout:fragment="content">
 		<div class="join-wrapper">
 			<div class="title-box">
-				<h2>회원가입</h2>
+				<a href="/" class="logo-text">퀴즈Q</a>
 				<p>가입을 통해 다양한 서비스를 경험하세요!!</p>
 			</div>
 			<form method="post" id="form" action="/member/signup">
@@ -212,6 +202,7 @@
 							errMsg.text("사용 가능한 아이디입니다.");
 							$('#id-check').val('y');
 						}else{
+							$('#error-id').removeClass('text-success').addClass('text-danger');
 							errMsg.text("이미 사용중인 아이디입니다.");
 							$('#id-check').val('n');
 						}
@@ -410,7 +401,7 @@
 					
 				},
 			    errorPlacement: function (error, element) {
-			        var errorId = 'error-' + element.attr('id');
+			        var errorId = 'error-' + $(element).attr('id');
 			        $('#' + errorId).html(error).removeClass("text-success").addClass("text-danger");
 			    },
 			    success: function (label, element) {
