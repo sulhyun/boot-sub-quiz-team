@@ -54,6 +54,13 @@ public class MemberController {
 	public String loginPost(Model model, LoginDTO user) {
 		System.out.println(user);
 		MemberVO member = memberService.login(user);
-		return "redirect:/";
+		if(member == null) {
+			model.addAttribute("msg", "로그인 실패!!");
+			model.addAttribute("url", "/member/login");
+		}else {
+			model.addAttribute("msg", "로그인 성공!!");
+			model.addAttribute("url", "/");
+		}
+		return "util/msg";
 	}
 }
