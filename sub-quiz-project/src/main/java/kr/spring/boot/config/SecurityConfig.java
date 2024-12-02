@@ -27,10 +27,10 @@ public class SecurityConfig {
                 .anyRequest().permitAll()  												// 그 외 요청은 인증 필요
             )
             .formLogin((form) -> form
-                //.loginPage("/login")  		// 커스텀 로그인 페이지 설정
-                .permitAll()          			// 로그인은 모두 접근 가능
-                .loginProcessingUrl("/login")	// 로그인 요청을 처리할 URL을 설정
-                .defaultSuccessUrl("/")			// 로그인 성공 후 리다이렉트할 기본 URL
+                .loginPage("/member/login")  			// 커스텀 로그인 페이지 설정
+                .permitAll()          					// 로그인은 모두 접근 가능
+                .loginProcessingUrl("/member/login")	// 로그인 요청을 처리할 URL을 설정
+                .defaultSuccessUrl("/")					// 로그인 성공 후 리다이렉트할 기본 URL
             )
             .logout((logout) -> logout
             		.logoutUrl("/logout")			// 로그아웃 요청을 처리할 URL을 설정
