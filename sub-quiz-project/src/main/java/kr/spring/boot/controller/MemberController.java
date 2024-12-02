@@ -2,11 +2,12 @@ package kr.spring.boot.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.ui.Model;
 
+import kr.spring.boot.model.dto.LoginDTO;
 import kr.spring.boot.model.dto.SignupDTO;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.service.MemberService;
@@ -49,4 +50,10 @@ public class MemberController {
 		return "/member/login";
 	}
 	
+	@PostMapping("/login")
+	public String loginPost(Model model, LoginDTO user) {
+		System.out.println(user);
+		MemberVO member = memberService.login(user);
+		return "redirect:/";
+	}
 }

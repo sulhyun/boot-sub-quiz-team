@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.MemberDAO;
+import kr.spring.boot.model.dto.LoginDTO;
 import kr.spring.boot.model.dto.SignupDTO;
 import kr.spring.boot.model.vo.MemberVO;
 import lombok.AllArgsConstructor;
@@ -56,5 +57,26 @@ public class MemberServiceImp implements MemberService {
 		}
 		return false;
 	} // 정규 표현식 검사 메소드 (맞으면 참, 틀리면 거짓)
+
+	@Override
+	public MemberVO login(LoginDTO user) {
+		if(user == null) {
+			return null;
+		}
+		if(user.getUsername() == null || user.getUsername().trim().length() == 0) {
+			return null;
+		}
+		if(user.getPassword() == null || user.getPassword().trim().length() == 0) {
+			return null;
+		}
+		MemberVO member = memberDao.selectMember(user.getUsername());
+		if(member == null) {
+			return null;
+		}
+		if(passwordEncoder.matches(user.getPassword(), member.getMb_pw())) {
+			return member;
+		}
+		return null;
+	}
 
 }
