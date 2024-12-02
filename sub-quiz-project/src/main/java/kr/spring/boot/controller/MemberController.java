@@ -61,5 +61,5 @@ public class MemberController {
 			model.addAttribute("url", "/");
 		}
 		return "util/msg";
-	}
+	} // MemberDetailService에서 처리하기 때문에 필요없음..
 }
