@@ -12,11 +12,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import kr.spring.boot.dao.MemberDAO;
 import kr.spring.boot.model.util.UserRole;
+import kr.spring.boot.service.MemberDetailService;
+import lombok.AllArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class SecurityConfig {
+	
+	private MemberDAO memberDao;
 	
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -44,15 +50,5 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-    
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin123"))
-                .authorities(UserRole.ADMIN.name())
-                .build(); 
-        return new InMemoryUserDetailsManager(admin);
     }
 }

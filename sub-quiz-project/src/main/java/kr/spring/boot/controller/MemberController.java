@@ -52,7 +52,6 @@ public class MemberController {
 	
 	@PostMapping("/login")
 	public String loginPost(Model model, LoginDTO user) {
-		System.out.println(user);
 		MemberVO member = memberService.login(user);
 		if(member == null) {
 			model.addAttribute("msg", "로그인 실패!!");
