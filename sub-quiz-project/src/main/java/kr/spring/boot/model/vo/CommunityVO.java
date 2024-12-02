@@ -9,4 +9,5 @@ public class CommunityVO {
 
 	private int co_num;		// 커뮤니티 기본키
 	private String co_name;	// 커뮤니티 명
+	
 }
