@@ -76,7 +76,6 @@
 						</select>
 					</div>
 				</div>
-				<input type="checkbox" id="remember-check" name="emailing"> <span>이메일 수신 동의 확인</span>
 				<input type="button" class="btn btn-outline-info col-12" id="email-code" value="이메일 인증">
 				<div id="timer">타이머</div>
 				<div class="form-group">
@@ -209,71 +208,110 @@
 						console.log(jqXHR);
 					}
 				});
+			} // 아이디 중복검사
+			
+			$('#email-code').click(emailRegex);
+			function emailRegex(){
+				const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
+				const email = $('#email').val();
+				const domain = $('#email-domain').val();
+				const mail = email + '@' + domain;
+				if(pattern.test(mail) == false) {
+					alert('이메일 형식이 일치하지 않습니다.');
+					return;
+				}else{
+					$('#email').attr('readonly', true);
+					$('#email-domain').attr('readonly', true);
+					getEmailCode(mail);
+					alert("이메일을 전송하였습니다. 잠시만 기다려주세요.");
+					return;
+				}
+			}
+			
+			function getEmailCode(mail){			
+				$.ajax({
+					async : true,
+					url : '/mail/setCode',
+					type : 'post',
+					data : {evc_email : mail},
+					success: function(data){
+			            $('#email-code').after('<input type="button" id="codeCheck" value="이메일 코드 확인" >');
+			            $('#email-code').after('<input type="number" id="code"  placeholder="code">');
+			            $('#email-code').attr("disabled", true);
+			            $('#email-code').css("background-color", "gray");
+					},
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+						alert("이메일 전송 실패\n문제가 계속된다면 관리자한테 문의하세요.");
+						$('#email').attr('readonly', false);
+						$('#email-domain').attr('readonly', false);
+					}
+				})				
 			}
 		</script>
 		
 		<script type="text/javascript">
-		$('#form').validate({
-			rules : {
-				mb_id : {
-					required : true,
-					regex : /^\w{6,20}$/
+			$('#form').validate({
+				rules : {
+					mb_id : {
+						required : true,
+						regex : /^\w{6,20}$/
+					},
+					mb_pw : {
+						required : true,
+						regex : /^[a-zA-Z0-9!@#$]{6,20}$/
+					},
+					mb_pw2 : {
+						equalTo : pw
+					},
+					mb_name : {
+						required : true
+					},
+					mb_nick : {
+						required : true
+					},
+					mb_ph : {
+						required : true,
+					}
 				},
-				mb_pw : {
-					required : true,
-					regex : /^[a-zA-Z0-9!@#$]{6,20}$/
+				messages : {
+					mb_id : {
+						required : '필수 항목입니다.',
+						regex : '영어, 숫자만 가능하며, 6~20자이어야 합니다.'
+					},
+					mb_pw : {
+						required : '필수 항목입니다.',
+						regex : '영어, 숫자, 특수문자(!@#$)만 가능하며, 6~20자이어야 합니다.'
+					},
+					mb_pw2 : {
+						equalTo : '비번과 일치하지 않습니다.'
+					},
+					mb_name : {
+						required : '필수 항목입니다.'
+					},
+					mb_nick : {
+						required : ' 필수 항목입니다.'
+					},
+					mb_ph : {
+						required : '필수 항목입니다.'
+					}
 				},
-				mb_pw2 : {
-					equalTo : pw
-				},
-				mb_name : {
-					required : true
-				},
-				mb_nick : {
-					required : true
-				},
-				mb_ph : {
-					required : true,
+			    errorPlacement: function (error, element) {
+			        var errorId = 'error-' + element.attr('id');
+			        $('#' + errorId).html(error).removeClass("text-success").addClass("text-danger");
+			    },
+			    success: function (label, element) {
+			        var errorId = 'error-' + $(element).attr('id');
+			        $('#' + errorId).html('').removeClass("text-danger").addClass("text-success");
+			    },
+				submitHandler : function(){
+					return true;
 				}
-			},
-			messages : {
-				mb_id : {
-					required : '필수 항목입니다.',
-					regex : '영어, 숫자만 가능하며, 6~20자이어야 합니다.'
-				},
-				mb_pw : {
-					required : '필수 항목입니다.',
-					regex : '영어, 숫자, 특수문자(!@#$)만 가능하며, 6~20자이어야 합니다.'
-				},
-				mb_pw2 : {
-					equalTo : '비번과 일치하지 않습니다.'
-				},
-				mb_name : {
-					required : '필수 항목입니다.'
-				},
-				mb_nick : {
-					required : ' 필수 항목입니다.'
-				},
-				mb_ph : {
-					required : '필수 항목입니다.'
-				}
-			},
-		    errorPlacement: function (error, element) {
-		        var errorId = 'error-' + element.attr('id');
-		        $('#' + errorId).html(error).removeClass("text-success").addClass("text-danger");
-		    },
-		    success: function (label, element) {
-		        var errorId = 'error-' + $(element).attr('id');
-		        $('#' + errorId).html('').removeClass("text-danger").addClass("text-success");
-		    },
-			submitHandler : function(){
-				return true;
-			}
-		});
-		$.validator.addMethod('regex', function(value, element, regex){
-			var re = new RegExp(regex);
-			return this.optional(element) || re.test(value);
-		}, "정규표현식을 확인하세요.");
+			});
+			$.validator.addMethod('regex', function(value, element, regex){
+				var re = new RegExp(regex);
+				return this.optional(element) || re.test(value);
+			}, "정규표현식을 확인하세요.");
 		</script>
 		
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
