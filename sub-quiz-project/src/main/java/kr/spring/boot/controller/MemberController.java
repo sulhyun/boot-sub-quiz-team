@@ -3,8 +3,11 @@ package kr.spring.boot.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
 
+import kr.spring.boot.model.dto.SignupDTO;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.service.MemberService;
 import lombok.AllArgsConstructor;
@@ -17,8 +20,7 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@GetMapping("/signup")
-	public String join() {
-		
+	public String signup() {
 		return "member/signup";
 	}
 	
@@ -27,5 +29,12 @@ public class MemberController {
 		MemberVO user = memberService.selectMember(mb_id);
 		boolean res = (user == null) ? true : false; 
 		return ResponseEntity.ok(res);
+	}
+	
+	@PostMapping("/signup")
+	public String signupPost(Model model, SignupDTO user) {
+		boolean res = memberService.signup(user);
+		
+		return "redirect:/member/signup";
 	}
 }

@@ -16,9 +16,10 @@ public class SignupDTO {
 	private int mb_zip;				// 회원 우편번호
 	private String mb_addr;			// 회원 기본주소
 	private String mb_addr2;		// 회원 상세주소
-	private int mb_birth;			// 회원 생년월일
+	private String mb_birth;		// 회원 생년월일
 	
 	// 초기값 설정
 	private int mb_level = 1;		// 회원 레벨
 	private int mb_point = 500;		// 회원 포인트
+	private String mb_login_method = "internal";
 }

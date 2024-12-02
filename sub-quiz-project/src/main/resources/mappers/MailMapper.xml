@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.boot.dao.MailDAO">
+	<insert id="insertMailCode">
+		INSERT INTO EMAIL_VERIFICATION(MB_EMAIL, EVC_CODE)VALUES
+		(#{mb_email}, #{code})
+	</insert>
+	<select id="selectMailCode" resultType="EmailVerificationVO">
+		SELECT *
+		FROM
+			EMAIL_VERIFICATION
+		WHERE
+			MB_EMAIL = #{mb_email}
+	</select>
+	<delete id="deleteMailCode">
+		DELETE FROM EMAIL_VERIFICATION WHERE MB_EMAIL = #{mb_email}
+	</delete>
+</mapper>

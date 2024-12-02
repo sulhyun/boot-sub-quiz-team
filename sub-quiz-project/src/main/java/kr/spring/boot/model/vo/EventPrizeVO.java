@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class Event_prizeVO {
+public class EventPrizeVO {
 
 	private int ep_num;			// 이벤트 경품 기본키
 	private String ep_prize;	// 당첨 경품

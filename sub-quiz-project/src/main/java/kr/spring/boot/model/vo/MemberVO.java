@@ -19,7 +19,7 @@ public class MemberVO {
 	private int mb_zip;				// 회원 우편번호
 	private String mb_addr;			// 회원 기본주소
 	private String mb_addr2;		// 회원 상세주소
-	private int mb_birth;			// 회원 생년월일
+	private String mb_birth;		// 회원 생년월일
 	private int mb_level;			// 회원 레벨
 	private Date mb_datetime;		// 회원 가입일
 	private Date mb_edit_date;		// 회원	수정일
@@ -27,6 +27,7 @@ public class MemberVO {
 	private String mb_cookie;		// 회원 쿠키
 	private String mb_cookie_limit;	// 회원 쿠키만료
 	private int mb_point;			// 회원 포인트
+	private String mb_login_method;
 	
 	public String getMb_auth() {
 		String auth = "GUEST";
