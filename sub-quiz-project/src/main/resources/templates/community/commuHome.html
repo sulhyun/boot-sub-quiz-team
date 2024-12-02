@@ -1,33 +1,25 @@
 <!DOCTYPE html>
 <html 
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}" >
 <head>
     <meta charset="UTF-8">
     <title>커뮤니티</title>
     <link rel="stylesheet" href="/css/style.css">
    
     <style>
-   body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
 
 .board-container {
-    width: 95%; /* 화면 폭을 더 사용 */
-    max-width: 1200px; /* 최대 너비 제한 */
+    width: 1350px;
     margin: 20px auto; /* 화면 중앙 정렬, 상하 간격 추가 */
-    background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
 
-header {
-    background-color: #3b5998;
+.co-header {
+    background-color: #096c8a;
     color: white;
     padding: 20px;
     text-align: center;
@@ -41,14 +33,13 @@ header {
 .board-nav {
     display: flex;
     justify-content: space-around;
-    background-color: #f8f8f8;
     border-bottom: 2px solid #eee;
     padding: 10px 0;
 }
 
 .board-nav a {
     text-decoration: none;
-    color: #3b5998;
+    color: #096c8a;
     font-size: 16px;
     font-weight: bold;
     padding: 10px 20px;
@@ -57,7 +48,7 @@ header {
 }
 
 .board-nav a:hover {
-    background-color: #3b5998;
+    background-color: #096c8a;
     color: white;
 }
 
@@ -93,7 +84,7 @@ header {
 }
 
 .board-table a {
-    color: #3b5998;
+    color: #096c8a;;
     font-weight: bold;
     text-decoration: none;
 }
@@ -103,23 +94,21 @@ header {
     color: #ff4500;
 }
 
-footer {
+.co-footer {
     text-align: center;
     font-size: 12px;
     color: #aaa;
     padding: 10px 0;
-    border-top: 1px solid #ddd;
-    background-color: #f8f8f8;
 }
 
     </style>
 </head>
 <body>
     <div layout:fragment="content" class="board-container">
-        <header>
+        <div class="co-header">
             <h1 class="board-title">커뮤니티</h1>
-        </header>
-        <main>
+        </div>
+        <div>
             <nav class="board-nav">
                 <a href="/board/popular">인기글</a>
                 <a href="/board/recent">최신글</a>
@@ -153,10 +142,10 @@ footer {
                     </tr>
                 </tbody>
             </table>
-        </main>
-        <footer>
-            &copy; 2024 커뮤니티. All rights reserved.
-        </footer>
+        </div>
+        <div class="co-footer">
+            &copy; 커뮤니티. All rights reserved.
+        </div>
     </div>
 </body>
 </html>
