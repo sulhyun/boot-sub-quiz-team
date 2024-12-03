@@ -3,7 +3,7 @@
 
 <mapper namespace="kr.spring.boot.dao.CoummuDAO">
 
-	<select id="CoummuSelect">
+	<select id="CommuSelect">
 		SELECT * , 
 				post.po_date, 
         		post.po_view, 

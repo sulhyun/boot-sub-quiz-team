@@ -5,17 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.spring.boot.dao.CoummuDAO;
+import kr.spring.boot.dao.CommuDAO;
 import kr.spring.boot.model.vo.CommunityVO;
 
 @Service
-public class CoummuService {
+public class CommuService {
 
 	@Autowired
-	private CoummuDAO coummuDAO;
+	private CommuDAO commuDAO;
 	
 	public List<CommunityVO> getAllcoummu() {
-		return coummuDAO.CoummuSelect();
+		return commuDAO.CommuSelect();
 	}
 
 }

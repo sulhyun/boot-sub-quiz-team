@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.spring.boot.model.vo.CommunityVO;
-import kr.spring.boot.service.CoummuService;
+import kr.spring.boot.service.CommuService;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -18,13 +18,23 @@ import lombok.AllArgsConstructor;
 public class CommunityController {
 
 	@Autowired
-	private CoummuService coummuService;
+	private CommuService commuService;
 	
 	// 커뮤니티 리스트업 
 	@GetMapping("/commuHome")
 	public String commuList(Model model) {
-		List<CommunityVO> coummu = coummuService.getAllcoummu();
-		model.addAttribute("coummu", coummu);
+		List<CommunityVO> commu = commuService.getAllcoummu();
+		model.addAttribute("commu", commu);
 		return "/community/commuHome";		
 	}
+	
+	// 커뮤니티 게시글 정보 리스트업 
+	@GetMapping("/commuDetail")
+	public String detailList(Model model) {
+		//List<CommunityVO> commudetail = commuService.getAllcoummu();
+		//model.addAttribute("commudetail", commudetail);
+		return "/community/commuDetail";		
+	}
+	
+	
 }

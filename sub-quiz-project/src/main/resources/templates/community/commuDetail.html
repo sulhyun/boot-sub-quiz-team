@@ -2,139 +2,86 @@
 <html 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/layout.html}" >
+	layout:decorate="~{layout/layout.html}">
 <head>
     <meta charset="UTF-8">
-    <title>커뮤니티</title>
+    <title>게시글 보기</title>
     <link rel="stylesheet" href="/css/style.css">
-   
+
     <style>
+        .post-container {
+            width: 800px;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #fff;
+        }
 
-.board-container {
-    width: 1350px;
-    margin: 20px auto; /* 화면 중앙 정렬, 상하 간격 추가 */
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
+        .post-header {
+            background-color: #096c8a;
+            color: white;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+        }
 
-.co-header {
-    background-color: #096c8a;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
+        .post-title {
+            font-size: 24px;
+            margin: 0;
+        }
 
-.board-title {
-    font-size: 28px;
-    letter-spacing: 1px;
-}
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #ccc;
+            margin: 10px 0 20px;
+        }
 
-.board-nav {
-    display: flex;
-    justify-content: space-around;
-    border-bottom: 2px solid #eee;
-    padding: 10px 0;
-}
+        .post-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
 
-.board-nav a {
-    text-decoration: none;
-    color: #096c8a;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 4px;
-    transition: background-color 0.3s, color 0.3s;
-}
+        .post-footer {
+            text-align: right;
+            margin-top: 20px;
+        }
 
-.board-nav a:hover {
-    background-color: #096c8a;
-    color: white;
-}
+        .post-footer a {
+            text-decoration: none;
+            color: #096c8a;
+            font-weight: bold;
+            border: 1px solid #096c8a;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-.board-table {
-    width: 100%; /* 전체 폭 사용 */
-    border-collapse: collapse;
-}
-
-.board-table th, .board-table td {
-    padding: 15px;
-    text-align: center;
-}
-
-.board-table th {
-    background-color: #f1f1f1;
-    font-size: 16px;
-    font-weight: bold;
-    border-bottom: 2px solid #ddd;
-}
-
-.board-table tbody tr {
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.3s;
-}
-
-.board-table tbody tr:hover {
-    background-color: #f9f9f9;
-}
-
-.board-table tbody td {
-    font-size: 14px;
-    color: #555;
-}
-
-.board-table a {
-    color: #096c8a;;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.board-table a:hover {
-    text-decoration: underline;
-    color: #ff4500;
-}
-
-.co-footer {
-    text-align: center;
-    font-size: 12px;
-    color: #aaa;
-    padding: 10px 0;
-}
-
+        .post-footer a:hover {
+            background-color: #096c8a;
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <div layout:fragment="content" class="board-container">
-        <div class="co-header">
-            <h1 class="board-title">커뮤니티</h1>
+    <div layout:fragment="content" class="post-container">
+        <div class="post-header">
+            <h1 class="post-title" th:text="${post.po_title}">게시글 제목</h1>
         </div>
-        <div>
-            <nav class="board-nav">
-                <a href="/board/popular">인기글</a>
-                <a href="/board/recent">최신글</a>
-                <a href="/board/notice">정보글</a>
-                <a href="/board/qna">질문답변</a>
-                <a href="/board/qna">다른 커뮤로</a>
-            </nav>
-            <table class="board-table">
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>커뮤니티</th>
-                        <th>작성자</th>
-                        <th>날짜</th>
-                        <th>조회수</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    	<tr th:each="coummu : ${coummu}">
-							<td th:text="${coummu.co_num}"></td>
-							<td th:text="${coummu.co_name}"></td>
-                </tbody>
-            </table>
+        <div class="post-meta">
+            <span th:text="'작성자: ' + ${post.mb_id}">작성자 정보</span>
+            <span th:text="'날짜: ' + ${#dates.format(post.po_date, 'yyyy-MM-dd HH:mm')}">작성 날짜</span>
+            <span th:text="'조회수: ' + ${post.po_view}">조회수 정보</span>
         </div>
-        <div class="co-footer">
-            &copy; 커뮤니티. All rights reserved.
+        <div class="post-content" th:text="${post.po_content}">
+            게시글 내용이 여기에 표시됩니다.
+        </div>
+        <div class="post-footer">
+            <a href="/board/community">목록으로 돌아가기</a>
         </div>
     </div>
 </body>
