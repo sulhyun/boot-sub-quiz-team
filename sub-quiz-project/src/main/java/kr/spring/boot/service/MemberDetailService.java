@@ -19,9 +19,6 @@ public class MemberDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		MemberVO member = memberDao.selectMember(username);
-		if (member == null) {
-			throw new UsernameNotFoundException("");
-		}
 		return new CustomUser(member);
 	}
 
