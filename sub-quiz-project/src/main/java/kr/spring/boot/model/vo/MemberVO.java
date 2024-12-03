@@ -23,7 +23,7 @@ public class MemberVO {
 	private int mb_level;			// 회원 레벨
 	private Date mb_datetime;		// 회원 가입일
 	private Date mb_edit_date;		// 회원	수정일
-	private Date amb_out_date;		// 회원 탈퇴일
+	private Date mb_out_date;		// 회원 탈퇴일
 	private String mb_cookie;		// 회원 쿠키
 	private String mb_cookie_limit;	// 회원 쿠키만료
 	private int mb_point;			// 회원 포인트
