@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.MemberDAO;
+import kr.spring.boot.model.dto.KakaoUserInfoDTO;
 import kr.spring.boot.model.dto.LoginDTO;
 import kr.spring.boot.model.dto.SignupDTO;
 import kr.spring.boot.model.vo.MemberVO;
@@ -78,5 +79,24 @@ public class MemberServiceImp implements MemberService {
 		}
 		return null;
 	}
+
+	@Override
+	public MemberVO kakaoSignup(KakaoUserInfoDTO userInfo) {
+		if(userInfo == null) {
+			return null;
+		}
+		MemberVO user = new MemberVO();
+		user.setMb_id(String.valueOf(userInfo.getId()));
+		user.setMb_email(userInfo.getKakaoAccount().getEmail());
+		user.setMb_nick(userInfo.getKakaoAccount().getProfile().getNickName());
+		user.setMb_level(1);
+		user.setMb_point(500);
+		user.setMb_login_method("kakao");
+		boolean res = memberDao.socialSignup(user);
+		if(res) {
+			return user;
+		}
+		return null;
+	} // 카카오 로그인 첫 회원이면 자동 회원가입
 
 }
