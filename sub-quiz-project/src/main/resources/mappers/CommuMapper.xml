@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.spring.boot.dao.CoummuDAO">
+
+	<select id="CoummuSelect">
+		SELECT * , 
+				post.po_date, 
+        		post.po_view, 
+        		post.mb_id
+			FROM community
+		LEFT JOIN 
+        post 
+    ON 
+        community.co_num = post.co_num
+	</select>
+</mapper>
