@@ -1,5 +1,7 @@
 package kr.spring.boot.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,20 +10,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import kr.spring.boot.model.dto.LoginDTO;
 import kr.spring.boot.model.dto.SignupDTO;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.service.MemberService;
-import lombok.AllArgsConstructor;
 
 @Controller
-@AllArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
-
+	
+	@Autowired
 	private MemberService memberService;
+	
+    @Value("${kakao.client_id}")
+    private String client_id;
+
+    @Value("${kakao.redirect_uri}")
+    private String redirect_uri;
 	
 	@GetMapping("/signup")
 	public String signup() {
@@ -49,7 +55,10 @@ public class MemberController {
 	} // 회원가입
 	
 	@GetMapping("/login")
-	public String login() {
+	public String login(Model model) {
+		String kakao_location = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+client_id+"&redirect_uri="+redirect_uri;
+		
+		model.addAttribute("kakao_location", kakao_location);
 		return "/member/login";
 	}
 	
