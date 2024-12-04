@@ -1,8 +1,7 @@
 package kr.spring.boot.controller;
 
-<<<<<<< Updated upstream
-import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,20 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.spring.boot.model.vo.EventVO;
 import kr.spring.boot.service.EventService;
-=======
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.ui.Model;
-
->>>>>>> Stashed changes
 import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping("/event")
 public class EventController {
-<<<<<<< Updated upstream
 	
 	@Autowired
 	private EventService eventService;
@@ -53,13 +44,4 @@ public class EventController {
         }        
         return "redirect:/event/eventpage";
 	}
-
-=======
-
-	@GetMapping("/eventpage")
-	public String event(Model model){
-		return null;
-	}
-	
->>>>>>> Stashed changes
 }
