@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.spring.boot.dao.CoummuDAO">
+<mapper namespace="kr.spring.boot.dao.CommuDAO">
 
-	<select id="CommuSelect">
+	<select id="commuSelect">
 		SELECT * , 
 				post.po_date, 
         		post.po_view, 
@@ -14,4 +14,16 @@
     ON 
         community.co_num = post.co_num
 	</select>
+
+	<select id="detailSelect">
+		SELECT *,
+				 comment.cm_num,
+				 comment.cm_content
+		FROM post
+		LEFT JOIN comment
+		ON post.po_num = comment.cm_num
+		WHERE post.co_num = 1
+
+	</select>
+	
 </mapper>

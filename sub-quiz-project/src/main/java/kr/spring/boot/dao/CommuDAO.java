@@ -7,5 +7,7 @@ import kr.spring.boot.model.vo.CommunityVO;
 public interface CommuDAO {
 
 
-	List<CommunityVO> CommuSelect();
+	List<CommunityVO> commuSelect();
+
+	List<CommunityVO> detailSelect();
 }

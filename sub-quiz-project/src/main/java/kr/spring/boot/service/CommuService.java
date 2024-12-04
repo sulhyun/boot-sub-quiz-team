@@ -15,7 +15,11 @@ public class CommuService {
 	private CommuDAO commuDAO;
 	
 	public List<CommunityVO> getAllcoummu() {
-		return commuDAO.CommuSelect();
+		return commuDAO.commuSelect();
+	}
+
+	public List<CommunityVO> getAllDetail() {
+		return commuDAO.detailSelect();
 	}
 
 }

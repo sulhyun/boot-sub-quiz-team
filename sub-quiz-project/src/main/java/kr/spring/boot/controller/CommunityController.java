@@ -31,8 +31,9 @@ public class CommunityController {
 	// 커뮤니티 게시글 정보 리스트업 
 	@GetMapping("/commuDetail")
 	public String detailList(Model model) {
-		//List<CommunityVO> commudetail = commuService.getAllcoummu();
-		//model.addAttribute("commudetail", commudetail);
+		List<CommunityVO> commudetail = commuService.getAllDetail();
+		model.addAttribute("commudetail", commudetail);
+		System.out.println(commudetail);
 		return "/community/commuDetail";		
 	}
 	
