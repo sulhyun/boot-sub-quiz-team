@@ -24,6 +24,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		System.out.println("CustomAuthenticationProvider 작동");
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
 		MemberVO member = memberDao.selectMember(username);
