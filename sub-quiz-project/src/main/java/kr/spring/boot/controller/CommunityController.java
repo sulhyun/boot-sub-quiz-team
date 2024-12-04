@@ -21,11 +21,11 @@ public class CommunityController {
 	private CommuService commuService;
 	
 	// 커뮤니티 리스트업 
-	@GetMapping("/commuHome")
+	@GetMapping("/commuPage")
 	public String commuList(Model model) {
 		List<CommunityVO> commu = commuService.getAllcoummu();
 		model.addAttribute("commu", commu);
-		return "/community/commuHome";		
+		return "/community/commuPage";		
 	}
 	
 	// 커뮤니티 게시글 정보 리스트업 
@@ -37,5 +37,12 @@ public class CommunityController {
 		return "/community/commuDetail";		
 	}
 	
+	// 커뮤홈 - 카테고리 리스트업 
+	@GetMapping("/commuHome")
+	public String commuLisst(Model model) {
+		List<CommunityVO> commu = commuService.getAllcoummu();
+		model.addAttribute("commu", commu);
+		return "/community/commuHome";		
+	}
 	
 }
