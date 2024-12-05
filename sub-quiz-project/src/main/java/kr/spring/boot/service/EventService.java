@@ -1,5 +1,7 @@
 package kr.spring.boot.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,11 @@ public class EventService {
 		eventDAO.evtaddpage(event);
 		return true;
 	}
+
+	public List<EventVO> getevent() {
+		return eventDAO.selectEvent();
+	}
 	
-	
+
 	
 }
