@@ -23,11 +23,11 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-    @Value("${kakao.client_id}")
-    private String client_id;
-
-    @Value("${kakao.redirect_uri}")
-    private String redirect_uri;
+	/*
+	 * @Value("${kakao.client_id}") private String client_id;
+	 * 
+	 * @Value("${kakao.redirect_uri}") private String redirect_uri;
+	 */
 	
 	@GetMapping("/signup")
 	public String signup() {
@@ -56,9 +56,9 @@ public class MemberController {
 	
 	@GetMapping("/login")
 	public String login(Model model) {
-		String kakao_location = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+client_id+"&redirect_uri="+redirect_uri;
+		//String kakao_location = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+client_id+"&redirect_uri="+redirect_uri;
 		
-		model.addAttribute("kakao_location", kakao_location);
+		//model.addAttribute("kakao_location", kakao_location);
 		return "/member/login";
 	}
 	
