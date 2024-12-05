@@ -2,6 +2,8 @@ package kr.spring.boot.model.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,8 +17,11 @@ public class EventVO {
 	private int ev_start_level;	// 참여가능 회원 시작 레벨
 	private int ev_end_level;	// 참여가능 회원 끝 레벨
 	private int ev_point;		// 이벤트 참여 비용(포인트)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date ev_datetime;	// 이벤트 등록일
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date ev_start;		// 이벤트 시작일
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date ev_end;		// 이벤트 종료일
 	private String ev_status;	// 이벤트 진행 여부
 	private int ev_cnt;			// 몇번까지 이벤트 참여 가능한지?

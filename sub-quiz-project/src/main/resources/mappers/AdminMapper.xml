@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.boot.dao.AdminDAO">
+
+	<select id="selectQuizCategories" resultType="QuizTypeVO">
+	    SELECT qt_num AS qt_num, qt_name AS qt_name FROM quiz_type ORDER BY qt_num DESC
+	</select>
+	
+	<insert id="insertCategory" parameterType="QuizTypeVO">
+	    INSERT INTO quiz_Type (qt_name)
+	    VALUES (#{qt_name})
+	</insert>
+	
+	<delete id="deleteQuizCategory">
+    	DELETE FROM quiz_type WHERE qt_num = #{qt_num}
+	</delete>
+	
+	<update id="updateQuizCategory" parameterType="QuizTypeVO">
+	    UPDATE quiz_type
+	    SET qt_name = #{qt_name}
+	    WHERE qt_num = #{qt_num}
+	</update>
+
+	<select id="selectQuizCategoryById" resultType="QuizTypeVO">
+	    SELECT qt_num AS qtNum, qt_name AS qtName
+	    FROM quiz_type
+	    WHERE qt_num = #{qt_num}
+	</select>
+	
+	<select id="getChoiceQuizListByCategory" resultType="QuizChoiceVO">
+        SELECT * 
+
+        FROM  quiz_choice
+
+        WHERE qt_num = #{qtNum}
+   	</select>
+    
+    <select id="getSubjectiveQuizListByCategory" resultType="QuizSubjectiveVO">
+        SELECT * 
+        FROM quiz_subjective
+        WHERE qt_num = #{qtNum}
+    </select>
+    
+</mapper>
