@@ -4,18 +4,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
+import kr.spring.boot.handler.LoginFailHandler;
 import kr.spring.boot.model.util.UserRole;
+import lombok.AllArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class SecurityConfig {
 	
 	@Bean
@@ -27,13 +27,14 @@ public class SecurityConfig {
                 .anyRequest().permitAll()  												// 그 외 요청은 인증 필요
             )
             .formLogin((form) -> form
-                //.loginPage("/login")  		// 커스텀 로그인 페이지 설정
-                .permitAll()          			// 로그인은 모두 접근 가능
-                .loginProcessingUrl("/login")	// 로그인 요청을 처리할 URL을 설정
-                .defaultSuccessUrl("/")			// 로그인 성공 후 리다이렉트할 기본 URL
+                .loginPage("/member/login")  				// 커스텀 로그인 페이지 설정
+                .permitAll()          						// 로그인은 모두 접근 가능
+                .loginProcessingUrl("/member/login")		// 로그인 요청을 처리할 URL을 설정
+                .failureHandler(new LoginFailHandler())		// 로그인 실패시 실행될 핸들러
+                .defaultSuccessUrl("/")						// 로그인 성공 후 리다이렉트할 기본 URL
             )
             .logout((logout) -> logout
-            		.logoutUrl("/logout")			// 로그아웃 요청을 처리할 URL을 설정
+            		.logoutUrl("/member/logout")	// 로그아웃 요청을 처리할 URL을 설정
             		.logoutSuccessUrl("/")			// 로그아웃 성공 후 리다이렉트할 기본 URL
             		.clearAuthentication(true)		// 로그아웃 시 인증 정보 제거
             		.invalidateHttpSession(true)	// 로그아웃 시 세션 무효화
@@ -46,13 +47,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
     
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin123"))
-                .authorities(UserRole.ADMIN.name())
-                .build(); 
-        return new InMemoryUserDetailsManager(admin);
-    }
 }

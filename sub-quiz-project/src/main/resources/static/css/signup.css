@@ -1,0 +1,10 @@
+.join-wrapper{width: 600px; margin: 60px auto;padding: 50px;border: 1px solid #fff;border-radius: 8px;box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);}
+.logo-text{font-size: 35px;}
+.title-box{margin-bottom: 30px;}
+.email-text{font-size: 17px;line-height: 38px;}
+.zip-num{width: 50%; display: inline;}
+.zip-find{margin-bottom: 5px;}
+#timer{color:red; margin-top: 10px;}
+button[type="submit"]:hover{color: white;}
+input[type="button"]:hover{color: white;}
+button[type="button"]:hover{color: white;}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.boot.dao.EventDAO">
+<insert id="evtaddpage">
+    INSERT INTO event (
+        ev_title, ev_content, ev_start_level, ev_end_level, 
+        ev_point, ev_start, ev_end, ev_cnt, ev_datetime
+    ) VALUES (
+        #{ev_title}, #{ev_content}, #{ev_start_level}, #{ev_end_level}, 
+        #{ev_point}, #{ev_start}, #{ev_end}, #{ev_cnt}, NOW()
+    )
+</insert>
+</mapper>

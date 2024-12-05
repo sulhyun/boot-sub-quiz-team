@@ -5,24 +5,14 @@
 	layout:decorate="~{layout/layout.html}">
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
-	<style type="text/css">
-		.join-wrapper{width: 600px; margin: auto;padding: 0 20px;margin-bottom: 20px;margin-top: 60px;}
-		.title-box{margin-bottom: 40px;}
-		button[type="submit"]:hover{color: white;}
-		input[type="button"]:hover{color: white;}
-		button[type="button"]:hover{color: white;}
-		.email-text{font-size: 20px;}
-		.zip-num{width: 50%; display: inline;}
-		.zip-find{margin-bottom: 5px;}
-		#timer{color:red; margin-top: 10px;}
-	</style>
+<title>퀴즈Q : 회원가입</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/signup.css}">
 </head>
 <body>
 	<main layout:fragment="content">
 		<div class="join-wrapper">
 			<div class="title-box">
-				<h2>회원가입</h2>
+				<a href="/" class="logo-text">퀴즈Q</a>
 				<p>가입을 통해 다양한 서비스를 경험하세요!!</p>
 			</div>
 			<form method="post" id="form" action="/member/signup">
@@ -36,6 +26,7 @@
 						</div>
 					</div>
 				</div>
+				<input type="hidden" id="id-check" value="n">
 				<div class="form-group">
 					<label for="pw"><b>비밀번호</b></label>
 					<span class="error-message text-danger" id="error-pw"></span>
@@ -58,13 +49,13 @@
 				</div>
 				<div class="form-group">
 					<label for="ph"><b>전화번호</b></label>
-					<span class="error-message text-danger" id="error-ph"></span>
-					<input type="text" class="form-control" id="ph" name="mb_ph" oninput="autoHyphen(this)" placeholder="휴대폰 번호 입력 ('-'제외 11자리)">
+					<span class="error-message text-danger" id="error-hp"></span>
+					<input type="text" class="form-control" id="hp" name="mb_hp" oninput="autoHyphen(this)" placeholder="휴대폰 번호 입력 ('-'제외 11자리)">
 				</div>
 				<div class="form-group">
 					<label for="email"><b>이메일</b></label>
 					<div class="input-group">
-						<input type="text" class="form-control" id="email" placeholder="이메일 입력">
+						<input type="text" class="form-control" id="email-input" placeholder="이메일 입력">
 						<span class="email-text">@</span>
 				    	<input type="text" class="form-control mr-2" id="email-domain" placeholder="직접 입력">
 					    <select class="form-select" id="domain-list">
@@ -76,8 +67,11 @@
 						</select>
 					</div>
 				</div>
+				<input type="hidden" id="email-check" value="n">
+				<input type="hidden" id="email" name="mb_email">
 				<input type="button" class="btn btn-outline-info col-12" id="email-code" value="이메일 인증">
-				<div id="timer">타이머</div>
+				<div id="timer"></div>
+				<div id="code-input"></div>
 				<div class="form-group">
 				    <label for="zip_btn"><b>주소</b></label>
 				    <br>
@@ -101,15 +95,20 @@
 						</select>
 					</div>		
 				</div>
+				<input type="hidden" id="birth" name="mb_birth">
 				<button type="submit" class="btn btn-outline-info col-12">회원가입</button>
 			</form>
 		</div>
 		<script type="text/javascript">
 			const autoHyphen = (target) => {
-				target.value = target.value
-					.replace(/[^0-9]/g, '')
-					.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
-			} // 전화번호 하이픈 자동 생성
+			    let hp = target.value.replace(/[^0-9]/g, '');
+			    if (hp.length > 11) {
+			        hp = hp.substring(0, 11);
+			    }
+			    target.value = hp
+			        .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+			        .replace(/(\-{1,2})$/g, "");
+			}; // 전화번호 하이픈 자동 생성
 			
 			document.getElementById('domain-list').addEventListener('change', function () {
 				const domainInput = document.getElementById('email-domain');
@@ -132,10 +131,8 @@
 				let isYear = false;
 				let isMonth = false;
 			
-				// 현재 년도 가져오기
 				const currentYear = new Date().getFullYear();
 			
-				// 출생 연도 로드
 				birthYear.on('focus', function () {
 					if (!isYear) {
 						isYear = true;
@@ -146,7 +143,6 @@
 					}
 				});
 			
-				// 출생 월 로드
 				birthMonth.on('focus', function () {
 					if (!isMonth) {
 						isMonth = true;
@@ -157,20 +153,17 @@
 					}
 				});
 			
- 				// 출생 일 업데이트 (년도와 월에 따라)
 				function updateDays() {
 					const selectedYear = parseInt(birthYear.val());
 					const selectedMonth = parseInt(birthMonth.val());
 			
-					// 월과 연도가 선택되지 않았을 경우 초기화
 					if (!selectedYear || !selectedMonth) {
 						birthDay.html('<option value="">일</option>').prop('disabled', true);
 						return;
 					}
 			
-					// 해당 월의 최대 일수 계산
 					const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
-					birthDay.html('<option value="">일</option>'); // 기존 옵션 초기화
+					birthDay.html('<option value="">일</option>');
 			
 					for (let i = 1; i <= daysInMonth; i++) {
 						const dayOption = $('<option>').val(i).text(i);
@@ -181,10 +174,17 @@
  				
  				birthDay.prop('disabled', true);
 			
-				// 년도나 월 선택 시 일 업데이트
 				birthYear.on('change', updateDays);
 				birthMonth.on('change', updateDays);
 			}); // 생년월일 선택
+			
+			$('#id').change(inputId);
+			function inputId() {
+				let errId = $('#error-id');
+				if(errId.text() != '사용 가능한 아이디입니다.') {
+					$('#id-check').val('n');
+				}
+			} // 사용자가 아이디를 지우고 다시 입력하면 'n'으로 업데이트
 			
 			function checkId(){
 				const mb_id = $('#id').val().trim();
@@ -200,8 +200,11 @@
 					success : function (data){
 						if(data) {
 							errMsg.text("사용 가능한 아이디입니다.");
+							$('#id-check').val('y');
 						}else{
+							$('#error-id').removeClass('text-success').addClass('text-danger');
 							errMsg.text("이미 사용중인 아이디입니다.");
+							$('#id-check').val('n');
 						}
 					}, 
 					error : function(jqXHR, textStatus, errorThrown){
@@ -213,41 +216,141 @@
 			$('#email-code').click(emailRegex);
 			function emailRegex(){
 				const pattern = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/;
-				const email = $('#email').val();
+				const email = $('#email-input').val();
 				const domain = $('#email-domain').val();
-				const mail = email + '@' + domain;
-				if(pattern.test(mail) == false) {
+				const mb_email = email + '@' + domain;
+				if(pattern.test(mb_email) == false) {
 					alert('이메일 형식이 일치하지 않습니다.');
 					return;
 				}else{
-					$('#email').attr('readonly', true);
+					$('#email-input').attr('readonly', true);
 					$('#email-domain').attr('readonly', true);
-					getEmailCode(mail);
+					$('#domain-list').attr('disabled', true);
+					getEmailCode(mb_email);
 					alert("이메일을 전송하였습니다. 잠시만 기다려주세요.");
 					return;
 				}
-			}
+			} // 이메일 정규표현식 확인 및 사용자한테 인증코드 보내기
 			
-			function getEmailCode(mail){			
+			function getEmailCode(mb_email){			
 				$.ajax({
 					async : true,
 					url : '/mail/setCode',
 					type : 'post',
-					data : {evc_email : mail},
+					data : {mb_email : mb_email},
 					success: function(data){
-			            $('#email-code').after('<input type="button" id="codeCheck" value="이메일 코드 확인" >');
-			            $('#email-code').after('<input type="number" id="code"  placeholder="code">');
-			            $('#email-code').attr("disabled", true);
-			            $('#email-code').css("background-color", "gray");
+						if(data == true) {
+							displayInputCode();
+				            $('#email-code').attr("disabled", true);
+				            $('#email-code').removeClass('btn-outline-info').addClass('btn-outline-dark');
+				            $('#email-code').css("background-color", "#d3d3d3");
+				            startTimer(300, mb_email);
+						}
 					},
 					error : function(jqXHR, textStatus, errorThrown){
 						console.log(jqXHR);
 						alert("이메일 전송 실패\n문제가 계속된다면 관리자한테 문의하세요.");
-						$('#email').attr('readonly', false);
+						$('#email-input').attr('readonly', false);
 						$('#email-domain').attr('readonly', false);
+						$('#domain-list').attr('disabled', false);
 					}
-				})				
-			}
+				});	
+			} // 이메일 인증 코드 보내는 Ajax
+			
+			function displayInputCode(){
+				str = `
+					<div class="input-group">
+						<input type="text" class="form-control" id="code"  placeholder="code">
+						<div class="input-group-append">
+							<input type="button" class="btn btn-outline-info" id="code-check" value="이메일 코드 확인" >
+						</div>
+					</div>
+				`;
+				$('#code-input').html(str);
+			} // 이메일 인증 코드 입력 및 확인 버튼 
+			
+			$(document).on('click', '#code-check', checkEmailCode); // 동적으로 추가된 요소이기 때문에 이벤트 리스너 사용
+			function checkEmailCode() {
+				const email = $('#email-input').val();
+				const domain = $('#email-domain').val();
+				const mb_email = email + '@' + domain;
+				const code = $('#code').val();
+				$.ajax({
+					async : true,
+					url : '/mail/getCode',
+					type : 'post',
+					data : 
+					{
+						mb_email : mb_email,
+						code : code
+					},
+					success: function(data){
+						if(data == true) {
+							$('#code').attr("readonly", true);
+			                $('#code-check').remove();
+			                $('#email-check').val('y');
+			                alert('이메일 인증 성공!!');
+			                clearInterval(timerInterval);
+			                delEmailCode(mb_email);
+						}else{
+							alert('잘못된 코드입니다. 다시 확인해주세요.');
+						}
+					},
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+						alert("이메일 인증 실패\n문제가 계속된다면 관리자한테 문의하세요.");
+					}
+				});
+			} // 사용자가 입력한 코드가 DB에 있는 코드와 같은지 확인
+			
+			function delEmailCode(mb_email) {
+				$.ajax({
+					async : true,
+					url : '/mail/delCode',
+					type : 'post',
+					data : {mb_email : mb_email},
+					success: function(data){
+						console.log(data);	
+					},
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
+			} // 처리가 끝난 인증 코드 삭제
+			
+			var timerInterval;
+			
+			function startTimer(duration, mb_email){
+				let timer = duration, minutes, seconds;
+				timerInterval = setInterval(function(){
+					minutes = parseInt(timer / 60, 10);
+			        seconds = parseInt(timer % 60, 10);
+
+			        minutes = minutes < 10 ? "0" + minutes : minutes;
+			        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+			        $('#timer').text("이메일 전송 완료! 인증 가능 시간 " + minutes + ":" + seconds);
+			        
+			        if(--timer < 0) {
+			        	clearInterval(timerInterval);
+			        	$('#timer').text('인증 시간이 만료되었습니다.');
+			        	console.log(mb_email);
+			        	delEmailCode(mb_email);
+			        	alert("이메일 인증 시간이 만료되었습니다. 다시 시도해 주세요.");
+			        	// 버튼 활성화
+			        	$('#email-code').attr("disabled", false);
+			            $('#email-code').removeClass('btn-outline-dark').addClass('btn-outline-info');
+			            $('#email-code').removeAttr('style');
+			        	// 이메일 입력창 활성화
+			            $('#email-input').attr('readonly', false);
+						$('#email-domain').attr('readonly', false);
+						$('#domain-list').attr('disabled', false);
+						// 인증 코드 필드 제거
+						$('#code').remove();
+						$('#code-check').remove();
+			        }
+				}, 1000);
+			} // 인증 코드 제한 시간
 		</script>
 		
 		<script type="text/javascript">
@@ -270,7 +373,7 @@
 					mb_nick : {
 						required : true
 					},
-					mb_ph : {
+					mb_hp : {
 						required : true,
 					}
 				},
@@ -292,20 +395,47 @@
 					mb_nick : {
 						required : ' 필수 항목입니다.'
 					},
-					mb_ph : {
+					mb_hp : {
 						required : '필수 항목입니다.'
 					}
+					
 				},
 			    errorPlacement: function (error, element) {
-			        var errorId = 'error-' + element.attr('id');
+			        var errorId = 'error-' + $(element).attr('id');
 			        $('#' + errorId).html(error).removeClass("text-success").addClass("text-danger");
 			    },
 			    success: function (label, element) {
 			        var errorId = 'error-' + $(element).attr('id');
 			        $('#' + errorId).html('').removeClass("text-danger").addClass("text-success");
 			    },
-				submitHandler : function(){
-					return true;
+				submitHandler : function(form){
+					let id2 = $('#id-check').val();
+					let email2 = $('#email-check').val();
+					if(id2 != 'y') {
+						alert('아이디 중복검사를 진행해 주세요.');
+						$('#id').focus();
+						return false;
+					}
+					if(email2 != 'y') {
+						alert("이메일 인증을 진해해 주세요.");
+						$('#email-input').focus();
+						return false;
+					}
+					// 이메일
+					const email = $('#email-input').val();
+					const domain = $('#email-domain').val();
+					const mb_email = email + '@' + domain;
+					
+					// 생년월일
+					const birthYear = $('#birth-year').val();
+					const birthMonth = $('#birth-month').val().padStart(2, '0');
+					const birthDay = $('#birth-day').val().padStart(2, '0');
+					const mb_birth = birthYear + '-' + birthMonth + '-' + birthDay;
+					
+					// 히든 요소의 value값에 가공된 변수들 넣어주기
+					$('#email').val(mb_email);
+					$('#birth').val(mb_birth);
+					form.submit();
 				}
 			});
 			$.validator.addMethod('regex', function(value, element, regex){
@@ -313,7 +443,7 @@
 				return this.optional(element) || re.test(value);
 			}, "정규표현식을 확인하세요.");
 		</script>
-		
+		      		
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	    <script>
 		    function execDaumPostcode() {

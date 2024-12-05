@@ -3,6 +3,16 @@
 <mapper namespace="kr.spring.boot.dao.MailDAO">
 	<insert id="insertMailCode">
 		INSERT INTO EMAIL_VERIFICATION(MB_EMAIL, EVC_CODE)VALUES
-		(#{evc_email}, #{code})
+		(#{mb_email}, #{code})
 	</insert>
+	<select id="selectMailCode" resultType="EmailVerificationVO">
+		SELECT *
+		FROM
+			EMAIL_VERIFICATION
+		WHERE
+			MB_EMAIL = #{mb_email}
+	</select>
+	<delete id="deleteMailCode">
+		DELETE FROM EMAIL_VERIFICATION WHERE MB_EMAIL = #{mb_email}
+	</delete>
 </mapper>

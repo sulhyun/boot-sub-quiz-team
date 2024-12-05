@@ -31,14 +31,15 @@ CREATE TABLE `member` (
 	`mb_zip`	int(11)	NULL,
 	`mb_addr`	varchar(255)	NULL,
 	`mb_addr2`	varchar(255)	NULL,
-	`mb_birth`	int(11)	NULL,
+	`mb_birth`	Date	NULL,
 	`mb_level`	int(11)	NULL,
 	`mb_datetime`	datetime	NULL,
 	`mb_edit_date`	datetime	NULL,
 	`mb_out_date`	datetime	NULL,
 	`mb_cookie`	varchar(255)	NULL,
 	`mb_cookie_limit`	varchar(255)	NULL,
-	`mb_point`	int(11)	NULL
+	`mb_point`	int(11)	NULL,
+	`mb_login_method`	varchar(50)	NULL
 );
 
 CREATE TABLE `comment` (
