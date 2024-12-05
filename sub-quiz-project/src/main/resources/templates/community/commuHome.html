@@ -2,149 +2,93 @@
 <html 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/layout.html}" >
+	layout:decorate="~{layout/layout.html}">
 <head>
     <meta charset="UTF-8">
-    <title>커뮤니티</title>
+    <title>커뮤니티 선택</title>
     <link rel="stylesheet" href="/css/style.css">
-   
+
     <style>
+        .community-select-container {
+            width: 1350px;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
-.board-container {
-    width: 1350px;
-    margin: 20px auto; /* 화면 중앙 정렬, 상하 간격 추가 */
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
+        .cs-header {
+            background-color: #096c8a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
 
-.co-header {
-    background-color: #096c8a;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
+        .cs-title {
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
 
-.board-title {
-    font-size: 28px;
-    letter-spacing: 1px;
-}
+        .community-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
 
-.board-nav {
-    display: flex;
-    justify-content: space-around;
-    border-bottom: 2px solid #eee;
-    padding: 10px 0;
-}
+        .community-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
 
-.board-nav a {
-    text-decoration: none;
-    color: #096c8a;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 4px;
-    transition: background-color 0.3s, color 0.3s;
-}
+        .community-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
 
-.board-nav a:hover {
-    background-color: #096c8a;
-    color: white;
-}
+        .community-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #096c8a;
+            margin-bottom: 10px;
+        }
 
-.board-table {
-    width: 100%; /* 전체 폭 사용 */
-    border-collapse: collapse;
-}
+        .community-meta {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
 
-.board-table th, .board-table td {
-    padding: 15px;
-    text-align: center;
-}
+        .community-link {
+            text-decoration: none;
+            color: white;
+            background-color: #096c8a;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
-.board-table th {
-    background-color: #f1f1f1;
-    font-size: 16px;
-    font-weight: bold;
-    border-bottom: 2px solid #ddd;
-}
-
-.board-table tbody tr {
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.3s;
-}
-
-.board-table tbody tr:hover {
-    background-color: #f9f9f9;
-}
-
-.board-table tbody td {
-    font-size: 14px;
-    color: #555;
-}
-
-.board-table a {
-    color: #096c8a;;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.board-table a:hover {
-    text-decoration: underline;
-    color: #ff4500;
-}
-
-.co-footer {
-    text-align: center;
-    font-size: 12px;
-    color: #aaa;
-    padding: 10px 0;
-}
-
+        .community-link:hover {
+            background-color: #074f68;
+        }
     </style>
 </head>
 <body>
-    <div layout:fragment="content" class="board-container">
-        <div class="co-header">
-            <h1 class="board-title">커뮤니티</h1>
+    <div layout:fragment="content" class="community-select-container">
+        <div class="cs-header">
+            <h1 class="cs-title">커뮤니티 선택</h1>
         </div>
-        <div>
-            <nav class="board-nav">
-                <a href="/board/popular">인기글</a>
-                <a href="/board/recent">최신글</a>
-                <a href="/board/notice">정보글</a>
-                <a href="/board/qna">질문답변</a>
-            </nav>
-            <table class="board-table">
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>날짜</th>
-                        <th>조회수</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="/board/1">첫 번째 글</a></td>
-                        <td>관리자</td>
-                        <td>2024-12-01</td>
-                        <td>123</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td><a href="/board/2">두 번째 글</a></td>
-                        <td>사용자</td>
-                        <td>2024-12-02</td>
-                        <td>98</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="co-footer">
-            &copy; 커뮤니티. All rights reserved.
+        <div class="community-list">
+            <div class="community-item" th:each="commu : ${commu}">
+                <div class="community-name" th:text="${commu.co_name}"></div>
+                <a class="community-link" th:href="@{/community/detail(coName=${commu.co_name})}">
+                    커뮤니티 입장
+                </a>
+            </div>
         </div>
     </div>
 </body>
