@@ -277,14 +277,12 @@ display: block;
                     <ul>
                         <li th:each="list : ${list}">
                         	<a class="event-list--a" href="#">
-	                        	<div>
-	                        	</div>
-	                        		<div>
-		                        		<h3 th:text="${list.ev_title}"></h3>
-	                        		</div>
-	                        		<div>
-		                        		<p th:text="${#dates.format(list.ev_start, 'yyyy-MM-dd') + ' ~ ' + #dates.format(list.ev_end, 'yyyy-MM-dd')}"></p>
-	                        		</div>
+                        		<div>
+	                        		<h3 th:text="${list.ev_title}"></h3>
+                        		</div>
+                        		<div>
+	                        		<p th:text="${#dates.format(list.ev_start, 'yyyy-MM-dd') + ' ~ ' + #dates.format(list.ev_end, 'yyyy-MM-dd')}"></p>
+                        		</div>
                         	</a>
                         </li>
                     </ul>
