@@ -80,7 +80,7 @@ padding: 0;
 			<div class="board">
 				<h2 class="main-title">이벤트 등록</h2>
 				<div class="sub-title">
-					<form action="/event/addevent/eventaddpage" method="post">
+					<form action="/event/addevent/eventaddpage" method="post" id="eventForm">
 					<table>
 					<caption></caption>
 					<colgroup>
@@ -97,11 +97,11 @@ padding: 0;
 							<td><textarea class="board-detail board-content" name="ev_content"></textarea></td>
 						</tr>
 						<tr>
-							<th>참여가능 레벨</th>
+							<th>참여 최소 레벨</th>
 							<td><input type="text" class="board-detail" name="ev_start_level" placeholder="나중에 select로 변경 예정"></td>
 						</tr>
 						<tr>
-							<th></th>
+							<th>참여 최대 레벨</th>
 							<td><input type="text" class="board-detail" name="ev_end_level" placeholder="나중에 select로 변경 예정"></td>
 						</tr>
 						<tr>
@@ -110,11 +110,11 @@ padding: 0;
 						</tr>
 						<tr>
 							<th>시작일</th>
-							<td><input type="text" id="datepicker-start" class="board-detail" name="ev_start"></td>
+							<td><input type="date" id="datepicker-start" class="board-detail" name="ev_start"></td>
 						</tr>
 						<tr>
 							<th>종료일</th>
-							<td><input type="text" id="datepicker-end" class="board-detail" name="ev_end"></td>
+							<td><input type="date" id="datepicker-end" class="board-detail" name="ev_end"></td>
 						</tr>
 						<tr>
 							<th>최대 참여 횟수</th>
@@ -129,31 +129,44 @@ padding: 0;
 		</div>
 		</div>
 	</main>
-	<script>
-   $(function() {
-       $("#datepicker-start, #datepicker-end").datepicker({
-    	   // 옵션 설정
-           dateFormat: 'yy-mm-dd' //달력 날짜 형태
-           ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-           ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
-           ,changeYear: true //option값 년 선택 가능
-           ,changeMonth: true //option값  월 선택 가능                
-           ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-           ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
-           ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-           ,buttonText: "선택" //버튼 호버 텍스트              
-           ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트
-           ,monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 텍스트
-           ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip
-           ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 텍스트
-           ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 Tooltip
-           ,minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-           ,maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-       });                    
-       
-       //초기값을 오늘 날짜로 설정해줘야 합니다.
-       $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
-  	});
+<!-- 데이트피커 설정 -->
+<script>
+  $(function() {
+      $("#datepicker-start, #datepicker-end").datepicker({
+   	   // 옵션 설정
+          dateFormat: 'yy-mm-dd' //달력 날짜 형태
+          ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+          ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
+          ,changeYear: true //option값 년 선택 가능
+          ,changeMonth: true //option값  월 선택 가능                
+          ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+          ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+          ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+          ,buttonText: "선택" //버튼 호버 텍스트              
+          ,yearSuffix: "년" //달력의 년도 부분 뒤 텍스트
+          ,monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 텍스트
+          ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip
+          ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 텍스트
+          ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 Tooltip
+          ,minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+          ,maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+      });                    
+      
+      //초기값을 오늘 날짜로 설정해줘야 합니다.
+      $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
+ 	});
+</script>
+<!-- 종료 날짜를 시작 날짜 이후로 설정하는 js -->
+<script>
+    document.getElementById('eventForm').addEventListener('submit', function(e) {
+        const startDate = new Date(document.getElementById('datepicker-start').value);
+        const endDate = new Date(document.getElementById('datepicker-end').value);
+
+        if (endDate <= startDate) {
+            e.preventDefault();
+            alert('종료 날짜는 시작 날짜 이후여야 합니다.');
+        }
+    });
 </script>
 </body>
 </html>

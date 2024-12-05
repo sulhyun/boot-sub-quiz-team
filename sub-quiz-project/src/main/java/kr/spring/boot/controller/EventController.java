@@ -1,6 +1,8 @@
 package kr.spring.boot.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +24,23 @@ public class EventController {
 	
 	@GetMapping("/eventpage")
 	public String event(Model model) {
-		
-		return null;		
+		List<EventVO> eventVO = eventService.getevent();
+		model.addAttribute("list", eventVO);
+		return "/event/eventpage";		
+	}
+	
+	@GetMapping("/eventpageEnd")
+	public String eventEnd(Model model) {
+		List<EventVO> eventVO = eventService.getevent();
+		model.addAttribute("list", eventVO);
+		return "/event/eventpageEnd";		
+	}
+	
+	@GetMapping("/eventpageWinner")
+	public String eventWinner(Model model) {
+		List<EventVO> eventVO = eventService.getevent();
+		model.addAttribute("list", eventVO);
+		return "/event/eventpageWinner";		
 	}
 	
 	@GetMapping("/addevent")

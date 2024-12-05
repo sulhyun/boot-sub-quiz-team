@@ -29,7 +29,9 @@
 	
 	<select id="getChoiceQuizListByCategory" resultType="QuizChoiceVO">
         SELECT * 
+
         FROM  quiz_choice
+
         WHERE qt_num = #{qtNum}
    	</select>
     
