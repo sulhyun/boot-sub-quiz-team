@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.spring.boot.model.vo.CommunityVO;
+import kr.spring.boot.model.vo.PostVO;
 import kr.spring.boot.service.CommuService;
 import lombok.AllArgsConstructor;
 
@@ -21,9 +23,9 @@ public class CommunityController {
 	private CommuService commuService;
 	
 	// 커뮤니티 리스트업 
-	@GetMapping("/commuPage")
-	public String commuList(Model model) {
-		List<CommunityVO> commu = commuService.getAllcoummu();
+	@GetMapping("/commuPage/{co_num}")
+	public String commuList(Model model, @PathVariable int co_num) {
+		List<PostVO> commu = commuService.getPostList(co_num);
 		model.addAttribute("commu", commu);
 		return "/community/commuPage";		
 	}
@@ -31,9 +33,7 @@ public class CommunityController {
 	// 커뮤니티 게시글 정보 리스트업 
 	@GetMapping("/commuDetail")
 	public String detailList(Model model) {
-		List<CommunityVO> commudetail = commuService.getAllDetail();
-		model.addAttribute("commudetail", commudetail);
-		System.out.println(commudetail);
+
 		return "/community/commuDetail";		
 	}
 	

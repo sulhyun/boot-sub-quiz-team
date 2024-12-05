@@ -85,7 +85,7 @@
         <div class="community-list">
             <div class="community-item" th:each="commu : ${commu}">
                 <div class="community-name" th:text="${commu.co_name}"></div>
-                <a class="community-link" th:href="@{/community/detail(coName=${commu.co_name})}">
+                <a class="community-link" th:href="@{/community/commuPage/{co_num}(co_num=${commu.co_num})}">
                     커뮤니티 입장
                 </a>
             </div>

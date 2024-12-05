@@ -7,19 +7,19 @@ import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.CommuDAO;
 import kr.spring.boot.model.vo.CommunityVO;
+import kr.spring.boot.model.vo.PostVO;
 
 @Service
 public class CommuService {
 
 	@Autowired
-	private CommuDAO commuDAO;
+	private CommuDAO commuDao;
 	
 	public List<CommunityVO> getAllcoummu() {
-		return commuDAO.commuSelect();
+		return commuDao.commuSelect();
 	}
 
-	public List<CommunityVO> getAllDetail() {
-		return commuDAO.detailSelect();
+	public List<PostVO> getPostList(int co_num) {
+		return commuDao.postSelect(co_num);
 	}
-
 }
