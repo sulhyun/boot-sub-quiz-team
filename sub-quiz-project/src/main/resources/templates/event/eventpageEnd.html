@@ -269,20 +269,22 @@ display: block;
                     </div>
                 </div>
                 <div class="tab-item3">
-                    <a href="/event/eventpage" class="tab__item--active">진행중 이벤트</a>
-                    <a href="/event/eventpageEnd" class="tab__item tab__item-border">종료된 이벤트</a>
+                    <a href="/event/eventpage" class="tab__item tab__item-border">진행중 이벤트</a>
+                    <a href="/event/eventpageEnd" class="tab__item--active">종료된 이벤트</a>
                     <a href="/event/eventpageWinner" class="tab__item">당첨자 발표</a>
                 </div>
                 <div class="event-list">
                     <ul>
                         <li th:each="list : ${list}">
                         	<a class="event-list--a" href="#">
-                        		<div>
-	                        		<h3 th:text="${list.ev_title}"></h3>
-                        		</div>
-                        		<div>
-	                        		<p th:text="${#dates.format(list.ev_start, 'yyyy-MM-dd') + ' ~ ' + #dates.format(list.ev_end, 'yyyy-MM-dd')}"></p>
-                        		</div>
+	                        	<div>
+	                        	</div>
+	                        		<div>
+		                        		<h3 th:text="${list.ev_title}"></h3>
+	                        		</div>
+	                        		<div>
+		                        		<p th:text="${#dates.format(list.ev_start, 'yyyy-MM-dd') + ' ~ ' + #dates.format(list.ev_end, 'yyyy-MM-dd')}"></p>
+	                        		</div>
                         	</a>
                         </li>
                     </ul>
