@@ -48,7 +48,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		MemberVO user = memberService.selectMember(id);
 		if(user == null) {
 			user = new MemberVO();
-			user.setMb_email(userInfo.getEmail());               		 
+			user.setMb_email(userInfo.getEmail()); 		 
 			user.setMb_id(userInfo.getProviderId());
 			user.setMb_nick(userInfo.getName()); 
 			user.setMb_level(1);
