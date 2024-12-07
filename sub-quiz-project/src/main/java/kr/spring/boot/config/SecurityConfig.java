@@ -7,16 +7,20 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
+import kr.spring.boot.handler.CustomLogoutHandler;
 import kr.spring.boot.handler.LoginFailHandler;
 import kr.spring.boot.model.util.UserRole;
+import kr.spring.boot.service.CustomOAuth2UserService;
 import lombok.AllArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig {
+	
+	private final CustomOAuth2UserService customOAuth2UserService; // OAuth2 사용자 정보 서비스
+	private final CustomLogoutHandler customLogoutHandler;
 	
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -35,10 +39,19 @@ public class SecurityConfig {
             )
             .logout((logout) -> logout
             		.logoutUrl("/member/logout")	// 로그아웃 요청을 처리할 URL을 설정
+            		.addLogoutHandler(customLogoutHandler)
             		.logoutSuccessUrl("/")			// 로그아웃 성공 후 리다이렉트할 기본 URL
             		.clearAuthentication(true)		// 로그아웃 시 인증 정보 제거
             		.invalidateHttpSession(true)	// 로그아웃 시 세션 무효화
-            		.permitAll());  				// 로그아웃은 모두 접근 가능
+            		.permitAll()					// 로그아웃은 모두 접근 가능
+           )
+           .oauth2Login(oauth2 -> oauth2
+                    .loginPage("/member/login")                   // 소셜 로그인도 동일한 로그인 페이지 사용
+                    .defaultSuccessUrl("/")                       // 소셜 로그인 성공 후 리다이렉트할 기본 URL
+                    .userInfoEndpoint(userInfo -> userInfo
+                        .userService(customOAuth2UserService)     // 사용자 정보를 처리할 서비스
+           )
+        );    
         return http.build();
     }
 

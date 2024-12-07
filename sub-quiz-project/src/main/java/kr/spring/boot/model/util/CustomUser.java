@@ -21,7 +21,7 @@ public class CustomUser extends User {
 	
 	public CustomUser(MemberVO vo) {
 		super(	vo.getMb_id(),
-				vo.getMb_pw() == null ? "" : vo.getMb_pw(),
+				vo.getMb_pw(),
 				Arrays.asList(new SimpleGrantedAuthority(vo.getMb_auth())));
 		this.member = vo;
 	}
