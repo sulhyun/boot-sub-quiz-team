@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import kr.spring.boot.handler.CustomLogoutHandler;
 import kr.spring.boot.handler.LoginFailHandler;
 import kr.spring.boot.model.util.UserRole;
 import kr.spring.boot.service.CustomOAuth2UserService;
@@ -19,6 +20,7 @@ import lombok.AllArgsConstructor;
 public class SecurityConfig {
 	
 	private final CustomOAuth2UserService customOAuth2UserService; // OAuth2 사용자 정보 서비스
+	private final CustomLogoutHandler customLogoutHandler;
 	
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,6 +39,7 @@ public class SecurityConfig {
             )
             .logout((logout) -> logout
             		.logoutUrl("/member/logout")	// 로그아웃 요청을 처리할 URL을 설정
+            		.addLogoutHandler(customLogoutHandler)
             		.logoutSuccessUrl("/")			// 로그아웃 성공 후 리다이렉트할 기본 URL
             		.clearAuthentication(true)		// 로그아웃 시 인증 정보 제거
             		.invalidateHttpSession(true)	// 로그아웃 시 세션 무효화
@@ -47,8 +50,8 @@ public class SecurityConfig {
                     .defaultSuccessUrl("/")                       // 소셜 로그인 성공 후 리다이렉트할 기본 URL
                     .userInfoEndpoint(userInfo -> userInfo
                         .userService(customOAuth2UserService)     // 사용자 정보를 처리할 서비스
-                    )
-                );    
+           )
+        );    
         return http.build();
     }
 

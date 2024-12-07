@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import kr.spring.boot.info.KakaoUserInfo;
+import kr.spring.boot.info.NaverUserInfo;
 import kr.spring.boot.info.OAuth2UserInfo;
 import kr.spring.boot.model.util.OAuth2CustomUser;
 import kr.spring.boot.model.vo.MemberVO;
@@ -33,12 +34,15 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		// DefaultOAuth2UserService를 사용하여 소셜 제공자로부터 사용자 정보를 가져옴
 		OAuth2User oAuth2User = delegate.loadUser(userRequest);
 		Map<String, Object> attributes = oAuth2User.getAttributes();
-		log.info("getAttributes : {}", oAuth2User.getAttributes());
+		log.info("getAttributes : {}", attributes);
 		String provider = userRequest.getClientRegistration().getRegistrationId();
 		OAuth2UserInfo userInfo = null;
 		if (provider.equals("kakao")) {
-				log.info("login : {}", "Kakao Login");
-	            userInfo = new KakaoUserInfo(attributes);
+			log.info("login : {}", "Kakao Login");
+            userInfo = new KakaoUserInfo(attributes);
+	    } else if(provider.equals("naver")) {
+	    	log.info("login : {}", "Naver Login");
+	    	userInfo = new NaverUserInfo(attributes);
 	    }
 		String id = userInfo.getProviderId();
 		MemberVO user = memberService.selectMember(id);

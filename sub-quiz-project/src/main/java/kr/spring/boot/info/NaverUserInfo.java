@@ -7,28 +7,28 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class KakaoUserInfo implements OAuth2UserInfo {
+public class NaverUserInfo implements OAuth2UserInfo {
 
 	private Map<String, Object> attributes;
 	
     @Override
     public String getProvider() {
-        return "kakao";
+        return "naver";
     }
 
     @Override
     public String getProviderId() {
-        return attributes.get("id").toString();
+    	return (String) ((Map) attributes.get("response")).get("id");
     }
 
     @Override
     public String getEmail() {
-        return (String) ((Map) attributes.get("kakao_account")).get("email");
+        return (String) ((Map) attributes.get("response")).get("email");
     }
 
     @Override
     public String getName() {
-        return (String) ((Map) attributes.get("properties")).get("nickname");
+        return (String) ((Map) attributes.get("response")).get("name");
     }
 
 }
