@@ -31,7 +31,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		System.out.println("소셜 로그인 작동");
-		// DefaultOAuth2UserService를 사용하여 소셜 제공자로부터 사용자 정보를 가져옴
 		OAuth2User oAuth2User = delegate.loadUser(userRequest);
 		Map<String, Object> attributes = oAuth2User.getAttributes();
 		log.info("getAttributes : {}", attributes);
