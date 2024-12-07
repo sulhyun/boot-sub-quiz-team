@@ -14,10 +14,12 @@ public class OAuth2CustomUser implements OAuth2User {
 
     private final MemberVO member; 					// 내부 사용자 정보
     private final Map<String, Object> attributes; 	// 소셜 제공자에서 받은 정보
+    private final String accessToken;
 
-    public OAuth2CustomUser(MemberVO member, Map<String, Object> attributes) {
+    public OAuth2CustomUser(MemberVO member, Map<String, Object> attributes, String accessToken) {
         this.member = member;
         this.attributes = attributes;
+        this.accessToken = accessToken;
     }
 	
 	@Override
@@ -34,5 +36,12 @@ public class OAuth2CustomUser implements OAuth2User {
 	public String getName() {
 		return attributes.containsKey("id") ? attributes.get("id").toString() : member.getMb_id();
 	} // 소셜 로그인 사용자의 고유 식별자 반환
+	
+    public String getAccessToken() {
+        return accessToken;
+    } // 엑세스 토큰 반환
 
+    public MemberVO getMember() {
+        return member;
+    } // 내부 사용자 정보를 반환
 }

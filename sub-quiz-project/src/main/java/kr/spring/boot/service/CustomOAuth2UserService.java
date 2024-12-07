@@ -30,12 +30,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-		System.out.println("소셜 로그인 작동");
-		// DefaultOAuth2UserService를 사용하여 소셜 제공자로부터 사용자 정보를 가져옴
+		System.out.println("소셜 로그인 작동 시작");
 		OAuth2User oAuth2User = delegate.loadUser(userRequest);
 		Map<String, Object> attributes = oAuth2User.getAttributes();
 		log.info("getAttributes : {}", attributes);
 		String provider = userRequest.getClientRegistration().getRegistrationId();
+		String accessToken = userRequest.getAccessToken().getTokenValue();
+		log.info("소셜 로그인: {}, AccessToken: {}", provider, accessToken);
 		OAuth2UserInfo userInfo = null;
 		if (provider.equals("kakao")) {
 			log.info("login : {}", "Kakao Login");
@@ -57,7 +58,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             user = memberService.socialSignup(user);     
 		}
 		log.info("MemberVO : {}", user);
-		return new OAuth2CustomUser(user, attributes);
+		System.out.println("소셜 로그인 작동 종료");
+		return new OAuth2CustomUser(user, attributes, accessToken);
 	}
 
 }
