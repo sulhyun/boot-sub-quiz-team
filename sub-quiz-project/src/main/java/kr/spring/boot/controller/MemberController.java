@@ -23,12 +23,6 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	/*
-	 * @Value("${kakao.client_id}") private String client_id;
-	 * 
-	 * @Value("${kakao.redirect_uri}") private String redirect_uri;
-	 */
-	
 	@GetMapping("/signup")
 	public String signup() {
 		return "member/signup";
@@ -56,25 +50,7 @@ public class MemberController {
 	
 	@GetMapping("/login")
 	public String login(Model model) {
-		//String kakao_location = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+client_id+"&redirect_uri="+redirect_uri;
-		
-		//model.addAttribute("kakao_location", kakao_location);
 		return "/member/login";
 	}
 	
-	@PostMapping("/login")
-	public String loginPost(Model model, HttpServletRequest request, LoginDTO user) {
-		MemberVO member = memberService.login(user);
-		if(member == null) {
-			model.addAttribute("msg", "로그인 실패!!");
-			model.addAttribute("url", "/member/login");
-		}else {
-			HttpSession session = request.getSession();
-			session.setAttribute("user", member);
-			model.addAttribute("msg", "로그인 성공!!");
-			model.addAttribute("url", "/");
-		}
-		return "util/msg";
-	} // MemberDetailService에서 처리하기 때문에 필요없음..
-
 }
