@@ -26,6 +26,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf ->csrf.disable())
             .authorizeHttpRequests((requests) -> requests
+            	.requestMatchers("/info/*").authenticated()								// 로그인만 되어있으면 '유저', '관리자' 이용 가능
                 .requestMatchers("/post/insert/*").hasAuthority(UserRole.USER.name()) 	// '로그인 된 유저'만 이용 가능한 페이지
                 .requestMatchers("/admin/**").hasAnyAuthority(UserRole.ADMIN.name())	// '관리자'만 이용 가능한 페이지
                 .anyRequest().permitAll()  												// 그 외 요청은 인증 필요
