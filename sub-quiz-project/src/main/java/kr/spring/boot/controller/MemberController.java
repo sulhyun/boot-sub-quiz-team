@@ -52,5 +52,5 @@ public class MemberController {
 	public String login(Model model) {
 		return "/member/login";
 	}
-
+	
 }

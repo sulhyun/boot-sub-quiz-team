@@ -20,8 +20,8 @@ public class InfoController {
 	
 	@GetMapping("/basic")
 	public String basic(Model model, Principal principal) {
-		//MemberVO user = memberService.selectMember(principal.getName());
-		//model.addAttribute("user", user);
+		MemberVO user = memberService.selectMember(principal.getName());
+		model.addAttribute("user", user);
 		return "info/basic";
 	}
 
