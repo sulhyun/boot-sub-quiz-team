@@ -1,6 +1,5 @@
 package kr.spring.boot.handler;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,12 +34,6 @@ public class CustomLogoutHandler implements LogoutHandler {
             } else if ("naver".equals(provider)) {
             	logoutNaver(accessToken);
             }
-        }
-        // 세션 무효화
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-            System.out.println("세션 무효화");
         }
         System.out.println("로그아웃 핸들러 작동 종료");
     }
