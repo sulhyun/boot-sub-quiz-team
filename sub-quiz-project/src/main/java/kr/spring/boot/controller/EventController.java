@@ -45,13 +45,11 @@ public class EventController {
 	
 	@GetMapping("/addevent")
 	public String addevent(Model model) {
-		return null;
+		return "/event/addevent";
 	}
 	
 	@PostMapping("/addevent/eventaddpage")
 	public String addpage(EventVO event, Model model) {
-		System.out.println(event);
-		
 		boolean res = eventService.eventaddpage(event); 
 		
         if (res == false) {
