@@ -6,10 +6,118 @@
 <head>
 <meta charset="UTF-8">
 <title>퀴즈Q : 내정보</title>
+<style type="text/css">
+    .info-wrapper {
+        max-width: 750px;
+        margin: 60px auto;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .info-wrapper h2 {
+        font-size: 1.55rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #343a40;
+    }
+    .info-wrapper .info-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+    }
+    .info-wrapper .info-item:last-child {
+        border-bottom: none;
+    }
+    .info-wrapper .info-label {
+        font-weight: 500;
+        color: #495057;
+        width: 30%;
+    }
+    .info-wrapper .info-value {
+        font-weight: 400;
+        color: #212529;
+        text-align: right;
+    }
+    .info-btn {
+         background-color: transparent;
+         border: none;
+         text-align: left;
+         cursor: pointer;
+         width: 100%;
+     }
+	.info-item:hover{
+		background-color: #f9fafb;
+		border-radius: 10px;
+	}
+</style>
 </head>
 <body>
 	<main layout:fragment="content">
 		<div th:replace="~{layout/infoheader.html}"></div>
+		<div class="info-wrapper">
+		    <h2>내 계정 정보</h2>
+		    <div class="info-item">
+		        <div class="info-label">이름</div>
+		        <div class="info-value" th:text="${user.mb_name}"></div>
+		    </div>
+		    <div class="info-item">
+		        <div class="info-label">닉네임</div>
+		        <div class="info-value" th:text="${user.mb_nick}"></div>
+		    </div>
+		    <div class="info-item">
+		        <div class="info-label">연락처</div>
+		        <div class="info-value" th:text="${user.mb_hp}"></div>
+		    </div>
+		    <div class="info-item">
+		        <div class="info-label">회원 등급</div>
+		        <div class="info-value" th:text="${user.mb_level} + Lv"></div>
+		    </div>
+		    <div class="info-item">
+		        <div class="info-label">포인트</div>
+		        <div class="info-value" th:text="${user.mb_point} + P"></div>
+		    </div>
+		    <div class="info-item">
+		        <div class="info-label">가입일</div>
+		        <div class="info-value" th:text="${#dates.format(user.mb_datetime, 'yyyy년 MM월 dd일')}"></div>
+		    </div>
+		    <div class="info-item">
+		        <div class="info-label">수정일</div>
+		        <div class="info-value" th:text="${#dates.format(user.mb_edit_date, 'yyyy년 MM월 dd일')}"></div>
+		    </div>
+		    <h2 class="mt-4">내 계정 관리</h2>
+		    <button class="info-btn">
+			    <div class="info-item">
+			        <div class="info-label">실명 수정</div>
+			        <div class="info-value">></div>
+			    </div>
+		    </button>
+		    <button class="info-btn">
+			    <div class="info-item">
+			        <div class="info-label">연락처 수정</div>
+			        <div class="info-value">></div>
+			    </div>
+		    </button>
+		    <button class="info-btn">
+			    <div class="info-item">
+			        <div class="info-label">주소 수정</div>
+			        <div class="info-value">></div>
+			    </div>
+		    </button>
+		    <button class="info-btn">
+			    <div class="info-item">
+			        <div class="info-label">비밀번호 변경</div>
+			        <div class="info-value">></div>
+			    </div>
+		    </button>
+		    <button class="info-btn">
+			    <div class="info-item">
+			        <div class="info-label">계정 탈퇴</div>
+			        <div class="info-value">></div>
+			    </div>
+		    </button>
+		</div>
 	</main>
 </body>
 </html>
