@@ -1,7 +1,5 @@
 package kr.spring.boot.auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
@@ -15,22 +13,18 @@ import org.springframework.stereotype.Component;
 import kr.spring.boot.dao.MemberDAO;
 import kr.spring.boot.model.util.CustomUser;
 import kr.spring.boot.model.vo.MemberVO;
+import lombok.AllArgsConstructor;
 
 @Component
+@AllArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	private MemberDAO memberDao;
 	private PasswordEncoder passwordEncoder;
 	
-	@Autowired
-    public CustomAuthenticationProvider(MemberDAO memberDao, @Lazy PasswordEncoder passwordEncoder) {
-        this.memberDao = memberDao;
-        this.passwordEncoder = passwordEncoder;
-    }
-    
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		System.out.println("내부 로그인 작동");
+		System.out.println("CustomAuthenticationProvider 작동");
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
 		MemberVO member = memberDao.selectMember(username);

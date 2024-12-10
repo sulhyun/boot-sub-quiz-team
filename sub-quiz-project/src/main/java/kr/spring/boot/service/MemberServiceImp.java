@@ -2,11 +2,11 @@ package kr.spring.boot.service;
 
 import java.util.regex.Pattern;
 
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.MemberDAO;
+import kr.spring.boot.model.dto.KakaoUserInfoDTO;
 import kr.spring.boot.model.dto.LoginDTO;
 import kr.spring.boot.model.dto.SignupDTO;
 import kr.spring.boot.model.vo.MemberVO;
@@ -16,11 +16,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MemberServiceImp implements MemberService {
 	
-	@Lazy
+	private MemberDAO memberDao;
 	private PasswordEncoder passwordEncoder;
 	
-	private MemberDAO memberDao;
-
 	@Override
 	public MemberVO selectMember(String mb_id) {
 		return memberDao.selectMember(mb_id);
@@ -28,24 +26,24 @@ public class MemberServiceImp implements MemberService {
 
 	@Override
 	public boolean signup(SignupDTO user) {
-		if (user == null) {
+		if(user == null) {
 			return false;
 		}
-		if (user.getMb_id() == null || user.getMb_id().trim().length() == 0) {
+		if(user.getMb_id() == null || user.getMb_id().trim().length() == 0) {
 			return false;
 		}
-		if (!checkRegex(user.getMb_id(), "^\\w{6,20}$")) {
+		if(!checkRegex(user.getMb_id(), "^\\w{6,20}$")) {
 			return false;
 		}
-		if (user.getMb_pw() == null || user.getMb_pw().trim().length() == 0) {
+		if(user.getMb_pw() == null || user.getMb_pw().trim().length() == 0) {
 			return false;
 		}
-		if (!checkRegex(user.getMb_pw(), "^[a-zA-Z0-9!@#$]{6,20}$")) {
+		if(!checkRegex(user.getMb_pw(), "^[a-zA-Z0-9!@#$]{6,20}$")) {
 			return false;
 		}
-		if (user.getMb_hp().contains("-")) {
+		if(user.getMb_hp().contains("-")) {
 			String[] arr = user.getMb_hp().split("-");
-			if (arr.length != 3) {
+			if(arr.length != 3) {
 				return false;
 			}
 			user.setMb_hp(arr[0] + arr[1] + arr[2]);
@@ -55,7 +53,7 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	private boolean checkRegex(String str, String regex) {
-		if (str != null && Pattern.matches(regex, str)) {
+		if(str != null && Pattern.matches(regex, str)) {
 			return true;
 		}
 		return false;
@@ -63,32 +61,42 @@ public class MemberServiceImp implements MemberService {
 
 	@Override
 	public MemberVO login(LoginDTO user) {
-		if (user == null) {
+		if(user == null) {
 			return null;
 		}
-		if (user.getUsername() == null || user.getUsername().trim().length() == 0) {
+		if(user.getUsername() == null || user.getUsername().trim().length() == 0) {
 			return null;
 		}
-		if (user.getPassword() == null || user.getPassword().trim().length() == 0) {
+		if(user.getPassword() == null || user.getPassword().trim().length() == 0) {
 			return null;
 		}
 		MemberVO member = memberDao.selectMember(user.getUsername());
-		if (member == null) {
+		if(member == null) {
 			return null;
 		}
-		if (passwordEncoder.matches(user.getPassword(), member.getMb_pw())) {
+		if(passwordEncoder.matches(user.getPassword(), member.getMb_pw())) {
 			return member;
 		}
 		return null;
 	}
 
-	 @Override 
-	 public MemberVO socialSignup(MemberVO user) {
-		 boolean res = memberDao.socialSignup(user); 
-		 if(res) { 
-			 return user; 
-		 } 
-	 	return null; 
-	 } // 소셜 로그인 첫 회원이면 자동 회원가입
-	 
+	@Override
+	public MemberVO kakaoSignup(KakaoUserInfoDTO userInfo) {
+		if(userInfo == null) {
+			return null;
+		}
+		MemberVO user = new MemberVO();
+		user.setMb_id(String.valueOf(userInfo.getId()));
+		user.setMb_email(userInfo.getKakaoAccount().getEmail());
+		user.setMb_nick(userInfo.getKakaoAccount().getProfile().getNickName());
+		user.setMb_level(1);
+		user.setMb_point(500);
+		user.setMb_login_method("kakao");
+		boolean res = memberDao.socialSignup(user);
+		if(res) {
+			return user;
+		}
+		return null;
+	} // 카카오 로그인 첫 회원이면 자동 회원가입
+
 }

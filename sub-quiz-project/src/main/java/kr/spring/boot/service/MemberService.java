@@ -1,5 +1,6 @@
 package kr.spring.boot.service;
 
+import kr.spring.boot.model.dto.KakaoUserInfoDTO;
 import kr.spring.boot.model.dto.LoginDTO;
 import kr.spring.boot.model.dto.SignupDTO;
 import kr.spring.boot.model.vo.MemberVO;
@@ -12,6 +13,6 @@ public interface MemberService {
 
 	MemberVO login(LoginDTO user);
 
-	MemberVO socialSignup(MemberVO member);
+	MemberVO kakaoSignup(KakaoUserInfoDTO userInfo);
 
 }

@@ -29,15 +29,13 @@
 	
 	<select id="getChoiceQuizListByCategory" resultType="QuizChoiceVO">
         SELECT * 
-
-        FROM  quiz_choice
-
+        FROM  
         WHERE qt_num = #{qtNum}
    	</select>
     
     <select id="getSubjectiveQuizListByCategory" resultType="QuizSubjectiveVO">
         SELECT * 
-        FROM quiz_subjective
+        FROM 
         WHERE qt_num = #{qtNum}
     </select>
     

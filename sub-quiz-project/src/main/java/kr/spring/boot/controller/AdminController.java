@@ -35,7 +35,6 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
-	
 	@GetMapping("/adminhome")
 	public String Admin(Model model) {
 		
@@ -49,7 +48,7 @@ public class AdminController {
         if (quizCategories == null || quizCategories.isEmpty()) {
             model.addAttribute("error", "카테고리 목록을 불러올 수 없습니다.");
         }
-        
+        System.out.println(quizCategories);
         model.addAttribute("quizCategories", quizCategories);
 
         return "/admin/adminquizcategory";
@@ -83,17 +82,20 @@ public class AdminController {
     	    @RequestParam("qt_num") int qtNum,
     	    @RequestParam("categoryName") String categoryName,
     	    RedirectAttributes redirectAttributes) {
+    	 	System.out.println("수정할 카테고리 ID: " + qtNum + ", 카테고리 이름: " + categoryName);
     	    boolean updated = adminService.updateQuizCategory(qtNum, categoryName);
     	   
+    	    System.out.println(updated);
     	    redirectAttributes.addFlashAttribute("message", updated ? "수정 성공" : "수정 실패");
     	    return "redirect:/admin/adminquizcategory";
     }
     @GetMapping("/quizlist/{qt_num}")
     public String quizList(@PathVariable("qt_num") int qtNum, Model model) {
-    	
+    	System.out.println("Received qt_num: " + qtNum);
     	List<QuizChoiceVO> ChoiceQuizList = adminService.getChoiceQuizListByCategory(qtNum);
-    	
+    	System.out.println("ChoiceQuizList: " + ChoiceQuizList);
     	List<QuizSubjectiveVO> SubjectiveQuizList = adminService.getSubjectiveQuizListByCategory(qtNum);
+    	System.out.println("SubjectiveQuizList: " + SubjectiveQuizList);
         model.addAttribute("ChoiceQuizList", ChoiceQuizList);
         model.addAttribute("SubjectiveQuizList",SubjectiveQuizList);
         model.addAttribute("qt_num", qtNum);
