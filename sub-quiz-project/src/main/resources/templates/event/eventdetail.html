@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout.html}" layout:fragment="content">
+<head>
+<link href="/css/header.css" rel='stylesheet'>
+<meta charset="UTF-8">
+<title>Event detail Page</title>
+<style type="text/css">
+.head-title{
+margin-top: 60px;
+font-weight: bold;
+}
+.content-img-tag1 {
+    position: relative;
+    width: 100%; /* 화면 전체에 맞춤 */
+    margin: 30px auto; /* 가운데 정렬 */
+    overflow: hidden; /* 콘텐츠 넘침 방지 */
+}
+
+.content-img-tag1 img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover; /* 이미지 왜곡 방지 */
+    display: block;
+}
+
+.title{
+margin-top: 60px;
+}
+
+.event-period{
+margin-top: 90px;
+}
+
+.event-level{
+margin-top: 90px;
+}
+
+.event-content{
+margin-top: 90px;
+}
+
+.event-prize{
+margin-top: 90px;
+}
+
+.event-member{
+margin-top: 90px;
+}
+
+.event-pay{
+margin-top: 90px;
+}
+
+.event-prize {
+    position: relative;
+    width: 100%; /* 화면 전체에 맞춤 */
+    margin: 30px auto; /* 가운데 정렬 */
+    overflow: hidden; /* 콘텐츠 넘침 방지 */
+}
+
+.event-prize img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover; /* 이미지 왜곡 방지 */
+    display: block;
+}
+
+.btn-size{
+width: 150px;
+height: 50px;
+}
+
+.btn-center{
+margin-top: 30px;
+margin-bottom: 30px;
+text-align: center;
+}
+
+</style>
+</head>
+<body>
+	<main>
+		<div class="container">
+			<div>
+				<h1 class="head-title">이벤트</h1>
+			</div>
+			<div class="content-img-tag1">
+				<img src="/img/고양이1.jpg"> <!-- 첨부파일로 변경해야함 -->
+			</div>
+			<div class="title">
+				<h3>제목</h3>
+				<p th:text="${event.ev_title}" />
+			</div>
+			<div class="event-period">
+				<h3>행사기간</h3>
+				<p th:text="${#dates.format(event.ev_start, 'yyyy-MM-dd') + ' ~ ' + #dates.format(event.ev_end, 'yyyy-MM-dd')}" />
+			</div>
+			<div class="event-level">
+				<h3>행사대상</h3>
+				<p th:text="${event.ev_start_level + ' ~ ' + event.ev_end_level + ' level'}" />
+			</div>
+			<div class="event-content">
+				<h3>행사내용</h3>
+				<p th:text="${event.ev_content}" />
+			</div>
+			<div class="event-prize">
+				<h3>경품안내</h3>
+				<img src="/img/고양이2.jpg"> <!-- 첨부파일로 변경해야함 -->
+			</div>
+			<div class="event-prize">
+				<h3>경품목록</h3>
+				<select name="ev_num">
+					<option value=""> 경품을 선택하세요 </option>
+					<option th:each="eventprize : ${eventprize}" th:value="${eventprize.ev_num}" th:text="${eventprize.ep_prize}">
+				</select>
+			</div>
+			<div class="event-pay">
+				<h3>경품지급 안내</h3>
+				<p>즉시 지급</p>
+			</div>
+			<div class="btn-center">
+				<button class="btn btn-outline-info btn-size">응모하기</button>
+			</div>
+			<div>
+				<p><br>
+꼭! 알아두세요<br><br><br>
+- 자세히보기이 이벤트는 퀴즈플레이 전용 이벤트로 최신 버전으로 앱을 업데이트한 분만 참여할 수 있습니다.<br>
+- 마이신한포인트 즉시 지급을 위해서는 신한플러스 회원가입이 반드시 필요합니다.<br>
+- 게임 참여는 아이디당 1일 1회 참여 가능하며, 각 게임당 15회 참여 가능합니다.<br>
+- 하단의 [응모]를 눌러 응모를 완료하신 고객님만 모바일 쿠폰 혜택을 받으실 수 있습니다.<br>
+- 모바일 쿠폰 당첨자 확인은 신한카드 홈페이지 > 혜택 > 이벤트 > 이벤트 응모내역에서 11월 2일에 확인할 수 있습니다.<br>
+- 모바일 쿠폰은 수급 사정에 따라 동일 가격의 다른 상품으로 대체될 수 있습니다.<br>
+- 모바일 쿠폰 발송은 신한카드 고객정보에 등록된 연락처로 진행되오니, 응모 전 등록된 정보가 맞는지 반드시 확인하시기 바랍니다.<br>
+- 경품 이미지는 이해를 돕기 위한 예시이며, 실제 상품과 차이가 있을 수 있습니다.<br>
+- 모바일 쿠폰 발송을 위해 위탁업체에 고객님의 개인정보가 제공될 수 있으며, 위탁업체의 경우 모바일 쿠폰 발송 완료 후 30일 이내 고객님의 개인정보는 폐기됩니다.<br>
+- 사용하시는 휴대폰 기종 및 인터넷 환경에 따라 이벤트 참여가 원활하지 않을 수 있습니다.<br>
+- 이 이벤트는 카드사의 사정에 따라 사전고지 없이 경품 및 내용 변경 또는 조기 종료될 수 있습니다.<br>
+- 이벤트 문의사항은 신한카드 고객센터(1544-7000)으로 문의 바랍니다.<br>
+준법감시 심의필 제20220523-Cpi-003호<br>
+(2022.05.23~2023.05.22)</p> <!-- 안내사항 db 만들어서 추가 하면 좋음 -->
+			</div>
+			<div class="btn-center">
+				<button class="btn btn-outline-info btn-size" type="button" onclick="location.href='/event/eventpage'">목록으로</button>
+			</div>
+		</div>
+	</main>
+</body>
+</html>
