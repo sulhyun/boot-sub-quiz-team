@@ -226,6 +226,12 @@ height: 300px;
 text-decoration: none;
 display: block;
 }
+
+.event-add-menu{
+text-align: right;
+margin: 30px;
+}
+
 </style>
 <meta charset="UTF-8">
 <title>Event Page</title>
@@ -276,7 +282,7 @@ display: block;
                 <div class="event-list">
                     <ul>
                         <li th:each="list : ${list}">
-                        	<a class="event-list--a" href="#">
+                        	<a class="event-list--a" th:href="@{/event/eventdetail/{id}(id=${list.ev_num})}">
                         		<div>
 	                        		<h3 th:text="${list.ev_title}"></h3>
                         		</div>
@@ -287,7 +293,8 @@ display: block;
                         </li>
                     </ul>
                 </div>
-                <div>
+                <div class="event-add-menu">
+                    <a href="/event/eventprize">이벤트 경품 등록</a>&emsp;       				
                     <a href="/event/addevent">이벤트 등록</a>
                 </div>
             </div>

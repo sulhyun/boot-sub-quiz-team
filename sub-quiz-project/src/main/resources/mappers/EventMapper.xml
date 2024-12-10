@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.boot.dao.EventDAO">
+<!-- 이벤트 페이지 등록 -->
 <insert id="evtaddpage">
     INSERT INTO event (
         ev_title, ev_content, ev_start_level, ev_end_level, 
@@ -11,5 +12,26 @@
     )
 </insert>
 
+
 <select id="selectEvent" resultType="EventVO"> SELECT * FROM quizgame.event; </select>
+
+<!-- 이벤트 상세 페이지 -->
+<select id="selectEventDetail" resultType="EventVO"> SELECT * FROM quizgame.event where ev_num = #{ev_num} </select>
+
+<!-- 종료된 이벤트 불러오기 -->
+<select id="selectEventEnd" resultType="EventVO"> SELECT * FROM quizgame.event WHERE ev_end &lt; NOW() </select>
+
+<!-- 이벤트 경품 등록 -->
+<insert id="evtPrizeAdd">
+    INSERT INTO event_prize (
+        ep_prize, ep_rank, ev_num
+    ) VALUES (
+        #{ep_prize}, #{ep_rank}, #{ev_num}
+    )
+</insert>
+
+<!-- 이벤트 상세 페이지에 이벤트 경품 목록 보내기 -->
+<select id="selectEventPrize" resultType="EventPrizeVO"> SELECT * FROM quizgame.event_prize where ev_num = #{ev_num} </select>
+
+
 </mapper>
