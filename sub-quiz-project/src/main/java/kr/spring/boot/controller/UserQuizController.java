@@ -18,6 +18,12 @@ public class UserQuizController {
 		return "/userquiz/userquizpage";
 	}
 	
+	@GetMapping("/userquizpagesub")
+	public String userQuizsub(Model model) {
+		
+		return "/userquiz/userquizpagesub";
+	}
+	
 	@GetMapping("/userquizselect")
 	public String userQuizSlct(Model model) {
 		
@@ -25,9 +31,15 @@ public class UserQuizController {
 	}
 	
 	@GetMapping("/userquizaddmc")
-	public String userQuizAdd(Model model) {
+	public String userQuizAddMultipleChoice(Model model) {
 		
 		return "/userquiz/userquizaddmc";
+	}
+	
+	@GetMapping("/userquizaddsb")
+	public String userQuizAddSubjectiv(Model model) {
+		
+		return "/userquiz/userquizaddsb";
 	}
 
 }
