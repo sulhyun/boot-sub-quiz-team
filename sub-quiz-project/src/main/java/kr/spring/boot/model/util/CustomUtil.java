@@ -29,6 +29,6 @@ public class CustomUtil {
     	if(hp == null || hp.length() != 11) {
     		return hp;
     	}
-    	return hp.substring(0, 3) + "-" + hp.substring(3, 4) + "***-" + hp.substring(7, 8) + "****";
+    	return hp.substring(0, 3) + "-" + hp.substring(3, 4) + "***-" + hp.substring(7, 8) + "***";
     }
 }

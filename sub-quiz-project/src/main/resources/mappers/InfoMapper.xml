@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.boot.dao.InfoDAO">
+	<update id="updateInfo">
+		UPDATE MEMBER SET 
+		<choose>
+			<when test="type == 'name'">
+				MB_NAME = #{mb_attr},
+				MB_EDIT_DATE = NOW()
+			</when>
+			<when test="type == 'contact'">
+				MB_HP = #{mb_attr},
+				MB_EDIT_DATE = NOW()
+			</when>
+		</choose>
+		WHERE MB_ID = #{mb_id}
+	</update>
+</mapper>
