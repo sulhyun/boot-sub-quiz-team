@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{layout/layout.html}" layout:fragment="content">
+<head>
+<link href="/css/header.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>퀴즈 유형선택</title>
+<style>
+/* 기본 설정 */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%; /* 부모 요소의 높이 확보 */
+    overflow: hidden; /* 스크롤 방지 */
+}
+
+main {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* 화면 전체 높이 */
+    background-image: url('/img/퀴즈화면.jpg'); /* 배경 이미지 */
+    background-size: cover;
+    background-position: center;
+    display: flex; /* 좌우 영역 배치를 위한 flexbox 사용 */
+}
+
+/* 좌우로 나눈 영역 */
+.half {
+    flex: 1; /* 각 영역이 화면의 50%를 차지 */
+    position: relative; /* a 태그 크기를 부모에 맞추기 위한 기준 */
+    display: flex; /* 텍스트 중앙 배치를 위한 flexbox */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    transition: background-color 0.3s ease; /* 부드러운 호버 효과 */
+    overflow: hidden; /* 내용 넘침 방지 */
+}
+
+/* 호버 시 효과 */
+.half:hover {
+    background-color: rgba(0, 0, 0, 0.3); /* 어두운 오버레이 효과 */
+}
+
+/* a 태그를 영역 전체로 확장 */
+.half a {
+    position: absolute; /* 부모 .half 기준으로 배치 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* 부모 영역을 완전히 채움 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: transparent; /* 텍스트 색상을 투명하게 처리 */
+}
+
+/* 텍스트 표시를 위한 span 추가 */
+.half span {
+    position: relative; /* 부모 안에서 중앙 정렬을 유지 */
+    color: white; /* 텍스트 색상 */
+    font-size: 2rem; /* 텍스트 크기 */
+    text-align: center;
+    opacity: 0; /* 기본적으로 보이지 않음 */
+    transition: opacity 0.3s ease; /* 부드러운 등장 효과 */
+}
+
+/* 마우스 호버 시 텍스트 보이기 */
+.half:hover span {
+    opacity: 1; /* 마우스 호버 시 텍스트 보이기 */
+}
+
+/* 각 영역 텍스트 설정 */
+.left span::before {
+    content: "객관식"; /* 왼쪽 텍스트 */
+}
+
+.right span::before {
+    content: "주관식"; /* 오른쪽 텍스트 */
+}
+
+/* 반응형 대응 */
+@media (max-width: 768px) {
+    .half span {
+        font-size: 1.5rem; /* 작은 화면에서 텍스트 크기 조정 */
+    }
+}
+</style>
+</head>
+<body>
+    <main>
+		<!-- 왼쪽 영역 -->
+		<div class="half left">
+		    <a href="/userquiz/userquizaddmc"></a>
+		    <span></span>
+		</div>
+		
+		<!-- 오른쪽 영역 -->
+		<div class="half right">
+		    <a href="#"></a>
+		    <span></span>
+		</div>
+    </main>
+</body>
+</html>

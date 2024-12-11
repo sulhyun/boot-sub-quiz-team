@@ -17,5 +17,17 @@ public class UserQuizController {
 		
 		return "/userquiz/userquizpage";
 	}
+	
+	@GetMapping("/userquizselect")
+	public String userQuizSlct(Model model) {
+		
+		return "/userquiz/userquizselect";
+	}
+	
+	@GetMapping("/userquizaddmc")
+	public String userQuizAdd(Model model) {
+		
+		return "/userquiz/userquizaddmc";
+	}
 
 }
