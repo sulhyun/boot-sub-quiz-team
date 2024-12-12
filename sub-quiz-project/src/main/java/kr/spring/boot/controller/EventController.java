@@ -115,7 +115,6 @@ public class EventController {
             boolean isInserted = eventService.insertEvent(evNum);
             if (isInserted) {
                 response.put("success", true);
-                response.put("message", "응모가 성공적으로 완료되었습니다.");
             } else {
                 response.put("success", false);
                 response.put("message", "응모 처리 중 문제가 발생했습니다.");
