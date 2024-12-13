@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈Q : 내정보</title>
+<style type="text/css">
+        .profile-wrapper {width: 700px;margin: 20px auto;}
+        .title-section {display: flex;align-items: center;padding: 20px;border: 1px solid #eee;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);border-radius: 8px;margin-bottom: 35px;}
+        .profile-img {width: 80px;height: 80px;border-radius: 50%;overflow: hidden;background-color: #f0f0f0;display: flex;align-items: center;justify-content: center;}
+        .profile-info {margin-left: 20px;}
+        .profile-section {align-items: center;padding: 20px;border: 1px solid #eee;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);border-radius: 8px;margin-bottom: 35px;}
+        .profile-section .profile-item {display: flex;justify-content: space-between;align-items: center;padding: 10px 5px;}
+    	.profile-section .profile-label {font-weight: 500;color: #495057;}
+    	.profile-section .profile-value {font-weight: 400;color: #212529;text-align: right;}
+    	.profile-btn {background-color: transparent;border: none;text-align: left;cursor: pointer;width: 100%;}
+    	.profile-item:hover{background-color: #f9fafb;border-radius: 10px;}
+    	.modal-btn {background: none;border: none;color: #17a2b8;cursor: pointer;padding: 0;}
+		.modal-btn:hover {color: #117a8b;text-decoration: none;}
+</style>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:replace="~{layout/infoheader.html}"></div>
+		<div class="profile-wrapper">
+	        <div class="title-section">
+	            <div class="profile-img">
+	                <img src="https://via.placeholder.com/80" alt="프로필 이미지">
+	            </div>
+	            <div class="profile-info">
+	            	<div style="font-size: 15px">회원 등급 <span th:text="${user.mb_level}"></span>Lv</div>
+	                <div style="font-size: 23px"><span th:text="${user.mb_nick}"></span>님 안녕하세요.</div>
+	            </div>
+	        </div>
+	        <div class="profile-section">
+	        	<div class="profile-item">
+	        		<div class="profile-label">
+	        			<span>이름</span>
+	        			<button class="modal-btn" data-toggle="modal" data-target="#myModal">수정</button>
+	        		</div>
+	        		<div class="profile-value" th:text="${user.mb_name}"></div>
+	        	</div>
+	        	<!-- The Modal -->
+				<div class="modal" id="myModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+				     		 <!-- Modal Header -->
+							<div class="modal-header">
+								<h5 class="modal-title">실명 수정</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<!-- Modal body -->
+			  				<form action="/info/profile" method="post">
+								<div class="modal-body">
+				  					<div class="form-group">
+				  						<input type="text" class="form-control" name="mb_name" placeholder="이름">
+				  						<input type="hidden" name="type" value="name">
+				  					</div>
+								</div>
+								<!-- Modal footer -->
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+									<button type="submit" class="btn btn-success">변경</button>
+								</div>
+			  				</form>
+						</div>
+					</div>
+				</div>
+	        	<div class="profile-item">
+			        <div class="profile-label">
+			        	<span>닉네임</span>
+	        			<button class="modal-btn" data-toggle="modal" data-target="#myModal2">수정</button>
+			        </div>
+			        <div class="profile-value" th:text="${user.mb_nick}"></div>
+			    </div>
+			    <!-- The Modal -->
+				<div class="modal" id="myModal2">
+					<div class="modal-dialog">
+						<div class="modal-content">
+				     		 <!-- Modal Header -->
+							<div class="modal-header">
+								<h5 class="modal-title">닉네임 수정</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<!-- Modal body -->
+			  				<form action="/info/profile" method="post">
+								<div class="modal-body">
+				  					<div class="form-group">
+				  						<input type="text" class="form-control" name="mb_nick" placeholder="닉네임">
+				  						<input type="hidden" name="type" value="nick">
+				  					</div>
+								</div>
+								<!-- Modal footer -->
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+									<button type="submit" class="btn btn-success">변경</button>
+								</div>
+			  				</form>
+						</div>
+					</div>
+				</div>
+			    <div class="profile-item">
+			        <div class="profile-label">
+			        	<span>연락처</span>
+		        		<button class="modal-btn" data-toggle="modal" data-target="#myModal3">수정</button>
+			        </div>
+			        <div class="profile-value" th:text="${user.mb_hp}"></div>
+			    </div>
+			    <!-- The Modal -->
+				<div class="modal" id="myModal3">
+					<div class="modal-dialog">
+						<div class="modal-content">
+				     		 <!-- Modal Header -->
+							<div class="modal-header">
+								<h5 class="modal-title">전화번호 수정</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+			  				<!-- Modal body -->
+			  				<form action="/info/profile" method="post">
+								<div class="modal-body">
+				  					<div class="form-group">
+				  						<input type="text" class="form-control" name="mb_hp" placeholder="휴대폰 번호 ('-'제외 11자리)">
+										<input type="hidden" name="type" value="contact">
+				  					</div>
+								</div>
+								<!-- Modal footer -->
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+									<button type="submit" class="btn btn-success">변경</button>
+								</div>
+			  				</form>
+						</div>
+					</div>
+				</div>
+			    <div class="profile-item">
+			        <div class="profile-label">포인트</div>
+			        <div class="profile-value" th:text="${user.mb_point} + P"></div>
+			    </div>
+			    <div class="profile-item">
+	        		<div class="profile-label">가입일</div>
+	        		<div class="profile-value" th:text="${#dates.format(user.mb_datetime, 'yyyy년 MM월 dd일')}"></div>
+	        	</div>
+	        </div>
+	        <div class="profile-section">
+	        	<button class="profile-btn">
+	        		<div class="profile-item">
+				        <div class="profile-label">배송지 관리</div>
+				        <div class="profile-value">></div>
+				    </div>
+	        	</button>
+	        </div>
+	        <div class="profile-section">
+	        	<button class="profile-btn">
+	        		<div class="profile-item">
+				        <div class="profile-label">비밀번호 변경</div>
+				        <div class="profile-value">></div>
+				    </div>
+	        	</button>
+	        	<button class="profile-btn">
+	        		<div class="profile-item">
+				        <div class="profile-label">계정 탈퇴</div>
+				        <div class="profile-value">></div>
+				    </div>
+	        	</button>
+	        </div>
+	    </div>
+	</main>
+</body>
+</html>

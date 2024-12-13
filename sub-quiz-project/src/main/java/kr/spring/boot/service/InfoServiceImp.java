@@ -18,6 +18,7 @@ public class InfoServiceImp implements InfoService {
 	public boolean updateInfo(String mb_id, Map<String, String> params) {
 		String type = params.get("type");
 		String mb_name = params.get("mb_name");
+		String mb_nick = params.get("mb_nick");
 		String mb_hp = params.get("mb_hp");
 		switch(type) {
 		case "name":
@@ -25,6 +26,11 @@ public class InfoServiceImp implements InfoService {
 				return false;
 			}
 			return infoDao.updateInfo(type, mb_id, mb_name);
+		case "nick":
+			if(mb_nick == null || mb_nick.trim().length() == 0) {
+				return false;
+			}
+			return infoDao.updateInfo(type, mb_id, mb_nick);
 		case "contact":
 			if(mb_hp == null || mb_hp.trim().length() == 0 || !checkRegex(mb_hp, "^010\\d{4}\\d{4}$")) {
 				return false;

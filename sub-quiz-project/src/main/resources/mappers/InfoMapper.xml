@@ -8,6 +8,10 @@
 				MB_NAME = #{mb_attr},
 				MB_EDIT_DATE = NOW()
 			</when>
+			<when test="type == 'nick'">
+				MB_NICK = #{mb_attr},
+				MB_EDIT_DATE = NOW()
+			</when>
 			<when test="type == 'contact'">
 				MB_HP = #{mb_attr},
 				MB_EDIT_DATE = NOW()
