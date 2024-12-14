@@ -5,21 +5,8 @@
 	layout:decorate="~{layout/layout.html}">
 <head>
 <meta charset="UTF-8">
-<title>퀴즈Q : 내정보</title>
-<style type="text/css">
-        .profile-wrapper {width: 700px;margin: 20px auto;}
-        .title-section {display: flex;align-items: center;padding: 20px;border: 1px solid #eee;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);border-radius: 8px;margin-bottom: 35px;}
-        .profile-img {width: 80px;height: 80px;border-radius: 50%;overflow: hidden;background-color: #f0f0f0;display: flex;align-items: center;justify-content: center;}
-        .profile-info {margin-left: 20px;}
-        .profile-section {align-items: center;padding: 20px;border: 1px solid #eee;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);border-radius: 8px;margin-bottom: 35px;}
-        .profile-section .profile-item {display: flex;justify-content: space-between;align-items: center;padding: 10px 5px;}
-    	.profile-section .profile-label {font-weight: 500;color: #495057;}
-    	.profile-section .profile-value {font-weight: 400;color: #212529;text-align: right;}
-    	.profile-btn {background-color: transparent;border: none;text-align: left;cursor: pointer;width: 100%;}
-    	.profile-item:hover{background-color: #f9fafb;border-radius: 10px;}
-    	.modal-btn {background: none;border: none;color: #17a2b8;cursor: pointer;padding: 0;}
-		.modal-btn:hover {color: #117a8b;text-decoration: none;}
-</style>
+<title>퀴즈Q : 프로필</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}">
 </head>
 <body>
 	<main layout:fragment="content">
@@ -27,17 +14,17 @@
 		<div class="profile-wrapper">
 	        <div class="title-section">
 	            <div class="profile-img">
-	                <img src="https://via.placeholder.com/80" alt="프로필 이미지">
+	                <img th:src="@{/img/profile_normal.png}" alt="프로필 이미지">
 	            </div>
 	            <div class="profile-info">
-	            	<div style="font-size: 15px">회원 등급 <span th:text="${user.mb_level}"></span>Lv</div>
+	            	<div style="font-size: 15px">회원 등급 · <span th:text="${user.mb_level}"></span>Lv</div>
 	                <div style="font-size: 23px"><span th:text="${user.mb_nick}"></span>님 안녕하세요.</div>
 	            </div>
 	        </div>
 	        <div class="profile-section">
 	        	<div class="profile-item">
 	        		<div class="profile-label">
-	        			<span>이름</span>
+	        			<span style="word-spacing: 8px;">이 름</span>
 	        			<button class="modal-btn" data-toggle="modal" data-target="#myModal">수정</button>
 	        		</div>
 	        		<div class="profile-value" th:text="${user.mb_name}"></div>
@@ -146,7 +133,7 @@
 	        <div class="profile-section">
 	        	<button class="profile-btn">
 	        		<div class="profile-item">
-				        <div class="profile-label">배송지 관리</div>
+				        <div class="profile-label">주소 관리</div>
 				        <div class="profile-value">></div>
 				    </div>
 	        	</button>
