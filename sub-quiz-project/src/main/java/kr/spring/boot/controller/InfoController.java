@@ -40,8 +40,7 @@ public class InfoController {
 	
 	@PostMapping("/profile")
 	public String basicPost(Model model, Principal principal, @RequestParam Map<String, String> params) {
-		String mb_id = principal.getName();
-		boolean res = infoService.updateInfo(mb_id, params);
+		boolean res = infoService.updateInfo(principal.getName(), params);
 		model.addAttribute("msg", res ? "수정 성공!!" : "수정 실패!!");
 		model.addAttribute("url", "/info/profile");
 		return "util/msg";
@@ -49,11 +48,10 @@ public class InfoController {
 	
 	@GetMapping("/point/{type}")
 	public String point(Model model, Principal principal, Criteria cri, @PathVariable String type) {
-		String mb_id = principal.getName();
-		MemberVO user = memberService.selectMember(mb_id);
 		cri.setPerPageNum(5);
-		PageMaker pm = infoService.getPageMaker(cri, mb_id);
-		List<PointVO> list = infoService.getPointList(cri, mb_id);
+		MemberVO user = memberService.selectMember(principal.getName());
+		PageMaker pm = infoService.getPageMaker(cri, principal.getName());
+		List<PointVO> list = infoService.getPointList(cri, principal.getName());
 		model.addAttribute("user", user);
 		model.addAttribute("pm", pm);
 		model.addAttribute("list", list);
