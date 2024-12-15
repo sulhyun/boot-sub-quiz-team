@@ -11,6 +11,8 @@
 			EMAIL_VERIFICATION
 		WHERE
 			MB_EMAIL = #{mb_email}
+		ORDER BY EVC_NUM DESC
+		LIMIT 1
 	</select>
 	<delete id="deleteMailCode">
 		DELETE FROM EMAIL_VERIFICATION WHERE MB_EMAIL = #{mb_email}

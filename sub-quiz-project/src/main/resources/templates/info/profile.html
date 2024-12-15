@@ -131,13 +131,49 @@
 	        	</div>
 	        </div>
 	        <div class="profile-section">
-	        	<button class="profile-btn">
+	        	<button class="profile-btn" data-toggle="modal" data-target="#myModal4">
 	        		<div class="profile-item">
 				        <div class="profile-label">주소 관리</div>
 				        <div class="profile-value">></div>
 				    </div>
 	        	</button>
 	        </div>
+	        <!-- The Modal -->
+			<div class="modal" id="myModal4">
+				<div class="modal-dialog">
+					<div class="modal-content">
+			     		 <!-- Modal Header -->
+						<div class="modal-header">
+							<h5 class="modal-title">주소 관리</h5>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+		  				<!-- Modal body -->
+		  				<form action="/info/profile" method="post">
+							<div class="modal-body">
+			  					<div class="form-group">
+			  						<label for="address"><b>현재 주소</b></label>
+			  						<input type="text" class="form-control" id="address" th:value="${user.mb_addr + ' ' + user.mb_addr2 + ' (' + user.mb_zip + ')'}" required readonly>
+			  					</div>
+			  					<div class="form-group">
+			  						<label for="zip-btn"><b>새 주소</b></label>
+			  						<br>
+			  						<input type="text" class="form-control mb-2 zip-num" id="zip" name="mb_zip" maxlength="10" placeholder="우편번호" readonly>
+				    				<input type="button" class="btn btn-outline-info zip-find" id="zip_btn" onclick="execDaumPostcode()" value="우편번호 찾기">
+				    				<br>
+				    				<input type="text" class="form-control mb-2" id="addr" name="mb_addr" maxlength="40" placeholder="기본 주소를 입력" readonly>
+				    				<input type="text" class="form-control" id="addr2" name="mb_addr2"  maxlength="40" placeholder="상세 주소를 입력">
+				    				<input type="hidden" name="type" value="address">
+			  					</div>
+							</div>
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+								<button type="submit" class="btn btn-success">변경</button>
+							</div>
+		  				</form>
+					</div>
+				</div>
+			</div>
 	        <div class="profile-section">
 	        	<button class="profile-btn">
 	        		<div class="profile-item">
@@ -153,6 +189,45 @@
 	        	</button>
 	        </div>
 	    </div>
+	    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	    <script>
+		    function execDaumPostcode() {
+		        new daum.Postcode({
+		            oncomplete: function(data) {
+		                // 팝업을 통한 검색 결과 항목 클릭 시 실행
+		                var addr = ''; // 주소_결과값이 없을 경우 공백 
+		                var extraAddr = ''; // 참고항목
+		
+		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		                if (data.userSelectedType === 'R') { // 도로명 주소를 선택
+		                    addr = data.roadAddress;
+		                } else { // 지번 주소를 선택
+		                    addr = data.jibunAddress;
+		                }
+		
+		                if(data.userSelectedType === 'R'){
+		                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                        extraAddr += data.bname;
+		                    }
+		                    if(data.buildingName !== '' && data.apartment === 'Y'){
+		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                    }
+		                    if(extraAddr !== ''){
+		                        extraAddr = ' (' + extraAddr + ')';
+		                    }
+		                } else {
+		                    document.getElementById("addr").value = '';
+		                }
+		
+		                // 선택된 우편번호와 주소 정보를 input 박스에 넣는다.
+		                document.getElementById('zip').value = data.zonecode;
+		                document.getElementById("addr").value = addr;
+		                document.getElementById("addr").value += extraAddr;
+		                document.getElementById("addr2").focus(); // 우편번호 + 주소 입력이 완료되었음으로 상세주소로 포커스 이동
+		            }
+		        }).open();
+		    }
+		</script>
 	</main>
 </body>
 </html>

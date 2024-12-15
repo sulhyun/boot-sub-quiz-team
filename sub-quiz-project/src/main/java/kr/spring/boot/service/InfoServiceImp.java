@@ -20,26 +20,27 @@ public class InfoServiceImp implements InfoService {
 
 	@Override
 	public boolean updateInfo(String mb_id, Map<String, String> params) {
-		String type = params.get("type");
-		String mb_name = params.get("mb_name");
-		String mb_nick = params.get("mb_nick");
-		String mb_hp = params.get("mb_hp");
-		switch(type) {
+		switch(params.get("type")) {
 		case "name":
-			if(mb_name == null || mb_name.trim().length() == 0) {
+			if(params.get("mb_name") == null || params.get("mb_name").trim().length() == 0) {
 				return false;
 			}
-			return infoDao.updateInfo(type, mb_id, mb_name);
+			return infoDao.updateInfo(mb_id, params);
 		case "nick":
-			if(mb_nick == null || mb_nick.trim().length() == 0) {
+			if(params.get("mb_nick") == null || params.get("mb_nick").trim().length() == 0) {
 				return false;
 			}
-			return infoDao.updateInfo(type, mb_id, mb_nick);
+			return infoDao.updateInfo(mb_id, params);
 		case "contact":
-			if(mb_hp == null || mb_hp.trim().length() == 0 || !checkRegex(mb_hp, "^010\\d{4}\\d{4}$")) {
+			if(params.get("mb_hp") == null || params.get("mb_hp").trim().length() == 0 || !checkRegex(params.get("mb_hp"), "^010\\d{4}\\d{4}$")) {
 				return false;
 			}
-			return infoDao.updateInfo(type, mb_id, mb_hp);
+			return infoDao.updateInfo(mb_id, params);
+		case "address":
+			if(params.get("mb_zip") == null || params.get("mb_zip").trim().length() == 0 || params.get("mb_addr") == null || params.get("mb_addr").trim().length() == 0 || params.get("mb_addr2") == null || params.get("mb_addr2").trim().length() == 0) {
+				return false;
+			}
+			return infoDao.updateInfo(mb_id, params);
 		}
 		return false;
 	} // 회원 정보 수정

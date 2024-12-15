@@ -4,16 +4,22 @@
 	<update id="updateInfo">
 		UPDATE MEMBER SET 
 		<choose>
-			<when test="type == 'name'">
-				MB_NAME = #{mb_attr},
+			<when test="params.type == 'name'">
+				MB_NAME = #{params.mb_name},
 				MB_EDIT_DATE = NOW()
 			</when>
-			<when test="type == 'nick'">
-				MB_NICK = #{mb_attr},
+			<when test="params.type == 'nick'">
+				MB_NICK = #{params.mb_nick},
 				MB_EDIT_DATE = NOW()
 			</when>
-			<when test="type == 'contact'">
-				MB_HP = #{mb_attr},
+			<when test="params.type == 'contact'">
+				MB_HP = #{params.mb_hp},
+				MB_EDIT_DATE = NOW()
+			</when>
+			<when test="params.type == 'address'">
+				MB_ZIP = #{params.mb_zip},
+				MB_ADDR = #{params.mb_addr},
+				MB_ADDR2 = #{params.mb_addr2},
 				MB_EDIT_DATE = NOW()
 			</when>
 		</choose>
