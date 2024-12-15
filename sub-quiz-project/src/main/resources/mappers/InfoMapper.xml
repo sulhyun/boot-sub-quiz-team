@@ -19,4 +19,26 @@
 		</choose>
 		WHERE MB_ID = #{mb_id}
 	</update>
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*)
+		FROM
+			POINT
+		WHERE
+			MB_ID = #{mb_id}
+	</select>
+	<select id="selectPointList" resultType="PointVO">
+		SELECT *
+		FROM
+			POINT
+		WHERE
+			MB_ID = #{mb_id}
+			<if test="cri.type == 'use'">
+				AND 0 > PI_NO
+			</if>
+			<if test="cri.type == 'get'">
+				AND PI_NO > 0
+			</if>
+		ORDER BY PI_NUM DESC
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
 </mapper>

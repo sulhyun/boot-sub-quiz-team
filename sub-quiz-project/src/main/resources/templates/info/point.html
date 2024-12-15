@@ -8,8 +8,8 @@
 <title>퀴즈Q : 포인트</title>
 <style type="text/css">
 	.point-wrapper{width: 900px;margin: 40px auto;}
-	.point-box {min-height: 50%;}
 	.point-container {display: flex;padding: 16px;margin: 8px;background-color: white;border-radius: 12px;}
+	.point-box{height: 450px;}
 	.date-info {font-size: 14px;font-weight: 500;color: #4a4a4a;margin-right: 16px;}
 	.point-details {flex-grow: 1; display: flex;justify-content: space-between;align-items: center;}
 	.point-info {display: flex;flex-direction: column;}
@@ -30,8 +30,7 @@
 		<div th:replace="~{layout/infoheader.html}"></div>
 		<div class="point-wrapper">
 			<h4>포인트</h4>
-			<p>사용 가능 포인트 · 500P</p>
-			<section>
+			<p>사용 가능 포인트 · <span th:text="${user.mb_point}"></span>P</p>
 				<div class="btn-list">
 					<ul class="list-group list-group-horizontal">
 						<li class="list-group-item list-group-item-light">
@@ -52,25 +51,41 @@
 					</ul>
 				</div>
 				<div class="point-box">
-					<div class="point-container">
-						<span class="date-info">12.12</span>
+					<div class="point-container" th:each="list:${list}">
+						<span class="date-info" th:text="${#dates.format(list.pi_datetime, 'MM.dd')}"></span>
 						<div class="point-details">
 							<div class="point-info">
-								<span class="point-contant">출석체크</span>
-								<span class="point-type">15:30 ㅣ 사용</span>
+								<span class="point-contant" th:text="${list.pi_content}"></span>
+								<span class="point-type"><span th:text="${#dates.format(list.pi_datetime, 'HH:mm')}"></span> ㅣ <span th:text="${list.pi_no > 0 ? '획득' : '사용'}"></span></span>
 							</div>
 							<div class="amount-info">
-								<span class="amount">50P</span>
+								<span class="amount"><span th:text="${#numbers.formatInteger(list.pi_no, 0, 'COMMA')}"></span>P</span>
 							</div>
 						</div>
 					</div>
-					<div class="none-list">
+					<div class="none-list" th:if="${list == null or #lists.isEmpty(list)}">
 						<div class="none-content">
 							<p class="no-title">내역이 없어요</p>
 						</div>
 					</div>
 				</div>
-			</section>
+			<div class="page_div">
+				<ul class="pagination justify-content-center center" 
+					th:object="${pm}" 
+					th:if="${pm.endPage != 0}">
+				    <li class="page-item" th:if="*{prev}">
+				    	<a class="page-link" th:href="@{/info/point/{type}(type=${type}, page=*{startPage-1})}">이전</a>
+				    </li>
+				    <li class="page-item" 
+				    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
+				    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
+				    	<a class="page-link" th:href="@{/info/point/{type}(type=${type}, page=${i})}" th:text="${i}"></a>
+				    </li>
+				    <li class="page-item" th:if="*{next}">
+				    	<a class="page-link" th:href="@{/info/point/{type}(type=${type}, page=*{endPage+1})}">다음</a>
+				    </li>
+				</ul>
+			</div>
 		</div>
 	</main>
 </body>

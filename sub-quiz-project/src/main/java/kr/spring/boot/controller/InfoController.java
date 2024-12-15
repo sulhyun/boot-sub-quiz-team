@@ -1,6 +1,7 @@
 package kr.spring.boot.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.spring.boot.model.util.CustomUtil;
 import kr.spring.boot.model.vo.MemberVO;
+import kr.spring.boot.model.vo.PointVO;
+import kr.spring.boot.pagination.Criteria;
+import kr.spring.boot.pagination.PageMaker;
 import kr.spring.boot.service.InfoService;
 import kr.spring.boot.service.MemberService;
 import lombok.AllArgsConstructor;
@@ -32,7 +36,7 @@ public class InfoController {
 		user.setMb_hp(customUtil.autoHyphen(user.getMb_hp()));
 		model.addAttribute("user", user);
 		return "info/profile";
-	}
+	} // 회원 정보 화면
 	
 	@PostMapping("/profile")
 	public String basicPost(Model model, Principal principal, @RequestParam Map<String, String> params) {
@@ -44,7 +48,15 @@ public class InfoController {
 	} // 회원 정보 수정
 	
 	@GetMapping("/point/{type}")
-	public String point(Model model, Principal principal, @PathVariable String type) {
+	public String point(Model model, Principal principal, Criteria cri, @PathVariable String type) {
+		String mb_id = principal.getName();
+		MemberVO user = memberService.selectMember(mb_id);
+		cri.setPerPageNum(5);
+		PageMaker pm = infoService.getPageMaker(cri, mb_id);
+		List<PointVO> list = infoService.getPointList(cri, mb_id);
+		model.addAttribute("user", user);
+		model.addAttribute("pm", pm);
+		model.addAttribute("list", list);
 		return "info/point";
-	}
+	} // 포인트 내역 화면(페이지네이션)
 }

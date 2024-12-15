@@ -1,11 +1,15 @@
 package kr.spring.boot.service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.InfoDAO;
+import kr.spring.boot.model.vo.PointVO;
+import kr.spring.boot.pagination.Criteria;
+import kr.spring.boot.pagination.PageMaker;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -45,6 +49,20 @@ public class InfoServiceImp implements InfoService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public PageMaker getPageMaker(Criteria cri, String mb_id) {
+		int count = infoDao.getCount(cri, mb_id);
+		return new PageMaker(5, cri, count);
+	}
+
+	@Override
+	public List<PointVO> getPointList(Criteria cri, String mb_id) {
+		if(mb_id == null) {
+			return null;
+		}
+		return infoDao.selectPointList(cri, mb_id);
 	}
 
 }
