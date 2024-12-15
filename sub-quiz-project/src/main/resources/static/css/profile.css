@@ -10,3 +10,5 @@
 .profile-item:hover{background-color: #f9fafb;border-radius: 10px;}
 .modal-btn {background: none;border: none;color: #17a2b8;cursor: pointer;padding: 0;}
 .modal-btn:hover {color: #117a8b;text-decoration: none;}
+.zip-num{width: 50%; display: inline;}
+.zip-find{margin-bottom: 5px;}

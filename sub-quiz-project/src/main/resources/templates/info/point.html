@@ -6,25 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>퀴즈Q : 포인트</title>
-<style type="text/css">
-	.point-wrapper{width: 900px;margin: 40px auto;}
-	.point-container {display: flex;padding: 16px;margin: 8px;background-color: white;border-radius: 12px;}
-	.point-box{height: 450px;}
-	.date-info {font-size: 14px;font-weight: 500;color: #4a4a4a;margin-right: 16px;}
-	.point-details {flex-grow: 1; display: flex;justify-content: space-between;align-items: center;}
-	.point-info {display: flex;flex-direction: column;}
-	.point-content {font-weight: bold;color: #333;font-size: 16px;margin-bottom: 4px;}
-	.point-type {color: #6c6c6c;font-size: 14px;}
-	.amount-info {display: flex;flex-direction: column;align-items: flex-end;}
-	.amount {font-weight: bold;color: #096c8a;font-size: 16px;}
-	li{cursor:pointer; color:#0c5460 !important;}
-	.list-group-item{border:none !important;padding: .3rem 0.25rem !important;}
-	.btn{width: 100% !important; text-align: left; border-radius: 20px;}
-	.none-list{margin-top: 18%;}
-	.none-content{text-align: center;}
-	.no-title{margin-top: 2%; font-weight: bold; color: #888; font-size: 0.9em;}
-	.point-box{padding: 10px;border: 1px solid #eee;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);border-radius: 8px;margin-top: 10px;margin-bottom: 13px;}
-</style>
+<link rel="stylesheet" type="text/css" th:href="@{/css/point.css}">
 </head>
 <body>
 	<main layout:fragment="content">
