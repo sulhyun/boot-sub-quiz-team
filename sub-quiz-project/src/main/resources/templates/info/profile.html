@@ -25,12 +25,12 @@
 	        	<div class="profile-item">
 	        		<div class="profile-label">
 	        			<span style="word-spacing: 8px;">이 름</span>
-	        			<button class="modal-btn" data-toggle="modal" data-target="#myModal">수정</button>
+	        			<button class="modal-btn" data-toggle="modal" data-target="#myModal-name">수정</button>
 	        		</div>
 	        		<div class="profile-value" th:text="${user.mb_name}"></div>
 	        	</div>
 	        	<!-- The Modal -->
-				<div class="modal" id="myModal">
+				<div class="modal" id="myModal-name">
 					<div class="modal-dialog">
 						<div class="modal-content">
 				     		 <!-- Modal Header -->
@@ -42,7 +42,8 @@
 			  				<form action="/info/profile" method="post">
 								<div class="modal-body">
 				  					<div class="form-group">
-				  						<input type="text" class="form-control" name="mb_name" placeholder="이름">
+				  						<label for="name"><b>이름</b></label>
+				  						<input type="text" class="form-control" id="name" name="mb_name" placeholder="이름">
 				  						<input type="hidden" name="type" value="name">
 				  					</div>
 								</div>
@@ -58,12 +59,12 @@
 	        	<div class="profile-item">
 			        <div class="profile-label">
 			        	<span>닉네임</span>
-	        			<button class="modal-btn" data-toggle="modal" data-target="#myModal2">수정</button>
+	        			<button class="modal-btn" data-toggle="modal" data-target="#myModal-nick">수정</button>
 			        </div>
 			        <div class="profile-value" th:text="${user.mb_nick}"></div>
 			    </div>
 			    <!-- The Modal -->
-				<div class="modal" id="myModal2">
+				<div class="modal" id="myModal-nick">
 					<div class="modal-dialog">
 						<div class="modal-content">
 				     		 <!-- Modal Header -->
@@ -75,7 +76,8 @@
 			  				<form action="/info/profile" method="post">
 								<div class="modal-body">
 				  					<div class="form-group">
-				  						<input type="text" class="form-control" name="mb_nick" placeholder="닉네임">
+				  						<label for="nick"><b>닉네임</b></label>
+				  						<input type="text" class="form-control" id="nick" name="mb_nick" placeholder="닉네임">
 				  						<input type="hidden" name="type" value="nick">
 				  					</div>
 								</div>
@@ -91,24 +93,25 @@
 			    <div class="profile-item">
 			        <div class="profile-label">
 			        	<span>연락처</span>
-		        		<button class="modal-btn" data-toggle="modal" data-target="#myModal3">수정</button>
+		        		<button class="modal-btn" data-toggle="modal" data-target="#myModal-hp">수정</button>
 			        </div>
 			        <div class="profile-value" th:text="${user.mb_hp}"></div>
 			    </div>
 			    <!-- The Modal -->
-				<div class="modal" id="myModal3">
+				<div class="modal" id="myModal-hp">
 					<div class="modal-dialog">
 						<div class="modal-content">
 				     		 <!-- Modal Header -->
 							<div class="modal-header">
-								<h5 class="modal-title">전화번호 수정</h5>
+								<h5 class="modal-title">연락처 수정</h5>
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 							</div>
 			  				<!-- Modal body -->
 			  				<form action="/info/profile" method="post">
 								<div class="modal-body">
 				  					<div class="form-group">
-				  						<input type="text" class="form-control" name="mb_hp" placeholder="휴대폰 번호 ('-'제외 11자리)">
+				  						<label for="hp"><b>연락처</b></label>
+				  						<input type="text" class="form-control" id="hp" name="mb_hp" placeholder="휴대폰 번호 ('-'제외 11자리)">
 										<input type="hidden" name="type" value="contact">
 				  					</div>
 								</div>
@@ -131,7 +134,7 @@
 	        	</div>
 	        </div>
 	        <div class="profile-section">
-	        	<button class="profile-btn" data-toggle="modal" data-target="#myModal4">
+	        	<button class="profile-btn" data-toggle="modal" data-target="#myModal-addr">
 	        		<div class="profile-item">
 				        <div class="profile-label">주소 관리</div>
 				        <div class="profile-value">></div>
@@ -139,7 +142,7 @@
 	        	</button>
 	        </div>
 	        <!-- The Modal -->
-			<div class="modal" id="myModal4">
+			<div class="modal" id="myModal-addr">
 				<div class="modal-dialog">
 					<div class="modal-content">
 			     		 <!-- Modal Header -->
@@ -175,12 +178,48 @@
 				</div>
 			</div>
 	        <div class="profile-section">
-	        	<button class="profile-btn">
+	        	<button class="profile-btn" data-toggle="modal" data-target="#myModal-pw">
 	        		<div class="profile-item">
 				        <div class="profile-label">비밀번호 변경</div>
 				        <div class="profile-value">></div>
 				    </div>
 	        	</button>
+	        	<!-- The Modal -->
+				<div class="modal" id="myModal-pw">
+					<div class="modal-dialog">
+						<div class="modal-content">
+				     		 <!-- Modal Header -->
+							<div class="modal-header">
+								<h5 class="modal-title">비밀번호 변경</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+			  				<!-- Modal body -->
+			  				<form action="/info/profile" method="post">
+								<div class="modal-body">
+				  					<div class="form-group">
+										<label for="pw"><b>기존 비밀번호</b></label>
+										<input type="password" class="form-control" id="pw" name="pw">
+									</div>
+									<div class="form-group">
+										<label for="mb_pw"><b>새 비밀번호</b></label>
+										<input type="password" class="form-control" id="mb_pw" name="mb_pw">
+									</div>
+									<div class="form-group">
+										<label for="mb_pw2"><b>새 비밀번호 확인</b></label>
+										<input type="password" class="form-control" id="mb_pw2" name="mb_pw2">
+									</div>
+									<input type="hidden" name="type" value="password">
+								</div>
+								<div class="error-pw"></div>
+								<!-- Modal footer -->
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+									<button type="button" class="btn btn-success" onclick="checkPw()">변경</button>
+								</div>
+			  				</form>
+						</div>
+					</div>
+				</div>
 	        	<button class="profile-btn">
 	        		<div class="profile-item">
 				        <div class="profile-label">계정 탈퇴</div>
