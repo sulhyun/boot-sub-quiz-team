@@ -1,7 +1,6 @@
 package kr.spring.boot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,9 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import kr.spring.boot.model.dto.LoginDTO;
 import kr.spring.boot.model.dto.SignupDTO;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.service.MemberService;
@@ -38,13 +34,8 @@ public class MemberController {
 	@PostMapping("/signup")
 	public String signupPost(Model model, SignupDTO user) {
 		boolean res = memberService.signup(user);
-		if(res) {
-			model.addAttribute("msg", "회원가입 성공!!");
-			model.addAttribute("url", "/");
-		}else {
-			model.addAttribute("msg", "회원가입 실패!!");
-			model.addAttribute("url", "/");
-		}
+		model.addAttribute("msg", res ? "회원가입 성공!!" : "회원가입 실패!!");
+		model.addAttribute("url", "/");
 		return "util/msg";
 	} // 회원가입
 	

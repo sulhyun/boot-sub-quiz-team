@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈Q : 포인트</title>
+<style type="text/css">
+	.point-wrapper{width: 900px;margin: 40px auto;}
+	.point-container {display: flex;padding: 16px;margin: 8px;background-color: white;border-radius: 12px;}
+	.point-box{height: 450px;}
+	.date-info {font-size: 14px;font-weight: 500;color: #4a4a4a;margin-right: 16px;}
+	.point-details {flex-grow: 1; display: flex;justify-content: space-between;align-items: center;}
+	.point-info {display: flex;flex-direction: column;}
+	.point-content {font-weight: bold;color: #333;font-size: 16px;margin-bottom: 4px;}
+	.point-type {color: #6c6c6c;font-size: 14px;}
+	.amount-info {display: flex;flex-direction: column;align-items: flex-end;}
+	.amount {font-weight: bold;color: #096c8a;font-size: 16px;}
+	li{cursor:pointer; color:#0c5460 !important;}
+	.list-group-item{border:none !important;padding: .3rem 0.25rem !important;}
+	.btn{width: 100% !important; text-align: left; border-radius: 20px;}
+	.none-list{margin-top: 18%;}
+	.none-content{text-align: center;}
+	.no-title{margin-top: 2%; font-weight: bold; color: #888; font-size: 0.9em;}
+</style>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:replace="~{layout/infoheader.html}"></div>
+		<div class="point-wrapper">
+			<h4>포인트</h4>
+			<p>사용 가능 포인트 · <span th:text="${user.mb_point}"></span>P</p>
+				<div class="btn-list">
+					<ul class="list-group list-group-horizontal">
+						<li class="list-group-item list-group-item-light">
+							<a th:href="@{/info/point/entire}">
+								<button type="button" th:class="${type == 'entire'} ? 'btn btn-info on':'btn btn-light'">전체</button>
+							</a>
+						</li>
+						<li class="list-group-item list-group-item-light">
+							<a th:href="@{/info/point/use}">
+								<button type="button" th:class="${type == 'use'} ? 'btn btn-info on':'btn btn-light'">사용</button>
+							</a>
+						</li>
+						<li class="list-group-item list-group-item-light">
+							<a th:href="@{/info/point/get}">
+								<button type="button" th:class="${type == 'get'} ? 'btn btn-info on':'btn btn-light'">획득</button>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="point-box">
+					<div class="point-container" th:each="list:${list}">
+						<span class="date-info" th:text="${#dates.format(list.pi_datetime, 'MM.dd')}"></span>
+						<div class="point-details">
+							<div class="point-info">
+								<span class="point-contant" th:text="${list.pi_content}"></span>
+								<span class="point-type"><span th:text="${#dates.format(list.pi_datetime, 'HH:mm')}"></span> ㅣ <span th:text="${list.pi_no > 0 ? '획득' : '사용'}"></span></span>
+							</div>
+							<div class="amount-info">
+								<span class="amount"><span th:text="${#numbers.formatInteger(list.pi_no, 0, 'COMMA')}"></span>P</span>
+							</div>
+						</div>
+					</div>
+					<div class="none-list" th:if="${list == null or #lists.isEmpty(list)}">
+						<div class="none-content">
+							<p class="no-title">내역이 없어요</p>
+						</div>
+					</div>
+				</div>
+			<div class="page_div">
+				<ul class="pagination justify-content-center center" 
+					th:object="${pm}" 
+					th:if="${pm.endPage != 0}">
+				    <li class="page-item" th:if="*{prev}">
+				    	<a class="page-link" th:href="@{/info/point/{type}(type=${type}, page=*{startPage-1})}">이전</a>
+				    </li>
+				    <li class="page-item" 
+				    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
+				    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
+				    	<a class="page-link" th:href="@{/info/point/{type}(type=${type}, page=${i})}" th:text="${i}"></a>
+				    </li>
+				    <li class="page-item" th:if="*{next}">
+				    	<a class="page-link" th:href="@{/info/point/{type}(type=${type}, page=*{endPage+1})}">다음</a>
+				    </li>
+				</ul>
+			</div>
+		</div>
+	</main>
+</body>
+</html>
