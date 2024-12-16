@@ -26,6 +26,17 @@
 				MB_PW = #{params.mb_pw2},
 				MB_EDIT_DATE = NOW()
 			</when>
+			<when test="params.type == 'delete'">
+				MB_NAME = NULL,
+				MB_NICK = NULL,
+				MB_HP = NULL,
+				MB_EMAIL = NULL,
+				MB_BIRTH = NULL,
+				MB_ZIP = NULL,
+				MB_ADDR = NULL,
+				MB_ADDR2 = NULL,
+				MB_OUT_DATE = NOW()
+			</when>
 		</choose>
 		WHERE MB_ID = #{mb_id}
 	</update>

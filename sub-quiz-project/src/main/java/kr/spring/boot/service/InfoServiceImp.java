@@ -55,6 +55,14 @@ public class InfoServiceImp implements InfoService {
 			}
 			params.replace("mb_pw2", passwordEncoder.encode(params.get("mb_pw2")));
 			return infoDao.updateInfo(mb_id, params);
+		case "delete":
+			if(!mb_id.equals(params.get("id"))) {
+				return false;
+			}
+			if(!passwordEncoder.matches(params.get("pw"), user.getMb_pw())) {
+				return false;
+			}
+			return infoDao.updateInfo(mb_id, params);
 		}
 		return false;
 	}

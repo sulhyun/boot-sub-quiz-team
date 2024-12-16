@@ -40,8 +40,12 @@ public class InfoController {
 	
 	@PostMapping("/profile")
 	public String basicPost(Model model, Principal principal, @RequestParam Map<String, String> params) {
-		System.out.println(params);
 		boolean res = infoService.updateInfo(principal.getName(), params);
+		if(params.get("type").equals("delete")) {
+			model.addAttribute("msg", res ? "탈퇴 성공!!" : "탈퇴 실패!!");
+			model.addAttribute("url", res ? "/member/login" : "/info/profile");
+			return "util/msg";
+		}
 		model.addAttribute("msg", res ? "수정 성공!!" : "수정 실패!!");
 		model.addAttribute("url", "/info/profile");
 		return "util/msg";

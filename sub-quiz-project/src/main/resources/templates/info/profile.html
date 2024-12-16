@@ -236,7 +236,7 @@
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
 							</div>
 			  				<!-- Modal body -->
-			  				<form action="/info/profile" method="post" id="form-pw">
+			  				<form action="/info/profile" method="post" id="form-del">
 								<div class="modal-body">
 				  					<div class="form-group">
 										<label for="id"><b>아아디</b></label>
@@ -265,6 +265,12 @@
 		    	$(this).find('input').not('#address, #zip_btn').val('');
 		        $(this).find('#error-pw').text('');
 		    });
+		    
+		    function checkDel(){
+		    	if (confirm('정말 계정을 삭제하시겠습니까?')) {
+		    		$('#form-del').submit();
+		        }
+		    }
 		    
 	    	function checkPw(){
 		    	const mb_pw2 = $('#mb_pw2').val();
