@@ -22,6 +22,10 @@
 				MB_ADDR2 = #{params.mb_addr2},
 				MB_EDIT_DATE = NOW()
 			</when>
+			<when test="params.type == 'password'">
+				MB_PW = #{params.mb_pw2},
+				MB_EDIT_DATE = NOW()
+			</when>
 		</choose>
 		WHERE MB_ID = #{mb_id}
 	</update>
