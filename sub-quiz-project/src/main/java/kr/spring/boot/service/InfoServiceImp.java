@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.InfoDAO;
+import kr.spring.boot.dao.MemberDAO;
+import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.pagination.Criteria;
 import kr.spring.boot.pagination.PageMaker;
@@ -16,34 +19,60 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class InfoServiceImp implements InfoService {
 	
+	private BCryptPasswordEncoder passwordEncoder;
 	private InfoDAO infoDao;
+	private MemberDAO memberDao;
 
 	@Override
 	public boolean updateInfo(String mb_id, Map<String, String> params) {
+		MemberVO user = memberDao.selectMember(mb_id);
 		switch(params.get("type")) {
 		case "name":
-			if(params.get("mb_name") == null || params.get("mb_name").trim().length() == 0) {
+			if(!checkNull(params.get("mb_name"))) {
 				return false;
 			}
 			return infoDao.updateInfo(mb_id, params);
 		case "nick":
-			if(params.get("mb_nick") == null || params.get("mb_nick").trim().length() == 0) {
+			if(!checkNull(params.get("mb_nick"))) {
 				return false;
 			}
 			return infoDao.updateInfo(mb_id, params);
 		case "contact":
-			if(params.get("mb_hp") == null || params.get("mb_hp").trim().length() == 0 || !checkRegex(params.get("mb_hp"), "^010\\d{4}\\d{4}$")) {
+			if(!checkNull(params.get("mb_hp")) || !checkRegex(params.get("mb_hp"), "^010\\d{4}\\d{4}$")) {
 				return false;
 			}
 			return infoDao.updateInfo(mb_id, params);
 		case "address":
-			if(params.get("mb_zip") == null || params.get("mb_zip").trim().length() == 0 || params.get("mb_addr") == null || params.get("mb_addr").trim().length() == 0 || params.get("mb_addr2") == null || params.get("mb_addr2").trim().length() == 0) {
+			if(!checkNull(params.get("mb_zip")) || !checkNull(params.get("mb_addr")) || !checkNull(params.get("mb_addr2"))) {
+				return false;
+			}
+		case "password":
+			if(!checkNull(params.get("mb_pw")) || !checkRegex(params.get("mb_pw"), "^[a-zA-Z0-9!@#$]{6,20}$")) {
+				return false;
+			}
+			if(!passwordEncoder.matches(params.get("mb_pw"), user.getMb_pw())) {
+				return false;
+			}
+			params.replace("mb_pw2", passwordEncoder.encode(params.get("mb_pw2")));
+			return infoDao.updateInfo(mb_id, params);
+		case "delete":
+			if(!mb_id.equals(params.get("id"))) {
+				return false;
+			}
+			if(!passwordEncoder.matches(params.get("pw"), user.getMb_pw())) {
 				return false;
 			}
 			return infoDao.updateInfo(mb_id, params);
 		}
 		return false;
-	} // 회원 정보 수정
+	}
+	
+	private boolean checkNull(String str) {
+		if(str == null || str.trim().length() == 0) {
+			return false;
+		}
+		return true;
+	}
 	
 	private boolean checkRegex(String str, String regex) {
 		if (str != null && Pattern.matches(regex, str)) {
@@ -51,7 +80,7 @@ public class InfoServiceImp implements InfoService {
 		}
 		return false;
 	}
-
+	
 	@Override
 	public PageMaker getPageMaker(Criteria cri, String mb_id) {
 		int count = infoDao.getCount(cri, mb_id);

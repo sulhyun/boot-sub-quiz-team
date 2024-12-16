@@ -15,3 +15,4 @@ li{cursor:pointer; color:#0c5460 !important;}
 .none-content{text-align: center;}
 .no-title{margin-top: 2%; font-weight: bold; color: #888; font-size: 0.9em;}
 .point-box{padding: 10px;border: 1px solid #eee;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);border-radius: 8px;margin-top: 10px;margin-bottom: 13px;}
+.error-pw{padding:7px;text-align: center;color:red;}
