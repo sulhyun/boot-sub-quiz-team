@@ -24,7 +24,9 @@ import kr.spring.boot.pagination.PageMaker;
 import kr.spring.boot.service.InfoService;
 import kr.spring.boot.service.MemberService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @AllArgsConstructor
 @RequestMapping("/info")
@@ -45,20 +47,30 @@ public class InfoController {
 	@PostMapping("/profile")
 	public String basicPost(Model model, Principal principal, @RequestParam Map<String, String> params, HttpServletRequest request, HttpServletResponse response) {
 		boolean res = infoService.updateInfo(principal.getName(), params);
-		if(params.get("type").equals("delete")) {
-			if(res) {
-				SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
-		        logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-			}
-			model.addAttribute("msg", res ? "탈퇴 성공!!" : "탈퇴 실패!!");
-			model.addAttribute("url", res ? "/member/login" : "/info/profile");
-			return "util/msg";
-		}
+		log.info("update Info : {}", res);
+		return "redirect:/info/profile";
+	} // 회원 정보 수정
+	
+	@PostMapping("/password")
+	public String password(Model model, Principal principal, @RequestParam Map<String, String> params) {
+		boolean res = infoService.updatePw(principal.getName(), params);
 		model.addAttribute("msg", res ? "수정 성공!!" : "수정 실패!!");
 		model.addAttribute("url", "/info/profile");
 		return "util/msg";
-	} // 회원 정보 수정
-
+	} // 비밀번호 변경
+	
+	@PostMapping("/cancel")
+	public String cancel(Model model, Principal principal, @RequestParam Map<String, String> params, HttpServletRequest request, HttpServletResponse response) {
+		boolean res = infoService.cancelMember(principal.getName(), params);
+		if(res) {
+			SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+	        logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+		}
+		model.addAttribute("msg", res ? "탈퇴 성공!!" : "탈퇴 실패!!");
+		model.addAttribute("url", res ? "/member/login" : "/user/profile");
+		return "util/msg";
+	} // 회원 탈퇴
+	
 	@GetMapping("/point/{type}")
 	public String point(Model model, Principal principal, Criteria cri, @PathVariable String type) {
 		cri.setPerPageNum(5);

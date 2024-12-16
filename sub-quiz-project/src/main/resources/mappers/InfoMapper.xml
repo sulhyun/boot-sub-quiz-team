@@ -22,23 +22,26 @@
 				MB_ADDR2 = #{params.mb_addr2},
 				MB_EDIT_DATE = NOW()
 			</when>
-			<when test="params.type == 'password'">
-				MB_PW = #{params.mb_pw2},
-				MB_EDIT_DATE = NOW()
-			</when>
-			<when test="params.type == 'delete'">
-				MB_NAME = NULL,
-				MB_NICK = NULL,
-				MB_HP = NULL,
-				MB_EMAIL = NULL,
-				MB_BIRTH = NULL,
-				MB_ZIP = NULL,
-				MB_ADDR = NULL,
-				MB_ADDR2 = NULL,
-				MB_OUT_DATE = NOW()
-			</when>
 		</choose>
 		WHERE MB_ID = #{mb_id}
+	</update>
+	<update id="updatePw">
+		UPDATE MEMBER SET MB_PW = #{params.mb_pw2}, MB_EDIT_DATE = NOW() WHERE MB_ID = #{mb_id}
+	</update>
+	<update id="cancelMember">
+		UPDATE MEMBER 
+		SET
+			MB_NAME = NULL,
+			MB_NICK = NULL,
+			MB_HP = NULL,
+			MB_EMAIL = NULL,
+			MB_BIRTH = NULL,
+			MB_ZIP = NULL,
+			MB_ADDR = NULL,
+			MB_ADDR2 = NULL,
+			MB_OUT_DATE = NOW()
+		WHERE 
+			MB_ID = #{mb_id}
 	</update>
 	<select id="getCount" resultType="int">
 		SELECT COUNT(*)

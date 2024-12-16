@@ -11,6 +11,10 @@ import kr.spring.boot.pagination.Criteria;
 public interface InfoDAO {
 	
 	boolean updateInfo(@Param("mb_id")String mb_id, @Param("params")Map<String, String> params);
+	
+	boolean updatePw(@Param("mb_id")String mb_id, @Param("params")Map<String, String> params);
+	
+	boolean cancelMember(@Param("mb_id")String mb_id, @Param("params")Map<String, String> params);
 
 	int getCount(@Param("cri")Criteria cri, @Param("mb_id")String mb_id);
 

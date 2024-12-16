@@ -10,6 +10,10 @@ import kr.spring.boot.pagination.PageMaker;
 public interface InfoService {
 
 	boolean updateInfo(String mb_id, Map<String, String> params);
+	
+	boolean updatePw(String mb_id, Map<String, String> params);
+	
+	boolean cancelMember(String mb_id, Map<String, String> params);
 
 	PageMaker getPageMaker(Criteria cri, String mb_id);
 
