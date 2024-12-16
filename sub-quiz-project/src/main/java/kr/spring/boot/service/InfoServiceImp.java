@@ -22,6 +22,20 @@ public class InfoServiceImp implements InfoService {
 	private BCryptPasswordEncoder passwordEncoder;
 	private InfoDAO infoDao;
 	private MemberDAO memberDao;
+	
+	private boolean checkNull(String str) {
+		if(str == null || str.trim().length() == 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean checkRegex(String str, String regex) {
+		if (str != null && Pattern.matches(regex, str)) {
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public boolean updateInfo(String mb_id, Map<String, String> params) {
@@ -73,20 +87,6 @@ public class InfoServiceImp implements InfoService {
 			return false;
 		}
 		return infoDao.cancelMember(mb_id, params);
-	}
-	
-	private boolean checkNull(String str) {
-		if(str == null || str.trim().length() == 0) {
-			return false;
-		}
-		return true;
-	}
-	
-	private boolean checkRegex(String str, String regex) {
-		if (str != null && Pattern.matches(regex, str)) {
-			return true;
-		}
-		return false;
 	}
 	
 	@Override
