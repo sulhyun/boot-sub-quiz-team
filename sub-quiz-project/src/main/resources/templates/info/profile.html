@@ -261,6 +261,11 @@
 	        </div>
 	    </div>
 	    <script type="text/javascript">
+		    $('.modal').on('hidden.bs.modal', function () {
+		    	$(this).find('input').not('#address, #zip_btn').val('');
+		        $(this).find('#error-pw').text('');
+		    });
+		    
 	    	function checkPw(){
 		    	const mb_pw2 = $('#mb_pw2').val();
 	        	const mb_pw3 = $('#mb_pw3').val();
