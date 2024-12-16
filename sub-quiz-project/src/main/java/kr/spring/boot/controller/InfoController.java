@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import kr.spring.boot.model.util.CustomUtil;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.PointVO;
@@ -39,9 +43,13 @@ public class InfoController {
 	} // 회원 정보 화면
 	
 	@PostMapping("/profile")
-	public String basicPost(Model model, Principal principal, @RequestParam Map<String, String> params) {
+	public String basicPost(Model model, Principal principal, @RequestParam Map<String, String> params, HttpServletRequest request, HttpServletResponse response) {
 		boolean res = infoService.updateInfo(principal.getName(), params);
 		if(params.get("type").equals("delete")) {
+			if(res) {
+				SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+		        logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+			}
 			model.addAttribute("msg", res ? "탈퇴 성공!!" : "탈퇴 실패!!");
 			model.addAttribute("url", res ? "/member/login" : "/info/profile");
 			return "util/msg";
@@ -50,7 +58,7 @@ public class InfoController {
 		model.addAttribute("url", "/info/profile");
 		return "util/msg";
 	} // 회원 정보 수정
-	
+
 	@GetMapping("/point/{type}")
 	public String point(Model model, Principal principal, Criteria cri, @PathVariable String type) {
 		cri.setPerPageNum(5);
