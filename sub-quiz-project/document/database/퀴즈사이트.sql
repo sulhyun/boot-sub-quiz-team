@@ -4,10 +4,14 @@ CREATE DATABASE IF NOT EXISTS quizgame;
 
 USE quizgame;
 
+DROP TABLE IF EXISTS `community`;
+
 CREATE TABLE `community` (
 	`co_num`	int primary key auto_increment	NOT NULL,
 	`co_name`	varchar(255)	NULL
 );
+
+DROP TABLE IF EXISTS `post`;
 
 CREATE TABLE `post` (
 	`po_num`	int primary key auto_increment	NOT NULL,
@@ -20,6 +24,8 @@ CREATE TABLE `post` (
 	`co_num`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `member`;
+
 CREATE TABLE `member` (
 	`mb_num`	int primary key auto_increment	NOT NULL,
 	`mb_id`	varchar(255)	NULL,
@@ -31,16 +37,17 @@ CREATE TABLE `member` (
 	`mb_zip`	int(11)	NULL,
 	`mb_addr`	varchar(255)	NULL,
 	`mb_addr2`	varchar(255)	NULL,
-	`mb_birth`	Date	NULL,
+	`mb_birth`	int(11)	NULL,
 	`mb_level`	int(11)	NULL,
 	`mb_datetime`	datetime	NULL,
 	`mb_edit_date`	datetime	NULL,
 	`mb_out_date`	datetime	NULL,
 	`mb_cookie`	varchar(255)	NULL,
 	`mb_cookie_limit`	varchar(255)	NULL,
-	`mb_point`	int(11)	NULL,
-	`mb_login_method`	varchar(50)	NULL
+	`mb_point`	int(11)	NULL
 );
+
+DROP TABLE IF EXISTS `comment`;
 
 CREATE TABLE `comment` (
 	`cm_num`	int primary key auto_increment	NOT NULL,
@@ -51,12 +58,16 @@ CREATE TABLE `comment` (
 	`po_num`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `recommend`;
+
 CREATE TABLE `recommend` (
 	`re_num`	int primary key auto_increment	NOT NULL,
 	`re_state`	char(1)	NULL,
 	`mb_id`	varchar(255)	NULL,
 	`po_num`	int	NOT NULL
 );
+
+DROP TABLE IF EXISTS `file`;
 
 CREATE TABLE `file` (
 	`fi_num`	int primary key auto_increment	NOT NULL,
@@ -67,6 +78,8 @@ CREATE TABLE `file` (
 	`fi_type`	varchar(255)	NULL
 );
 
+DROP TABLE IF EXISTS `friend`;
+
 CREATE TABLE `friend` (
 	`fr_num`	int primary key auto_increment	NOT NULL,
 	`mb_id`	varchar(255)	NULL,
@@ -74,21 +87,29 @@ CREATE TABLE `friend` (
 	`fr_status`	char(1)	NULL
 );
 
+DROP TABLE IF EXISTS `quiz_type`;
+
 CREATE TABLE `quiz_type` (
 	`qt_num`	int primary key auto_increment	NOT NULL,
-	`qt_name`	varchar(255)	NULL
+	`qt_name`	varchar(255)	NULL,
+	`qt_type`	varchar(255)	NULL,
+	`ra_num`	int	NOT NULL
 );
+
+DROP TABLE IF EXISTS `quiz_choice`;
 
 CREATE TABLE `quiz_choice` (
 	`qu_num`	int primary key auto_increment	NOT NULL,
 	`qu_content`	longtext	NULL,
-	`qu_answer1`	int(11)	NULL,
-	`qu_answer2`	int(11)	NULL,
-	`qu_answer3`	int(11)	NULL,
-	`qu_answer4`	int(11)	NULL,
+	`qu_answer1`	varchar(255)	NULL,
+	`qu_answer2`	varchar(255)	NULL,
+	`qu_answer3`	varchar(255)	NULL,
+	`qu_answer4`	varchar(255)	NULL,
 	`qu_correct_answer`	int(11)	NULL,
 	`qt_num`	int	NOT NULL
 );
+
+DROP TABLE IF EXISTS `quiz_attempt`;
 
 CREATE TABLE `quiz_attempt` (
 	`qa_num`	int primary key auto_increment	NOT NULL,
@@ -96,6 +117,8 @@ CREATE TABLE `quiz_attempt` (
 	`qa_correct_count`	int	NULL,
 	`qu_num`	int	NOT NULL
 );
+
+DROP TABLE IF EXISTS `point`;
 
 CREATE TABLE `point` (
 	`pi_num`	int primary key auto_increment	NOT NULL,
@@ -105,18 +128,23 @@ CREATE TABLE `point` (
 	`mb_id`	varchar(255)	NULL
 );
 
+DROP TABLE IF EXISTS `quiz_interest`;
+
 CREATE TABLE `quiz_interest` (
 	`qi_num`	int primary key auto_increment	NOT NULL,
 	`mb_id`	varchar(255)	NULL,
 	`qt_num`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `rating`;
+
 CREATE TABLE `rating` (
 	`ra_num`	int primary key auto_increment	NOT NULL,
 	`ra_no`	int(11)	NULL,
-	`mb_id`	varchar(255)	NULL,
-	`qt_num`	int	NOT NULL
+	`mb_id`	varchar(255)	NULL
 );
+
+DROP TABLE IF EXISTS `quiz_subjective`;
 
 CREATE TABLE `quiz_subjective` (
 	`qs_num`	int primary key auto_increment	NOT NULL,
@@ -125,6 +153,8 @@ CREATE TABLE `quiz_subjective` (
 	`qs_correct_answer`	varchar(255)	NULL,
 	`qt_num`	int	NOT NULL
 );
+
+DROP TABLE IF EXISTS `event`;
 
 CREATE TABLE `event` (
 	`ev_num`	int primary key auto_increment	NOT NULL,
@@ -140,6 +170,8 @@ CREATE TABLE `event` (
 	`ev_cnt`	int(11)	NULL
 );
 
+DROP TABLE IF EXISTS `event_prize`;
+
 CREATE TABLE `event_prize` (
 	`ep_num`	int primary key auto_increment	NOT NULL,
 	`ep_prize`	varchar(255)	NULL,
@@ -148,12 +180,16 @@ CREATE TABLE `event_prize` (
 	`ev_num`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `event_list`;
+
 CREATE TABLE `event_list` (
 	`el_num`	int primary key auto_increment	NOT NULL,
 	`mb_id`	varchar(255)	NULL,
 	`el_datetime`	datetime	NULL,
 	`ev_num`	int	NOT NULL
 );
+
+DROP TABLE IF EXISTS `email_verification`;
 
 CREATE TABLE `email_verification` (
 	`evc_num`	int primary key auto_increment	NOT NULL,
@@ -182,6 +218,13 @@ REFERENCES `post` (
 	`po_num`
 );
 
+ALTER TABLE `quiz_type` ADD CONSTRAINT `FK_rating_TO_quiz_type_1` FOREIGN KEY (
+	`ra_num`
+)
+REFERENCES `rating` (
+	`ra_num`
+);
+
 ALTER TABLE `quiz_choice` ADD CONSTRAINT `FK_quiz_type_TO_quiz_choice_1` FOREIGN KEY (
 	`qt_num`
 )
@@ -197,13 +240,6 @@ REFERENCES `quiz_choice` (
 );
 
 ALTER TABLE `quiz_interest` ADD CONSTRAINT `FK_quiz_type_TO_quiz_interest_1` FOREIGN KEY (
-	`qt_num`
-)
-REFERENCES `quiz_type` (
-	`qt_num`
-);
-
-ALTER TABLE `rating` ADD CONSTRAINT `FK_quiz_type_TO_rating_1` FOREIGN KEY (
 	`qt_num`
 )
 REFERENCES `quiz_type` (
@@ -230,4 +266,3 @@ ALTER TABLE `event_list` ADD CONSTRAINT `FK_event_TO_event_list_1` FOREIGN KEY (
 REFERENCES `event` (
 	`ev_num`
 );
-
