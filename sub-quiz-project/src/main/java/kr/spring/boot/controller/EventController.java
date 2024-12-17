@@ -1,7 +1,9 @@
 package kr.spring.boot.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.spring.boot.model.dto.EventListDTO;
 import kr.spring.boot.model.vo.EventPrizeVO;
 import kr.spring.boot.model.vo.EventVO;
 import kr.spring.boot.service.EventService;
@@ -101,4 +106,24 @@ public class EventController {
 		return "redirect:/event/eventpage";
 	}
 	
+    @ResponseBody
+    @PostMapping("/eventdetail/eventapply")
+    public Map<String, Object> applyEvent(@RequestBody EventListDTO request) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            int evNum = request.getEv_num();
+            boolean isInserted = eventService.insertEvent(evNum);
+            if (isInserted) {
+                response.put("success", true);
+            } else {
+                response.put("success", false);
+                response.put("message", "응모 처리 중 문제가 발생했습니다.");
+            }
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "서버 오류: " + e.getMessage());
+        }
+        return response;
+    }
+    
 }

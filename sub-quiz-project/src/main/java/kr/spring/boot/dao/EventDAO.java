@@ -23,4 +23,6 @@ public interface EventDAO {
 
 	EventPrizeVO selectEventPrize(int ev_num);
 
+	int insertEvent(int ev_num);
+
 }

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}" layout:fragment="content">
+<head>
+<link href="/css/header.css" rel='stylesheet'>
+<meta charset="UTF-8">
+<title>사용자 퀴즈 사이트</title>
+<style type="text/css">
+.container{
+margin: 0 auto;
+padding: 0;
+position: relative;
+}
+
+.main-title{
+margin: 0;
+border-bottom: 3px solid #000;
+padding: 50px 0 25px;
+display: flex;
+justify-content: space-between;
+align-items: center; 
+}
+
+.list--default{
+border-width: 0;
+margin-top: 35px;
+}
+
+a{
+background-color: transparent;
+color: inherit;
+text-decoration: none;
+}
+
+ul{
+list-style: none;
+}
+
+.list-quiz{
+border-bottom: 1px solid #ebebeb;
+border-collapse: collapse;
+display: table;
+table-layout: fixed;
+width: 100%;
+}
+
+.list__subject {
+    height: 60px;
+    color: #222;
+    padding: 3px 10px 7px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 기존 유지 */
+}
+
+.list__subject button {
+    margin-left: 10px; /* 버튼 간격 */
+}
+
+.list__subject > span {
+    flex-grow: 1; /* 제목 영역이 공간을 차지하도록 설정 */
+}
+
+.list__title{
+vertical-align: middle;
+word-break: break-all;
+}
+
+/* ----------- 진행중 종료 당첨자 탭 스타일 ----------- */
+.tab-item3 {
+    border-top: 0;
+    display: flex !important;
+    width: 100%;
+}
+
+/* 사이트 변경시 클래스 위치 변경해서 진행 */
+.tab__item--active {
+    background-color: #fff;
+    border-bottom: 0;
+    color: #222;
+    box-sizing: border-box;
+    display: block;
+    flex: 1 1 0;
+    font-size: 18px;
+    height: 60px;
+    line-height: 60px;
+    max-width: 100%;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+}
+
+.tab__item {
+    background-color: #f9f9f9;
+    border-bottom: 2px solid #ddd;
+    box-sizing: border-box;
+    color: #888;
+    display: block;
+    flex: 1 1 0;
+    font-size: 18px;
+    height: 60px;
+    line-height: 60px;
+    max-width: 100%;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* 이벤트 페이지 종료된 이벤트 페이지로 변경시 left로 변경 */
+.tab__item-border {
+    border-right: 1px solid #ddd;
+}
+
+</style>
+</head>
+<body>
+	<main>
+		<div class="container">
+			<div class="main-title">
+				<h1>사용자 지정 게임</h1>			
+				<a href="/userquiz/userquizselect">퀴즈 등록</a>
+			</div>
+			<div class="tab-item3">
+                <a href="/userquiz/userquizpage" class="tab__item tab__item-border">객관식 퀴즈</a>
+                <a href="/userquiz/userquizpagesub" class="tab__item--active">주관식 퀴즈</a>
+            </div>
+			<div class="list--default">
+				<ul>
+					<li>
+						<a href="#" class="list-quiz">
+							<div class="list__subject">
+								<span class="list__title">제목</span>
+								<button class="btn btn-outline-info">수정</button>
+								<button class="btn btn-outline-info">삭제</button>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

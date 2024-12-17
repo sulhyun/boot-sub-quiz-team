@@ -40,5 +40,10 @@ public class EventService {
 	public EventPrizeVO eventPrize(int ev_num) {
 		return eventDAO.selectEventPrize(ev_num);
 	}
+
+	 public boolean insertEvent(int ev_num) {
+        int result = eventDAO.insertEvent(ev_num);
+        return result > 0;
+    }
 	
 }

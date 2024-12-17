@@ -4,6 +4,8 @@
     layout:decorate="~{layout/layout.html}" layout:fragment="content">
 <head>
 <link href="/css/header.css" rel='stylesheet'>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>Event detail Page</title>
 <style type="text/css">
@@ -121,7 +123,8 @@ text-align: center;
 				<p>즉시 지급</p>
 			</div>
 			<div class="btn-center">
-				<button class="btn btn-outline-info btn-size">응모하기</button>
+			    <input name="ev_num" id="ev_num" th:value="${event.ev_num}" type="hidden">
+			    <button class="btn btn-outline-info btn-size" id="evtNumBtn">응모하기</button>
 			</div>
 			<div>
 				<p><br>
@@ -146,5 +149,35 @@ text-align: center;
 			</div>
 		</div>
 	</main>
+	<script>
+	$(document).ready(function () {
+	    $("#evtNumBtn").click(function (e) {
+	        e.preventDefault(); // 기본 동작 방지
+	        const ev_num = $("#ev_num").val();
+	        if (!ev_num) {
+	            alert("ev_num 값이 없습니다!");
+	            return;
+	        }
+	        $.ajax({
+	            type: "POST",
+	            url: "/event/eventdetail/eventapply",
+	            contentType: "application/json",
+	            data: JSON.stringify({ ev_num: parseInt(ev_num, 10) }),
+	            dataType: "json",
+	            success: function (response) {
+	                if (response.success) {
+	                    alert("응모가 성공적으로 완료되었습니다.");
+	                } else {
+	                    alert("응모 실패: " + response.message);
+	                }
+	            },
+	            error: function (xhr, status, error) {
+	                console.error("응모 처리 실패:", error);
+	                alert("응모 중 문제가 발생했습니다.");
+	            }
+	        });
+	    });
+	});
+	</script>
 </body>
 </html>
