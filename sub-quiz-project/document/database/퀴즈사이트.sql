@@ -44,7 +44,8 @@ CREATE TABLE `member` (
 	`mb_out_date`	datetime	NULL,
 	`mb_cookie`	varchar(255)	NULL,
 	`mb_cookie_limit`	varchar(255)	NULL,
-	`mb_point`	int(11)	NULL
+	`mb_point`	int(11)	NULL,
+	`mb_login_method`	varchar(255)	NULL
 );
 
 DROP TABLE IF EXISTS `comment`;
@@ -266,3 +267,4 @@ ALTER TABLE `event_list` ADD CONSTRAINT `FK_event_TO_event_list_1` FOREIGN KEY (
 REFERENCES `event` (
 	`ev_num`
 );
+
