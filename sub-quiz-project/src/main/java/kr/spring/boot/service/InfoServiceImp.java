@@ -22,10 +22,23 @@ public class InfoServiceImp implements InfoService {
 	private BCryptPasswordEncoder passwordEncoder;
 	private InfoDAO infoDao;
 	private MemberDAO memberDao;
+	
+	private boolean checkNull(String str) {
+		if(str == null || str.trim().length() == 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean checkRegex(String str, String regex) {
+		if (str != null && Pattern.matches(regex, str)) {
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public boolean updateInfo(String mb_id, Map<String, String> params) {
-		MemberVO user = memberDao.selectMember(mb_id);
 		switch(params.get("type")) {
 		case "name":
 			if(!checkNull(params.get("mb_name"))) {
@@ -46,39 +59,34 @@ public class InfoServiceImp implements InfoService {
 			if(!checkNull(params.get("mb_zip")) || !checkNull(params.get("mb_addr")) || !checkNull(params.get("mb_addr2"))) {
 				return false;
 			}
-		case "password":
-			if(!checkNull(params.get("mb_pw")) || !checkRegex(params.get("mb_pw"), "^[a-zA-Z0-9!@#$]{6,20}$")) {
-				return false;
-			}
-			if(!passwordEncoder.matches(params.get("mb_pw"), user.getMb_pw())) {
-				return false;
-			}
-			params.replace("mb_pw2", passwordEncoder.encode(params.get("mb_pw2")));
-			return infoDao.updateInfo(mb_id, params);
-		case "delete":
-			if(!mb_id.equals(params.get("id"))) {
-				return false;
-			}
-			if(!passwordEncoder.matches(params.get("pw"), user.getMb_pw())) {
-				return false;
-			}
 			return infoDao.updateInfo(mb_id, params);
 		}
 		return false;
 	}
 	
-	private boolean checkNull(String str) {
-		if(str == null || str.trim().length() == 0) {
+	@Override
+	public boolean updatePw(String mb_id, Map<String, String> params) {
+		MemberVO user = memberDao.selectMember(mb_id);
+		if(!checkNull(params.get("mb_pw")) || !checkRegex(params.get("mb_pw"), "^[a-zA-Z0-9!@#$]{6,20}$")) {
 			return false;
 		}
-		return true;
+		if(!passwordEncoder.matches(params.get("mb_pw"), user.getMb_pw())) {
+			return false;
+		}
+		params.replace("mb_pw2", passwordEncoder.encode(params.get("mb_pw2")));
+		return infoDao.updatePw(mb_id, params);
 	}
 	
-	private boolean checkRegex(String str, String regex) {
-		if (str != null && Pattern.matches(regex, str)) {
-			return true;
+	@Override
+	public boolean cancelMember(String mb_id, Map<String, String> params) {
+		MemberVO user = memberDao.selectMember(mb_id);
+		if(!mb_id.equals(params.get("id"))) {
+			return false;
 		}
-		return false;
+		if(!passwordEncoder.matches(params.get("pw"), user.getMb_pw())) {
+			return false;
+		}
+		return infoDao.cancelMember(mb_id, params);
 	}
 	
 	@Override
