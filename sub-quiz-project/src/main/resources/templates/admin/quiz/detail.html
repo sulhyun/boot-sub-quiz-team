@@ -5,25 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>퀴즈 게임 : 관리자</title>
-<style type="text/css">
-	.quiz-wrapper{width: 85%;padding: 20px;margin-left: 220px;}
-	.heading{font-size: 2em;font-weight: bold;text-align: center;margin-bottom: 20px;}
-	.list-group-item{border:none !important;padding: .3rem 0.25rem !important;}
-	.btn{text-align: left; border-radius: 10px;}
-	.table-hover th, .table-hover td{text-align: center;}
-	.truncate{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 150px;}
-	.btn-group{display: flex;gap: 10px;justify-content: center;}
-	.button{border: none;outline: none;border-radius: 10px;width: 50px !important;padding: 5px;cursor: pointer;}
-	.quiz-box{height: 530px;}
-	.btn-td{width: 10%}
-	.insert{padding: 10px;}
-</style>
+<link rel="stylesheet" type="text/css" th:href="@{/css/adminQuizDetail.css}">
 </head>
 <body>
 	<main layout:fragment="content">
-		<div th:replace="~{layout/adminsidebar.html}"></div>
+		<div th:replace="~{layout/adminSidebar.html}"></div>
 		<div class="quiz-wrapper">
-	    	<h1 class="heading">퀴즈 상세</h1>
+	    	<h1 class="heading" th:text="${qt_name + ' 퀴즈'}"></h1>
 	    	<div class="d-flex">
 		    	<div class="btn-list mr-auto">
 					<ul class="list-group list-group-horizontal">
@@ -40,7 +28,7 @@
 					</ul>
 				</div>
 				<div class="list-group-item">
-		    		<a>
+		    		<a th:href="@{/admin/quiz/insert/{qt_num}/{type} (qt_num=${qt_num}, type=${type})}">
 		    			<button type="button" class="btn btn-dark">등록</button>
 		    		</a>
 				</div>
@@ -61,11 +49,11 @@
 						</thead>
 						<tbody>
 							 <tr th:each="list:${list}">
-				                <td class="truncate" data-toggle="tooltip" title="Hooray!" th:text="${list.qu_content}"></td>
-				                <td class="truncate" th:text="${list.qu_answer1}"></td>
-				                <td class="truncate" th:text="${list.qu_answer2}"></td>
-				                <td class="truncate" th:text="${list.qu_answer3}"></td>
-				                <td class="truncate" th:text="${list.qu_answer4}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qu_content}" th:text="${list.qu_content}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qu_answer1}" th:text="${list.qu_answer1}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qu_answer2}" th:text="${list.qu_answer2}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qu_answer3}" th:text="${list.qu_answer3}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qu_answer4}" th:text="${list.qu_answer4}"></td>
 				                <td class="truncate" th:text="${list.qu_correct_answer}"></td>
 				                <td class="btn-td">
 				                	<div class="btn-group">
@@ -90,8 +78,8 @@
 						</thead>
 						<tbody>
 							 <tr th:each="list:${list}">
-				                <td class="truncate" data-toggle="tooltip" title="Hooray!" th:text="${list.qs_content}"></td>
-				                <td class="truncate" th:text="${list.qs_correct_answer}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qs_content}" th:text="${list.qs_content}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qs_correct_answer}" th:text="${list.qs_correct_answer}"></td>
 				                <td class="btn-td">
 				                	<div class="btn-group">
 					                	<a class="button btn-info">수정</a>

@@ -1,0 +1,11 @@
+.quiz-wrapper{width: 85%;padding: 20px;margin-left: 220px;}
+.heading{font-size: 2em;font-weight: bold;text-align: center;margin-bottom: 20px;}
+.list-group-item{border:none !important;padding: .3rem 0.25rem !important;}
+.btn{text-align: left; border-radius: 10px;}
+.table-hover th, .table-hover td{text-align: center;}
+.truncate{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 150px;}
+.btn-group{display: flex;gap: 10px;justify-content: center;}
+.button{border: none;outline: none;border-radius: 10px;width: 50px !important;padding: 5px;cursor: pointer;}
+.quiz-box{height: 530px;}
+.btn-td{width: 10%}
+.insert{padding: 10px;}

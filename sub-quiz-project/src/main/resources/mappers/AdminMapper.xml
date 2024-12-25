@@ -53,4 +53,12 @@
     	ORDER BY QS_NUM DESC
     	LIMIT #{cri.pageStart}, #{cri.perPageNum}
     </select>
+    
+    <select id="selectQuizTypeName" resultType="String">
+    	SELECT QT_NAME
+    	FROM
+    		QUIZ_TYPE
+    	WHERE
+    		QT_NUM = #{qt_num}
+    </select>
 </mapper>
