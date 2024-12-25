@@ -41,4 +41,23 @@
         WHERE qt_num = #{qtNum}
     </select>
     
+    <select id="selectQuizType" resultType="QuizTypeVO">
+    	SELECT *
+    	FROM
+    		QUIZ_TYPE
+    	ORDER BY QT_NUM DESC
+    </select>
+    
+    <insert id="insertQuizType">
+    	INSERT INTO QUIZ_TYPE(QT_NAME) VALUES 
+    	(#{qt_name})
+    </insert>
+    
+    <delete id="deleteQuizType">
+    	DELETE FROM QUIZ_TYPE WHERE QT_NUM = #{qt_num}
+    </delete>
+    
+    <update id="updateQuizType">
+    	UPDATE QUIZ_TYPE SET QT_NAME = #{qt_name} WHERE QT_NUM = #{qt_num}
+    </update>
 </mapper>

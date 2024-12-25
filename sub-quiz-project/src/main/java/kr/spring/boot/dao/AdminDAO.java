@@ -23,4 +23,12 @@ public interface AdminDAO {
 	List<QuizChoiceVO> getChoiceQuizListByCategory(@Param("qtNum")int qtNum);
 
 	List<QuizSubjectiveVO> getSubjectiveQuizListByCategory(@Param("qtNum")int qtNum);
+
+	List<QuizTypeVO> selectQuizType();
+
+	boolean insertQuizType(@Param("qt_name")String qt_name);
+
+	boolean deleteQuizType(@Param("qt_num")int qt_num);
+
+	boolean updateQuizType(@Param("qt_num")int qt_num, @Param("qt_name")String qt_name);
 }

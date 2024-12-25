@@ -17,7 +17,9 @@ import kr.spring.boot.model.vo.QuizChoiceVO;
 import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
 import kr.spring.boot.service.AdminService;
+import kr.spring.boot.service.AdminServiceImp;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 /*
  * 퀴즈 수정,등록,삭제
  * 힌트 수정,등록,삭제
@@ -28,6 +30,7 @@ import lombok.AllArgsConstructor;
  * 포인트 관리
  * 홈페이지 기본 사항 관리
  * */
+@Slf4j
 @Controller
 @AllArgsConstructor
 @RequestMapping("/admin")
@@ -38,56 +41,37 @@ public class AdminController {
 	
 	@GetMapping("/adminhome")
 	public String Admin(Model model) {
-		
 		return "/admin/adminHome";		
 	}
-	@GetMapping("/adminquizcategory")
-	public String adminquizcategory(Model model,Principal principal) {
-
-        List<QuizTypeVO> quizCategories = adminService.getQuizCategories();
-        
-        if (quizCategories == null || quizCategories.isEmpty()) {
-            model.addAttribute("error", "카테고리 목록을 불러올 수 없습니다.");
-        }
-        
-        model.addAttribute("quizCategories", quizCategories);
-
-        return "/admin/adminquizcategory";
+	
+	@GetMapping("/quiz/type")
+	public String adminquizcategory(Model model, Principal principal) {
+        List<QuizTypeVO> list = adminService.getQuizType();
+        model.addAttribute("list", list);
+        return "/admin/quiz/type";
 	}
-    @PostMapping("/addquizcategory")
-    public String addQuizCategory(@RequestParam("categoryName") String categoryName, RedirectAttributes redirectAttributes) {
-        boolean Add = adminService.addCategory(categoryName);
-        
-        
-        if (Add) {
-            redirectAttributes.addFlashAttribute("message", "카테고리가 성공적으로 추가되었습니다.");
-        } else {
-            redirectAttributes.addFlashAttribute("message", "카테고리 추가에 실패했습니다.");
-        }
-
-        return "redirect:/admin/adminquizcategory";
+	
+    @PostMapping("/quiz/type/add")
+    public String addQuizCategory(@RequestParam String qt_name) {
+        boolean res = adminService.addQuizType(qt_name);
+        log.info("insert quiz_type : {}", res);
+        return "redirect:/admin/quiz/type";
     }
-    @PostMapping("/adminquizcategory/delete")
-    public String deleteQuizCategory(
-    	    @RequestParam("qt_num") int qtNum,
-    	    RedirectAttributes redirectAttributes) {
-    	    
-    	    System.out.println("삭제할 카테고리 ID: " + qtNum);
-    	    boolean deleted = adminService.deleteQuizCategory(qtNum);
-
-    	    redirectAttributes.addFlashAttribute("message", deleted ? "삭제 성공" : "삭제 실패");
-    	    return "redirect:/admin/adminquizcategory";
-    	}
-    @PostMapping("/adminquizcategory/update")
-    public String updateQuizCategory(
-    	    @RequestParam("qt_num") int qtNum,
-    	    @RequestParam("categoryName") String categoryName,
-    	    RedirectAttributes redirectAttributes) {
-    	    boolean updated = adminService.updateQuizCategory(qtNum, categoryName);
-    	   
-    	    redirectAttributes.addFlashAttribute("message", updated ? "수정 성공" : "수정 실패");
-    	    return "redirect:/admin/adminquizcategory";
+    
+    @PostMapping("/quiz/type/del")
+    public String deleteQuizCategory(@RequestParam int qt_num) {
+	    boolean res = adminService.delQuizType(qt_num);
+	    log.info("delete quiz_type : {}", res);
+	    return "redirect:/admin/quiz/type";
+	}
+    
+    @PostMapping("/quiz/type/update")
+    public String updateQuizCategory(@RequestParam int qt_num, @RequestParam String qt_name) {
+	    boolean res = adminService.updateQuizType(qt_num, qt_name);
+	    log.info("delete quiz_type : {}", res);
+	    return "redirect:/admin/quiz/type";
     }
+    
     @GetMapping("/quizlist/{qt_num}")
     public String quizList(@PathVariable("qt_num") int qtNum, Model model) {
     	

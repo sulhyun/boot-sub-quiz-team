@@ -118,15 +118,15 @@
     <!-- 카테고리 목록 -->
     <div class="grid">
         <!-- 카테고리 목록 반복문 -->
-        <div class="card" th:each="quiz : ${quizCategories}">
-        	<a th:href="@{/admin/quizlist/{qt_num}(qt_num=${quiz.qt_num})}" class="card-link">
-	            <h2 class="card-title" th:text="${quiz.qt_name}">카테고리 이름</h2>
+        <div class="card" th:each="list : ${list}">
+        	<a th:href="@{/admin/quizlist/{qt_num}(qt_num=${list.qt_num})}" class="card-link">
+	            <h2 class="card-title" th:text="${list.qt_name}">카테고리 이름</h2>
 	            <p class="card-count">퀴즈 갯수 : 3</p>
             </a>
             <div class="button-group">
-                <button class="update-btn btn btn-primary" id="update" th:data-num="${quiz.qt_num}" data-toggle="modal" data-target="#updateModal">수정</button>
-                <form action="/admin/adminquizcategory/delete" method="post">
-                    <input type="hidden" name="qt_num" th:value="${quiz.qt_num}">
+                <button class="update-btn btn btn-primary" id="update" th:data-num="${list.qt_num}" data-toggle="modal" data-target="#updateModal">수정</button>
+                <form action="/admin/quiz/type/del" method="post">
+                    <input type="hidden" name="qt_num" th:value="${list.qt_num}">
                     <button class="delete-btn" type="submit">삭제</button>
                 </form>
             </div>
@@ -148,13 +148,13 @@
 	          <button type="button" class="close" data-dismiss="modal">&times;</button>
 	        </div>
 	        <div class="modal-body">
-		        <form id="addCategoryForm" action="/admin/addquizcategory" method="post">
+		        <form id="addCategoryForm" action="/admin/quiz/type/add" method="post">
 		            <div class="form-group">
 		                <label for="categoryName" class="form-label">카테고리</label>
 		                <input
 		                    type="text"
 		                    id="categoryName"
-		                    name="categoryName"
+		                    name="qt_name"
 		                    required
 		                    class="form-input"
 		                />
@@ -176,9 +176,9 @@
 	          <button type="button" class="close" data-dismiss="modal">&times;</button>
 	        </div>
 	        <div class="modal-body">
-		        <form action="/admin/adminquizcategory/update" method="post">
+		        <form action="/admin/quiz/type/update" method="post">
 		            <input type="hidden" id="modalqtNum" name="qt_num">
-		            <input type="text" name="categoryName" placeholder="카테고리 이름">
+		            <input type="text" name="qt_name" placeholder="카테고리 이름">
 		            <button type="submit">수정</button>
 		        </form>
 	        </div>
