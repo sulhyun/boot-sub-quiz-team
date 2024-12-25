@@ -4,23 +4,23 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import kr.spring.boot.model.vo.QuizChoiceVO;
-import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
+import kr.spring.boot.pagination.Criteria;
 
 public interface AdminDAO {
 
-	List<QuizTypeVO> selectQuizCategories();
-	
-	int insertCategory(QuizTypeVO quizType);
-	
-	int deleteQuizCategory(int qt_num);
+	List<QuizTypeVO> selectQuizType();
 
-	QuizTypeVO selectQuizCategoryById(int qtNum);
+	boolean insertQuizType(@Param("qt_name")String qt_name);
 
-	int updateQuizCategory(QuizTypeVO quizType);
+	boolean deleteQuizType(@Param("qt_num")int qt_num);
 
-	List<QuizChoiceVO> getChoiceQuizListByCategory(@Param("qtNum")int qtNum);
+	boolean updateQuizType(@Param("qt_num")int qt_num, @Param("qt_name")String qt_name);
 
-	List<QuizSubjectiveVO> getSubjectiveQuizListByCategory(@Param("qtNum")int qtNum);
+	int getCount(@Param("cri")Criteria cri, @Param("qt_num")int qt_num);
+
+	List<?> selectQuizListByChoice(@Param("cri")Criteria cri, @Param("qt_num")int qt_num);
+
+	List<?> selectQuizListBySubjective(@Param("cri")Criteria cri, @Param("qt_num")int qt_num);
+
 }

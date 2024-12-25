@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈 게임 : 관리자</title>
+<style type="text/css">
+	.quiz-wrapper{width: 85%;padding: 20px;margin-left: 220px;}
+	.heading{font-size: 2em;font-weight: bold;text-align: center;margin-bottom: 20px;}
+	.list-group-item{border:none !important;padding: .3rem 0.25rem !important;}
+	.btn{text-align: left; border-radius: 10px;}
+	.table-hover th, .table-hover td{text-align: center;}
+	.truncate{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 150px;}
+	.btn-group{display: flex;gap: 10px;justify-content: center;}
+	.button{border: none;outline: none;border-radius: 10px;width: 50px !important;padding: 5px;cursor: pointer;}
+	.quiz-box{height: 530px;}
+	.btn-td{width: 10%}
+	.insert{padding: 10px;}
+</style>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:replace="~{layout/adminsidebar.html}"></div>
+		<div class="quiz-wrapper">
+	    	<h1 class="heading">퀴즈 상세</h1>
+	    	<div class="d-flex">
+		    	<div class="btn-list mr-auto">
+					<ul class="list-group list-group-horizontal">
+						<li class="list-group-item list-group-item-light">
+							<a th:href="@{/admin/quiz/detail/{qt_num}/choice(qt_num=${qt_num})}">
+								<button type="button" th:class="${type == 'choice'} ? 'btn btn-info on':'btn btn-light'">객관식</button>
+							</a>
+						</li>
+						<li class="list-group-item list-group-item-light">
+							<a th:href="@{/admin/quiz/detail/{qt_num}/subjective(qt_num=${qt_num})}">
+								<button type="button" th:class="${type == 'subjective'} ? 'btn btn-info on':'btn btn-light'">주관식</button>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="list-group-item">
+		    		<a>
+		    			<button type="button" class="btn btn-dark">등록</button>
+		    		</a>
+				</div>
+	    	</div>
+			<div th:if="${type == 'choice'}">
+				<div class="quiz-box">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>문제</th>
+								<th>보기1</th>
+								<th>보기2</th>
+								<th>보기3</th>
+								<th>보기4</th>
+								<th>정답</th>
+								<th>관리</th>
+							</tr>
+						</thead>
+						<tbody>
+							 <tr th:each="list:${list}">
+				                <td class="truncate" data-toggle="tooltip" title="Hooray!" th:text="${list.qu_content}"></td>
+				                <td class="truncate" th:text="${list.qu_answer1}"></td>
+				                <td class="truncate" th:text="${list.qu_answer2}"></td>
+				                <td class="truncate" th:text="${list.qu_answer3}"></td>
+				                <td class="truncate" th:text="${list.qu_answer4}"></td>
+				                <td class="truncate" th:text="${list.qu_correct_answer}"></td>
+				                <td class="btn-td">
+				                	<div class="btn-group">
+					                	<a class="button btn-info">수정</a>
+					                	<a class="button btn-danger">삭제</a>
+				                	</div>
+				                </td>
+				            </tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div th:if="${type == 'subjective'}">
+				<div class="quiz-box">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>문제</th>
+								<th>정답</th>
+								<th>관리</th>
+							</tr>
+						</thead>
+						<tbody>
+							 <tr th:each="list:${list}">
+				                <td class="truncate" data-toggle="tooltip" title="Hooray!" th:text="${list.qs_content}"></td>
+				                <td class="truncate" th:text="${list.qs_correct_answer}"></td>
+				                <td class="btn-td">
+				                	<div class="btn-group">
+					                	<a class="button btn-info">수정</a>
+					                	<a class="button btn-danger">삭제</a>
+				                	</div>
+				                </td>
+				            </tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="page_div">
+				<ul class="pagination justify-content-center center" 
+					th:object="${pm}" 
+					th:if="${pm.endPage != 0}">
+				    <li class="page-item" th:if="*{prev}">
+				    	<a class="page-link" th:href="@{/admin/quiz/{qt_num}/{type}(qt_num=${qt_num}, type=${type}, page=*{startPage-1})}">이전</a>
+				    </li>
+				    <li class="page-item" 
+				    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
+				    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
+				    	<a class="page-link" th:href="@{/admin/quiz/{qt_num}/{type}(qt_num=${qt_num} ,type=${type}, page=${i})}" th:text="${i}"></a>
+				    </li>
+				    <li class="page-item" th:if="*{next}">
+				    	<a class="page-link" th:href="@{/admin/quiz/{qt_num}/{type}(qt_num=${qt_num} ,type=${type}, page=*{endPage+1})}">다음</a>
+				    </li>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('[data-toggle="tooltip"]').tooltip();
+			});
+		</script>
+   </main>
+</body>
+</html>

@@ -37,14 +37,15 @@ CREATE TABLE `member` (
 	`mb_zip`	int(11)	NULL,
 	`mb_addr`	varchar(255)	NULL,
 	`mb_addr2`	varchar(255)	NULL,
-	`mb_birth`	int(11)	NULL,
+	`mb_birth`	varchar(10)	NULL,
 	`mb_level`	int(11)	NULL,
 	`mb_datetime`	datetime	NULL,
 	`mb_edit_date`	datetime	NULL,
 	`mb_out_date`	datetime	NULL,
 	`mb_cookie`	varchar(255)	NULL,
 	`mb_cookie_limit`	varchar(255)	NULL,
-	`mb_point`	int(11)	NULL
+	`mb_point`	int(11)	NULL,
+	`mb_login_method`	varchar(255)	NULL
 );
 
 DROP TABLE IF EXISTS `comment`;
@@ -92,8 +93,7 @@ DROP TABLE IF EXISTS `quiz_type`;
 CREATE TABLE `quiz_type` (
 	`qt_num`	int primary key auto_increment	NOT NULL,
 	`qt_name`	varchar(255)	NULL,
-	`qt_type`	varchar(255)	NULL,
-	`ra_num`	int	NOT NULL
+	`qt_type`	varchar(255)	NULL
 );
 
 DROP TABLE IF EXISTS `quiz_choice`;
@@ -141,7 +141,8 @@ DROP TABLE IF EXISTS `rating`;
 CREATE TABLE `rating` (
 	`ra_num`	int primary key auto_increment	NOT NULL,
 	`ra_no`	int(11)	NULL,
-	`mb_id`	varchar(255)	NULL
+	`mb_id`	varchar(255)	NULL,
+	`qt_num`	int	NOT NULL
 );
 
 DROP TABLE IF EXISTS `quiz_subjective`;
@@ -218,13 +219,6 @@ REFERENCES `post` (
 	`po_num`
 );
 
-ALTER TABLE `quiz_type` ADD CONSTRAINT `FK_rating_TO_quiz_type_1` FOREIGN KEY (
-	`ra_num`
-)
-REFERENCES `rating` (
-	`ra_num`
-);
-
 ALTER TABLE `quiz_choice` ADD CONSTRAINT `FK_quiz_type_TO_quiz_choice_1` FOREIGN KEY (
 	`qt_num`
 )
@@ -240,6 +234,13 @@ REFERENCES `quiz_choice` (
 );
 
 ALTER TABLE `quiz_interest` ADD CONSTRAINT `FK_quiz_type_TO_quiz_interest_1` FOREIGN KEY (
+	`qt_num`
+)
+REFERENCES `quiz_type` (
+	`qt_num`
+);
+
+ALTER TABLE `rating` ADD CONSTRAINT `FK_quiz_type_TO_rating_1` FOREIGN KEY (
 	`qt_num`
 )
 REFERENCES `quiz_type` (

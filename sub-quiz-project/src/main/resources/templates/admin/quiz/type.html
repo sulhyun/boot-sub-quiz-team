@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html 
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+  layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈 게임 : 관리자</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/adminquiztype.css}">
+</head>
+<body>
+<main layout:fragment="content">
+	<div th:replace="~{layout/adminsidebar.html}"></div>
+	<div class="quiz-wrapper">
+	    <!-- 헤더 -->
+	    <h1 class="heading">퀴즈 카테고리</h1>
+	    <!-- 카테고리 목록 -->
+	    <div class="grid">
+	        <!-- 카테고리 목록 반복문 -->
+	        <div class="card" th:each="list : ${list}">
+	        	<a th:href="@{/admin/quiz/detail/{qt_num}/choice(qt_num=${list.qt_num})}" class="card-link" th:text="${list.qt_name}"></a>
+	            <div class="button-group">
+	                <button class="update-btn btn btn-primary" id="update" th:data-num="${list.qt_num}" data-toggle="modal" data-target="#updateModal">수정</button>
+	                <form action="/admin/quiz/type/del" method="post">
+	                    <input type="hidden" name="qt_num" th:value="${list.qt_num}">
+	                    <button class="delete-btn" type="submit">삭제</button>
+	                </form>
+	            </div>
+	        </div>
+	        <!-- 추가 카드 -->
+	        <div class="card add-card">
+	            <button class="add-btn btn" data-toggle="modal" data-target="#myModal">+</button>
+	        </div>
+	    </div>
+	</div>
+	<!-- 모달 -->
+	<div id="myModal" class="modal">
+	    <div class="modal-dialog">
+	    	<div class="modal-content">
+		    	<div class="modal-header">
+					<h4 class="modal-title">카테고리 추가</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+		        </div>
+		        <form id="addCategoryForm" action="/admin/quiz/type/add" method="post">
+			        <div class="modal-body">
+			            <div class="form-group">
+			                <label for="qt_name_add"><b>카테고리</b></label>
+			                <input type="text" class="form-control" id="qt_name_add" name="qt_name" required placeholder="카테고리"/>
+			            </div>
+				        <div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+				            <button type="submit" class="btn btn-success">등록</button>
+				        </div>
+				    </div>
+			    </form>
+	        </div>
+	    </div>
+	</div>
+	<div id="updateModal" class="modal">
+	    <div class="modal-dialog">
+	    	<div class="modal-content">
+		    	<div class="modal-header">
+					<h4 class="modal-title">카테고리 수정</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+		        </div>
+			    <form action="/admin/quiz/type/update" method="post">
+			        <div class="modal-body">
+			        	<div class="form-group">
+				        	<label for="qt_name_update"><b>카테고리</b></label>
+				            <input type="text" class="form-control" id="qt_name_update" name="qt_name" placeholder="카테고리">
+				            <input type="hidden" id="qt_num" name="qt_num">
+			            </div>
+			        </div>
+			        <div class="modal-footer">
+		          		<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+			            <button type="submit" class="btn btn-success">수정</button>
+		        	</div>
+			    </form>
+	    	</div>
+	    </div>
+	</div>
+	<script type="text/javascript">
+		$(document).on('click', '#update', function() {
+			var qt_num = $(this).data('num');
+			$('#qt_num').val(qt_num);
+		});
+	</script>
+</main>
+</body>
+</html>
