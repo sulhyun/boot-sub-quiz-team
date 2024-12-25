@@ -7,27 +7,8 @@
   <meta charset="UTF-8">
   <title>퀴즈 게임 : 관리자 페이지</title>
   <style>
-    #wrapper {
+    #admin-wrapper {
       display: flex;
-    }
-    #sidebar {
-      width: 200px;
-      background-color: #333;
-      color: white;
-      padding: 15px;
-      height: 106%;
-      position: absolute;
-    }
-    #sidebar a {
-      display: block;
-      color: white;
-      padding: 10px;
-      text-decoration: none;
-      margin-bottom: 10px;
-      font-size: 15px;
-    }
-    #sidebar a:hover {
-      background-color: #575757;
     }
     #main-content {
       margin-left: 220px;
@@ -66,15 +47,8 @@
 </head>
 <body>
 <main layout:fragment="content">
-<div id="wrapper">
-  <div id="sidebar">
-  	<a href="#">홈페이지 기본 사항</a>
-    <a href="#">회원 관리</a>
-    <a href="/admin/quiz/type">퀴즈 관리</a>
-    <a href="#">사용자 문의 내용</a>
-    <a href="#">포인트 관리</a>
-    <a href="#">로그아웃</a>
-  </div>
+<div id="admin-wrapper">
+  <div th:replace="~{layout/adminsidebar.html}"></div>
 
   <div id="main-content">
     <section class="section">
