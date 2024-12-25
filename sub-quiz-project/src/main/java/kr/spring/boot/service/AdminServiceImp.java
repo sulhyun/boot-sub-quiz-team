@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.AdminDAO;
-import kr.spring.boot.model.vo.QuizChoiceVO;
-import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
 import kr.spring.boot.pagination.Criteria;
 import kr.spring.boot.pagination.PageMaker;
