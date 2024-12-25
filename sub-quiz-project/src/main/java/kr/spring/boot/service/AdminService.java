@@ -20,4 +20,6 @@ public interface AdminService {
 
 	List<?> getQuizList(Criteria cri, int qt_num);
 
+	String getQuizTypeName(int qt_num);
+
 }

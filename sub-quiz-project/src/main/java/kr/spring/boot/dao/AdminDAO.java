@@ -23,4 +23,6 @@ public interface AdminDAO {
 
 	List<?> selectQuizListBySubjective(@Param("cri")Criteria cri, @Param("qt_num")int qt_num);
 
+	String selectQuizTypeName(@Param("qt_num")int qt_num);
+
 }

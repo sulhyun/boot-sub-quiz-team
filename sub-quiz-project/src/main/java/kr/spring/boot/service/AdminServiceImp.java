@@ -57,4 +57,9 @@ public class AdminServiceImp implements AdminService {
 		return null;
 	}
 
+	@Override
+	public String getQuizTypeName(int qt_num) {
+		return adminDao.selectQuizTypeName(qt_num);
+	}
+
 }

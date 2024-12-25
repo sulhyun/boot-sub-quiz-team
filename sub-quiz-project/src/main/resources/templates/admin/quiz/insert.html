@@ -15,7 +15,7 @@
 <main layout:fragment="content">
 	<div th:replace="~{layout/adminSidebar.html}"></div>
 	<div class="quiz-wrapper">
-	 	<h1 class="heading">퀴즈 등록</h1>
+	 	<h1 class="heading" th:text="${qt_name + ' 퀴즈'}"></h1>
 	</div>
 </main>
 </body>
