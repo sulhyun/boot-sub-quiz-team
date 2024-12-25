@@ -71,15 +71,9 @@ public class AdminController {
         return "/admin/quiz/detail";
     } // 퀴즈 조회(페이지네이션)
     
-    @GetMapping("/createchoicequiz")
-    public String createChoiceQuiz(@RequestParam("qt_num") int qtNum, Model model) {
-        model.addAttribute("qt_num", qtNum);
-        return "/admin/createchoicequiz";
-    }
-
-    @GetMapping("/createsubjectivequiz")
-    public String createSubjectiveQuiz(@RequestParam("qt_num") int qtNum, Model model) {
-        model.addAttribute("qt_num", qtNum);
-        return "/admin/createsubjectivequiz";
+    @GetMapping("/quiz/insert/{qt_num}/{type}")
+    public String createChoiceQuiz(Model model, @PathVariable int qt_num, @PathVariable String type) {
+    	System.out.println(qt_num + "," + type);
+        return "/admin/quiz/insert";
     }
 }

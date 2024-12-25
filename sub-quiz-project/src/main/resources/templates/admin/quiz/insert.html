@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html 
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+  layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈 게임 : 관리자</title>
+<style type="text/css">
+.quiz-wrapper{width: 85%;padding: 20px;margin-left: 220px;}
+.heading{font-size: 2em;font-weight: bold;text-align: center;margin-bottom: 20px;}
+</style>
+</head>
+<body>
+<main layout:fragment="content">
+	<div th:replace="~{layout/adminSidebar.html}"></div>
+	<div class="quiz-wrapper">
+	 	<h1 class="heading">퀴즈 등록</h1>
+	</div>
+</main>
+</body>
+</html>
