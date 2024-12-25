@@ -11,14 +11,14 @@
 <body>
 <main layout:fragment="content">
 	<div th:replace="~{layout/adminsidebar.html}"></div>
-	<div class="container">
+	<div class="quiz-wrapper">
 	    <!-- 헤더 -->
 	    <h1 class="heading">퀴즈 카테고리</h1>
 	    <!-- 카테고리 목록 -->
 	    <div class="grid">
 	        <!-- 카테고리 목록 반복문 -->
 	        <div class="card" th:each="list : ${list}">
-	        	<a th:href="@{/admin/quizlist/{qt_num}(qt_num=${list.qt_num})}" class="card-link" th:text="${list.qt_name}"></a>
+	        	<a th:href="@{/admin/quiz/detail/{qt_num}/choice(qt_num=${list.qt_num})}" class="card-link" th:text="${list.qt_name}"></a>
 	            <div class="button-group">
 	                <button class="update-btn btn btn-primary" id="update" th:data-num="${list.qt_num}" data-toggle="modal" data-target="#updateModal">수정</button>
 	                <form action="/admin/quiz/type/del" method="post">

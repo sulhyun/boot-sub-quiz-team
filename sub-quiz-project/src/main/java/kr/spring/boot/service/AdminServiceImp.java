@@ -9,6 +9,8 @@ import kr.spring.boot.dao.AdminDAO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
 import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
+import kr.spring.boot.pagination.Criteria;
+import kr.spring.boot.pagination.PageMaker;
 
 
 @Service
@@ -16,45 +18,6 @@ public class AdminServiceImp implements AdminService {
 	
 	@Autowired
 	private AdminDAO adminDao;
-	
-	public List<QuizTypeVO> getQuizCategories() {
-		
-		return adminDao.selectQuizCategories();
-	}
-    public boolean addCategory(String categoryName) {
-        if (categoryName != null && !categoryName.trim().isEmpty()) {
-            QuizTypeVO quizType = new QuizTypeVO();
-            quizType.setQt_name(categoryName);
-            return adminDao.insertCategory(quizType) > 0; // 성공 여부 확인
-        }
-        return false;
-    }
-
-    public boolean deleteQuizCategory(int qtNum) {
-        return adminDao.deleteQuizCategory(qtNum) > 0; // 성공 여부 확인
-    }
-
-    public QuizTypeVO getQuizCategoryById(int qtNum) {
-        return adminDao.selectQuizCategoryById(qtNum);
-    }
-
-    public boolean updateQuizCategory(int qtNum, String categoryName) {
-        if (categoryName != null && !categoryName.trim().isEmpty()) {
-            QuizTypeVO quizType = new QuizTypeVO();
-            quizType.setQt_num(qtNum);
-            quizType.setQt_name(categoryName);
-            return adminDao.updateQuizCategory(quizType) > 0; // 성공 여부 확인
-        }
-        return false;
-    }
-	public List<QuizChoiceVO> getChoiceQuizListByCategory(int qtNum) {
-		
-		return adminDao.getChoiceQuizListByCategory(qtNum);
-	}
-	public List<QuizSubjectiveVO> getSubjectiveQuizListByCategory(int qtNum) {
-		
-		return adminDao.getSubjectiveQuizListByCategory(qtNum);
-	}
 	
 	@Override
 	public List<QuizTypeVO> getQuizType() {
@@ -78,4 +41,22 @@ public class AdminServiceImp implements AdminService {
 	public boolean updateQuizType(int qt_num, String qt_name) {
 		return adminDao.updateQuizType(qt_num, qt_name);
 	}
+
+	@Override
+	public PageMaker getPageMaker(Criteria cri, int qt_num) {
+		int count = adminDao.getCount(cri, qt_num);
+		return new PageMaker(5, cri, count);
+	}
+
+	@Override
+	public List<?> getQuizList(Criteria cri, int qt_num) {
+		switch(cri.getType()) {
+		case "choice":
+			return adminDao.selectQuizListByChoice(cri, qt_num);
+		case "subjective":
+			return adminDao.selectQuizListBySubjective(cri, qt_num);
+		}
+		return null;
+	}
+
 }

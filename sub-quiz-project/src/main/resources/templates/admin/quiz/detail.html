@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈 게임 : 관리자</title>
+<style type="text/css">
+	.quiz-wrapper {width: 1200px;margin: 0 auto;padding: 20px;}
+	.heading {font-size: 2em;font-weight: bold;text-align: center;margin-bottom: 20px;}
+	.list-group-item{border:none !important;padding: .3rem 0.25rem !important;}
+	.btn{width: 100% !important; text-align: left; border-radius: 20px;}
+</style>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:replace="~{layout/adminsidebar.html}"></div>
+		<div class="quiz-wrapper">
+	    	<h1 class="heading">퀴즈 상세</h1>
+	    	<div class="btn-list">
+				<ul class="list-group list-group-horizontal">
+					<li class="list-group-item list-group-item-light">
+						<a th:href="@{/admin/quiz/detail/{qt_num}/choice(qt_num=${qt_num})}">
+							<button type="button" th:class="${type == 'choice'} ? 'btn btn-info on':'btn btn-light'">객관식</button>
+						</a>
+					</li>
+					<li class="list-group-item list-group-item-light">
+						<a th:href="@{/admin/quiz/detail/{qt_num}/subjective(qt_num=${qt_num})}">
+							<button type="button" th:class="${type == 'subjective'} ? 'btn btn-info on':'btn btn-light'">주관식</button>
+						</a>
+					</li>
+				</ul>
+			</div>
+			
+		</div>
+   </main>
+</body>
+</html>

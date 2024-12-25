@@ -3,6 +3,8 @@ package kr.spring.boot.service;
 import java.util.List;
 
 import kr.spring.boot.model.vo.QuizTypeVO;
+import kr.spring.boot.pagination.Criteria;
+import kr.spring.boot.pagination.PageMaker;
 
 public interface AdminService {
 
@@ -13,5 +15,9 @@ public interface AdminService {
 	boolean delQuizType(int qt_num);
 
 	boolean updateQuizType(int qt_num, String qt_name);
+
+	PageMaker getPageMaker(Criteria cri, int qt_num);
+
+	List<?> getQuizList(Criteria cri, int qt_num);
 
 }
