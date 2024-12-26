@@ -47,7 +47,11 @@ public class AdminServiceImp implements AdminService {
 	
 	@Override
 	public boolean updateQuizType(int qt_num, String qt_name) {
-		return adminDao.updateQuizType(qt_num, qt_name);
+		try {
+			return adminDao.updateQuizType(qt_num, qt_name);
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override

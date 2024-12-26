@@ -78,5 +78,5 @@ public class AdminController {
     	System.out.println(qt_num + "," + type);
     	model.addAttribute("qt_name", qt_name);
         return "/admin/quiz/insert";
-    } // 퀴즈 등록
+    } // 퀴즈 등록 화면
 }
