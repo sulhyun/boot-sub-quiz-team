@@ -45,7 +45,7 @@ public class InfoController {
 	} // 회원 정보 화면
 	
 	@PostMapping("/profile")
-	public String basicPost(Model model, Principal principal, @RequestParam Map<String, String> params, HttpServletRequest request, HttpServletResponse response) {
+	public String basicPost(Model model, Principal principal, @RequestParam Map<String, String> params) {
 		boolean res = infoService.updateInfo(principal.getName(), params);
 		log.info("update Info : {}", res);
 		return "redirect:/info/profile";
