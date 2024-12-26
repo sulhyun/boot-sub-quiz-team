@@ -42,21 +42,21 @@ public class AdminController {
     @PostMapping("/quiz/type/add")
     public String quizTypeAdd(@RequestParam String qt_name, RedirectAttributes redirectAttributes) {
         boolean res = adminService.addQuizType(qt_name);
-        redirectAttributes.addFlashAttribute("msg", res ? "카테고리가 성공적으로 추가되었습니다." : "카테고리 추가를 실패했습니다.");
+        redirectAttributes.addFlashAttribute("msg", res ? "카테고리 추가를 성공했습니다." : "카테고리 추가를 실패했습니다.");
         return "redirect:/admin/quiz/type";
     } // 퀴즈 카테고리 추가
     
     @PostMapping("/quiz/type/del")
     public String quizTypeDel(@RequestParam int qt_num, RedirectAttributes redirectAttributes) {
 	    boolean res = adminService.delQuizType(qt_num);
-	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리가 성공적으로 삭제되었습니다." : "카테고리 삭제를 실패했습니다.");
+	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리 삭제를 성공했습니다." : "카테고리 삭제를 실패했습니다.");
 	    return "redirect:/admin/quiz/type";
 	} // 퀴즈 카테고리 삭제
     
     @PostMapping("/quiz/type/update")
     public String quizTypeUpdate(@RequestParam int qt_num, @RequestParam String qt_name, RedirectAttributes redirectAttributes) {
 	    boolean res = adminService.updateQuizType(qt_num, qt_name);
-	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리가 성공적으로 수정되었습니다." : "카테고리 수정을 실패했습니다.");
+	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리 수정을 성공했습니다." : "카테고리 수정을 실패했습니다.");
 	    return "redirect:/admin/quiz/type";
     } // 퀴즈 카테고리 수정
     

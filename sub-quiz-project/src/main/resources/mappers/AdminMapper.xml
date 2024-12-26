@@ -61,4 +61,12 @@
     	WHERE
     		QT_NUM = #{qt_num}
     </select>
+    
+    <select id="selectQuizChoice" resultType="QuizChoiceVO">
+    	SELECT * FROM QUIZ_CHOICE WHERE QT_NUM = #{qt_num}
+    </select>
+    
+    <select id="selectQuizSubjective" resultType="QuizSubjectiveVO">
+    	SELECT * FROM QUIZ_SUBJECTIVE WHERE QT_NUM = #{qt_num}
+    </select>
 </mapper>
