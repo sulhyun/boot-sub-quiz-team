@@ -92,8 +92,7 @@ DROP TABLE IF EXISTS `quiz_type`;
 
 CREATE TABLE `quiz_type` (
 	`qt_num`	int primary key auto_increment	NOT NULL,
-	`qt_name`	varchar(255)	NULL,
-	`qt_type`	varchar(255)	NULL
+	`qt_name`	varchar(255)	NOT NULL
 );
 
 DROP TABLE IF EXISTS `quiz_choice`;
@@ -267,3 +266,6 @@ ALTER TABLE `event_list` ADD CONSTRAINT `FK_event_TO_event_list_1` FOREIGN KEY (
 REFERENCES `event` (
 	`ev_num`
 );
+
+-- 퀴즈 카테고리명 유니크 추가
+ALTER TABLE quiz_type ADD CONSTRAINT unique_qt_name UNIQUE (qt_name);
