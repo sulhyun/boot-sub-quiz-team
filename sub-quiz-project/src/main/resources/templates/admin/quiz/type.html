@@ -11,6 +11,9 @@
 <body>
 <main layout:fragment="content">
 	<div th:replace="~{layout/adminSidebar.html}"></div>
+	<div class="flash-message" id="flash-message" th:if="${msg}" th:classappend="${msg.contains('성공') ? '' : 'error'}" >
+	    <span th:text="${msg}"></span>
+	</div>
 	<div class="quiz-wrapper">
 	    <!-- 헤더 -->
 	    <h1 class="heading">퀴즈 목록</h1>
@@ -83,6 +86,15 @@
 		$(document).on('click', '#update', function() {
 			var qt_num = $(this).data('num');
 			$('#qt_num').val(qt_num);
+		});
+		
+		$(document).ready(function () {
+		    setTimeout(function () {
+		        var flashMessage = $("#flash-message");
+		        if(flashMessage.length) {
+		            flashMessage.fadeOut(500);
+		        }
+		    }, 5000);
 		});
 	</script>
 </main>

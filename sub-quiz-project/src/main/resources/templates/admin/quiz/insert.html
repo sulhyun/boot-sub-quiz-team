@@ -8,14 +8,20 @@
 <title>퀴즈 게임 : 관리자</title>
 <style type="text/css">
 .quiz-wrapper{width: 85%;padding: 20px;margin-left: 220px;}
-.heading{font-size: 2em;font-weight: bold;text-align: center;margin-bottom: 20px;}
+.title-box{text-align: center;}
+.main-title{font-size: 2em;font-weight: bold;}
+.sub-title{font-size: 1.5em;font-weight: bold;}
 </style>
 </head>
 <body>
 <main layout:fragment="content">
 	<div th:replace="~{layout/adminSidebar.html}"></div>
 	<div class="quiz-wrapper">
-	 	<h1 class="heading" th:text="${qt_name + ' 퀴즈'}"></h1>
+		<div class="title-box">
+		 	<span class="main-title" th:text="${qt_name + ' : '}"></span>
+		 	<span class="sub-title" th:text="${type=='choice' ? '객관식 퀴즈' : '주관식 퀴즈'}"></span>
+	 	</div>
+	 	
 	</div>
 </main>
 </body>
