@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.AdminDAO;
+import kr.spring.boot.model.vo.QuizChoiceVO;
+import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
 import kr.spring.boot.pagination.Criteria;
 import kr.spring.boot.pagination.PageMaker;
@@ -24,15 +26,23 @@ public class AdminServiceImp implements AdminService {
 	
 	@Override
 	public boolean addQuizType(String qt_name) {
-		if(qt_name == null || qt_name.trim().length() == 0) {
+		try {
+			if(qt_name == null || qt_name.trim().length() == 0) {
+				return false;
+			}
+		    return adminDao.insertQuizType(qt_name);
+		} catch (Exception e) {
 			return false;
 		}
-		return adminDao.insertQuizType(qt_name);
 	}
 	
 	@Override
 	public boolean delQuizType(int qt_num) {
-		return adminDao.deleteQuizType(qt_num);
+		try {
+			return adminDao.deleteQuizType(qt_num);
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	@Override

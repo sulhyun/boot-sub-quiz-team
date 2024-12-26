@@ -11,15 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.boot.model.vo.QuizTypeVO;
 import kr.spring.boot.pagination.Criteria;
 import kr.spring.boot.pagination.PageMaker;
 import kr.spring.boot.service.AdminService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @AllArgsConstructor
 @RequestMapping("/admin")
@@ -41,23 +40,23 @@ public class AdminController {
 	} // 퀴즈 카테고리 조회
 	
     @PostMapping("/quiz/type/add")
-    public String quizTypeAdd(@RequestParam String qt_name) {
+    public String quizTypeAdd(@RequestParam String qt_name, RedirectAttributes redirectAttributes) {
         boolean res = adminService.addQuizType(qt_name);
-        log.info("insert quiz_type : {}", res);
+        redirectAttributes.addFlashAttribute("msg", res ? "카테고리 추가를 성공했습니다." : "카테고리 추가를 실패했습니다.");
         return "redirect:/admin/quiz/type";
     } // 퀴즈 카테고리 추가
     
     @PostMapping("/quiz/type/del")
-    public String quizTypeDel(@RequestParam int qt_num) {
+    public String quizTypeDel(@RequestParam int qt_num, RedirectAttributes redirectAttributes) {
 	    boolean res = adminService.delQuizType(qt_num);
-	    log.info("delete quiz_type : {}", res);
+	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리 삭제를 성공했습니다." : "카테고리 삭제를 실패했습니다.");
 	    return "redirect:/admin/quiz/type";
 	} // 퀴즈 카테고리 삭제
     
     @PostMapping("/quiz/type/update")
-    public String quizTypeUpdate(@RequestParam int qt_num, @RequestParam String qt_name) {
+    public String quizTypeUpdate(@RequestParam int qt_num, @RequestParam String qt_name, RedirectAttributes redirectAttributes) {
 	    boolean res = adminService.updateQuizType(qt_num, qt_name);
-	    log.info("delete quiz_type : {}", res);
+	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리 수정을 성공했습니다." : "카테고리 수정을 실패했습니다.");
 	    return "redirect:/admin/quiz/type";
     } // 퀴즈 카테고리 수정
     
