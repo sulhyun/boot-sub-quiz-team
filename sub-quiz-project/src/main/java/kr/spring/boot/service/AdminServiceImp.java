@@ -26,20 +26,23 @@ public class AdminServiceImp implements AdminService {
 	
 	@Override
 	public boolean addQuizType(String qt_name) {
-		if(qt_name == null || qt_name.trim().length() == 0) {
+		try {
+			if(qt_name == null || qt_name.trim().length() == 0) {
+				return false;
+			}
+		    return adminDao.insertQuizType(qt_name);
+		} catch (Exception e) {
 			return false;
 		}
-		return adminDao.insertQuizType(qt_name);
 	}
 	
 	@Override
 	public boolean delQuizType(int qt_num) {
-		List<QuizChoiceVO> choice = adminDao.selectQuizChoice(qt_num);
-		List<QuizSubjectiveVO> subjective = adminDao.selectQuizSubjective(qt_num);
-		if(choice.size() != 0 || subjective.size() != 0) {
+		try {
+			return adminDao.deleteQuizType(qt_num);
+		} catch (Exception e) {
 			return false;
 		}
-		return adminDao.deleteQuizType(qt_num);
 	}
 	
 	@Override

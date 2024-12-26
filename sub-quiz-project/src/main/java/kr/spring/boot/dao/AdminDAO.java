@@ -27,8 +27,4 @@ public interface AdminDAO {
 
 	String selectQuizTypeName(@Param("qt_num")int qt_num);
 
-	List<QuizChoiceVO> selectQuizChoice(@Param("qt_num")int qt_num);
-
-	List<QuizSubjectiveVO> selectQuizSubjective(@Param("qt_num")int qt_num);
-
 }
