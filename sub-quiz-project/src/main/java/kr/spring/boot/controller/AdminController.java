@@ -134,7 +134,7 @@ public class AdminController {
     	model.addAttribute("msg", res ? "퀴즈 수정에 성공하였습니다." : "퀴즈 수정에 실패하였습니다.");
     	model.addAttribute("url", "/admin/quiz/detail/" + quiz.getQt_num() + "/choice");
     	return "util/msg";
-    }
+    } // 객관식 퀴즈 수정
     
     @PostMapping("/quiz/update/{qt_num}/{qs_num}/subjective")
     public String quizUpdateSubjective(Model model, QuizSubjectiveVO quiz) {
@@ -142,5 +142,5 @@ public class AdminController {
     	model.addAttribute("msg", res ? "퀴즈 수정에 성공하였습니다." : "퀴즈 수정에 실패하였습니다.");
     	model.addAttribute("url", "/admin/quiz/detail/" + quiz.getQt_num() + "/subjective");
     	return "util/msg";
-    }
+    } // 주관식 퀴즈 수정
 }
