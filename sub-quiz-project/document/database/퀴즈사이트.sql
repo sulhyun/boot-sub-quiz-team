@@ -99,7 +99,7 @@ DROP TABLE IF EXISTS `quiz_choice`;
 
 CREATE TABLE `quiz_choice` (
 	`qu_num`	int primary key auto_increment	NOT NULL,
-	`qu_content`	longtext	NULL,
+	`qu_content`	varchar(255)	NOT NULL,
 	`qu_answer1`	varchar(255)	NULL,
 	`qu_answer2`	varchar(255)	NULL,
 	`qu_answer3`	varchar(255)	NULL,
@@ -148,7 +148,7 @@ DROP TABLE IF EXISTS `quiz_subjective`;
 
 CREATE TABLE `quiz_subjective` (
 	`qs_num`	int primary key auto_increment	NOT NULL,
-	`qs_content`	longtext	NULL,
+	`qs_content`	varchar(255)	NOT NULL,
 	`qs_answer`	varchar(255)	NULL,
 	`qs_correct_answer`	varchar(255)	NULL,
 	`qt_num`	int	NOT NULL
@@ -269,3 +269,7 @@ REFERENCES `event` (
 
 -- 퀴즈 카테고리명 유니크 추가
 ALTER TABLE quiz_type ADD CONSTRAINT unique_qt_name UNIQUE (qt_name);
+
+-- (객관식/주관식) 퀴즈 문제명 유니크 추가
+ALTER TABLE quiz_choice ADD CONSTRAINT unique_qu_content UNIQUE (qu_content);
+ALTER TABLE quiz_subjective ADD CONSTRAINT unique_qs_content UNIQUE (qs_content);
