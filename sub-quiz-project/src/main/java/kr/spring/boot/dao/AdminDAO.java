@@ -31,4 +31,8 @@ public interface AdminDAO {
 
 	boolean insertQuizSubjective(@Param("quiz")QuizSubjectiveVO quiz);
 
+	boolean deleteQuizChoice(@Param("quiz")QuizChoiceVO quiz);
+
+	boolean deleteQuizSubjective(@Param("quiz")QuizSubjectiveVO quiz);
+
 }

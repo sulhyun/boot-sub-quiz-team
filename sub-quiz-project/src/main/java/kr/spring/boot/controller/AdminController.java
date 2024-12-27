@@ -42,21 +42,21 @@ public class AdminController {
 	} // 퀴즈 카테고리 조회
 	
     @PostMapping("/quiz/type/add")
-    public String quizTypeAdd(@RequestParam String qt_name, RedirectAttributes redirectAttributes) {
+    public String quizTypeAdd(RedirectAttributes redirectAttributes, @RequestParam String qt_name) {
         boolean res = adminService.addQuizType(qt_name);
         redirectAttributes.addFlashAttribute("msg", res ? "카테고리 추가를 성공했습니다." : "카테고리 추가를 실패했습니다.");
         return "redirect:/admin/quiz/type";
     } // 퀴즈 카테고리 추가
     
     @PostMapping("/quiz/type/del")
-    public String quizTypeDel(@RequestParam int qt_num, RedirectAttributes redirectAttributes) {
+    public String quizTypeDel(RedirectAttributes redirectAttributes, @RequestParam int qt_num) {
 	    boolean res = adminService.delQuizType(qt_num);
 	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리 삭제를 성공했습니다." : "카테고리 삭제를 실패했습니다.");
 	    return "redirect:/admin/quiz/type";
 	} // 퀴즈 카테고리 삭제
     
     @PostMapping("/quiz/type/update")
-    public String quizTypeUpdate(@RequestParam int qt_num, @RequestParam String qt_name, RedirectAttributes redirectAttributes) {
+    public String quizTypeUpdate(RedirectAttributes redirectAttributes, @RequestParam int qt_num, @RequestParam String qt_name) {
 	    boolean res = adminService.updateQuizType(qt_num, qt_name);
 	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리 수정을 성공했습니다." : "카테고리 수정을 실패했습니다.");
 	    return "redirect:/admin/quiz/type";
@@ -98,4 +98,17 @@ public class AdminController {
     	return "util/msg";
     } // 주관식 퀴즈 등록
     
+    @PostMapping("/quiz/del/{qt_num}/{qu_num}/choice")
+    public String quizDelChoice(RedirectAttributes redirectAttributes, QuizChoiceVO quiz) {
+    	boolean res = adminService.delQuizChoice(quiz);
+	    redirectAttributes.addFlashAttribute("msg", res ? "퀴즈 삭제를 성공했습니다." : "퀴즈 삭제를 실패했습니다.");
+	    return "redirect:/admin/quiz/detail/" + quiz.getQt_num() + "/choice";
+    } // 객관식 퀴즈 삭제
+    
+    @PostMapping("/quiz/del/{qt_num}/{qs_num}/subjective")
+    public String quizDelSubjective(RedirectAttributes redirectAttributes, QuizSubjectiveVO quiz) {
+    	boolean res = adminService.delQuizSubjective(quiz);
+	    redirectAttributes.addFlashAttribute("msg", res ? "퀴즈 삭제를 성공했습니다." : "퀴즈 삭제를 실패했습니다.");
+	    return "redirect:/admin/quiz/detail/" + quiz.getQt_num() + "/subjective";
+    } // 객관식 퀴즈 삭제
 }

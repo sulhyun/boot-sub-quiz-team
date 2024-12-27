@@ -100,4 +100,28 @@ public class AdminServiceImp implements AdminService {
 		}
 	}
 
+	@Override
+	public boolean delQuizChoice(QuizChoiceVO quiz) {
+		try {
+			if(quiz == null) {
+				return false;
+			}
+			return adminDao.deleteQuizChoice(quiz);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean delQuizSubjective(QuizSubjectiveVO quiz) {
+		try {
+			if(quiz == null) {
+				return false;
+			}
+			return adminDao.deleteQuizSubjective(quiz);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 }

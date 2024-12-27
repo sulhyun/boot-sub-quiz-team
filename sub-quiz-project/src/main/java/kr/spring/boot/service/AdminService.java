@@ -28,4 +28,8 @@ public interface AdminService {
 
 	boolean addQuizSubjective(QuizSubjectiveVO quiz);
 
+	boolean delQuizChoice(QuizChoiceVO quiz);
+
+	boolean delQuizSubjective(QuizSubjectiveVO quiz);
+
 }

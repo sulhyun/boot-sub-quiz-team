@@ -71,4 +71,12 @@
     	INSERT INTO QUIZ_SUBJECTIVE(QS_CONTENT, QS_CORRECT_ANSWER, QT_NUM) VALUES
     	(#{quiz.qs_content}, #{quiz.qs_correct_answer}, #{quiz.qt_num})
     </insert>
+    
+    <delete id="deleteQuizChoice">
+    	DELETE FROM QUIZ_CHOICE WHERE QU_NUM = #{quiz.qu_num}
+    </delete>
+    
+    <delete id="deleteQuizSubjective">
+    	DELETE FROM QUIZ_SUBJECTIVE WHERE QS_NUM = #{quiz.qs_num}
+    </delete>
 </mapper>
