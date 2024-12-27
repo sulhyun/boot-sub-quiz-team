@@ -9,3 +9,5 @@
 .quiz-box{height: 530px;}
 .btn-td{width: 10%}
 .insert{padding: 10px;}
+.flash-message {position: fixed;bottom: 20px;right: 20px; background-color: #4caf50;color: white;padding: 15px;border-radius: 5px;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);font-size: 16px;z-index: 1000;transition: opacity 0.5s ease-in-out;}
+.flash-message.error {background-color: #f44336;}

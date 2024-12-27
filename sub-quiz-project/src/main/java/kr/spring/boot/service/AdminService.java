@@ -3,6 +3,7 @@ package kr.spring.boot.service;
 import java.util.List;
 
 import kr.spring.boot.model.vo.QuizChoiceVO;
+import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
 import kr.spring.boot.pagination.Criteria;
 import kr.spring.boot.pagination.PageMaker;
@@ -23,6 +24,20 @@ public interface AdminService {
 
 	String getQuizTypeName(int qt_num);
 
-	boolean addQuiz(QuizChoiceVO quiz);
+	boolean addQuizChoice(QuizChoiceVO quiz);
+
+	boolean addQuizSubjective(QuizSubjectiveVO quiz);
+
+	boolean delQuizChoice(QuizChoiceVO quiz);
+
+	boolean delQuizSubjective(QuizSubjectiveVO quiz);
+
+	QuizChoiceVO getQuizChoice(int qu_num);
+
+	QuizSubjectiveVO getQuizSubjective(int qs_num);
+
+	boolean updateQuizChoice(QuizChoiceVO quiz);
+
+	boolean updateQuizSubjective(QuizSubjectiveVO quiz);
 
 }

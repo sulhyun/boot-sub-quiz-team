@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.spring.boot.model.vo.QuizChoiceVO;
+import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
 import kr.spring.boot.pagination.Criteria;
 
@@ -27,5 +28,19 @@ public interface AdminDAO {
 	String selectQuizTypeName(@Param("qt_num")int qt_num);
 
 	boolean insertQuizChoice(@Param("quiz")QuizChoiceVO quiz);
+
+	boolean insertQuizSubjective(@Param("quiz")QuizSubjectiveVO quiz);
+
+	boolean deleteQuizChoice(@Param("quiz")QuizChoiceVO quiz);
+
+	boolean deleteQuizSubjective(@Param("quiz")QuizSubjectiveVO quiz);
+
+	QuizChoiceVO selectQuizChoice(@Param("qu_num")int qu_num);
+
+	QuizSubjectiveVO selectQuizSubjective(@Param("qs_num")int qs_num);
+
+	boolean updateQuizChoice(@Param("quiz")QuizChoiceVO quiz);
+
+	boolean updateQuizSubjective(@Param("quiz")QuizSubjectiveVO quiz);
 
 }

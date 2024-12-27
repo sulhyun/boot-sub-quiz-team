@@ -10,6 +10,9 @@
 <body>
 	<main layout:fragment="content">
 		<div th:replace="~{layout/adminSidebar.html}"></div>
+		<div class="flash-message" id="flash-message" th:if="${msg}" th:classappend="${msg.contains('성공') ? '' : 'error'}" >
+	    	<span th:text="${msg}"></span>
+		</div>
 		<div class="quiz-wrapper">
 	    	<h1 class="heading" th:text="${qt_name + ' 퀴즈'}"></h1>
 	    	<div class="d-flex">
@@ -29,7 +32,7 @@
 				</div>
 				<div class="list-group-item">
 		    		<a th:href="@{/admin/quiz/insert/{qt_num}/{type} (qt_num=${qt_num}, type=${type})}">
-		    			<button type="button" class="btn btn-dark">등록</button>
+		    			<button type="button" class="btn btn-info">등록</button>
 		    		</a>
 				</div>
 	    	</div>
@@ -57,8 +60,10 @@
 				                <td class="truncate" th:text="${list.qu_correct_answer}"></td>
 				                <td class="btn-td">
 				                	<div class="btn-group">
-					                	<a class="button btn-primary">수정</a>
-					                	<a class="button btn-danger">삭제</a>
+					                	<a th:href="@{/admin/quiz/update/{qt_num}/{num}/{type}(qt_num=${list.qt_num}, num=${list.qu_num}, type=${type})}" class="button btn-primary">수정</a>
+					                	<form th:action="@{/admin/quiz/del/{qt_num}/{qu_num}/choice(qt_num=${list.qt_num}, qu_num=${list.qu_num})}" method="post">
+					                		<button class="button btn-danger" type="submit">삭제</button>
+					                	</form>
 				                	</div>
 				                </td>
 				            </tr>
@@ -82,8 +87,10 @@
 				                <td class="truncate" data-toggle="tooltip" th:title="${list.qs_correct_answer}" th:text="${list.qs_correct_answer}"></td>
 				                <td class="btn-td">
 				                	<div class="btn-group">
-					                	<a class="button btn-primary">수정</a>
-					                	<a class="button btn-danger">삭제</a>
+					                	<a th:href="@{/admin/quiz/update/{qt_num}/{num}/{type}(qt_num=${list.qt_num}, num=${list.qs_num}, type=${type})}" class="button btn-primary">수정</a>
+					                	<form th:action="@{/admin/quiz/del/{qt_num}/{qs_num}/subjective(qt_num=${list.qt_num}, qs_num=${list.qs_num})}" method="post">
+					                		<button class="button btn-danger" type="submit">삭제</button>
+					                	</form>
 				                	</div>
 				                </td>
 				            </tr>
@@ -112,6 +119,15 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$('[data-toggle="tooltip"]').tooltip();
+			});
+			
+			$(document).ready(function () {
+			    setTimeout(function () {
+			        var flashMessage = $("#flash-message");
+			        if(flashMessage.length) {
+			            flashMessage.fadeOut(500);
+			        }
+			    }, 5000);
 			});
 		</script>
    </main>
