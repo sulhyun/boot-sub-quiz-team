@@ -77,14 +77,25 @@ public class AdminServiceImp implements AdminService {
 	}
 
 	@Override
-	public boolean addQuiz(QuizChoiceVO quiz) {
+	public boolean addQuizChoice(QuizChoiceVO quiz) {
 		try {
 			if(quiz == null) {
 				return false;
 			}
 			return adminDao.insertQuizChoice(quiz);
 		} catch (Exception e) {
-			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean addQuizSubjective(QuizSubjectiveVO quiz) {
+		try {
+			if(quiz == null) {
+				return false;
+			}
+			return adminDao.insertQuizSubjective(quiz);
+		} catch (Exception e) {
 			return false;
 		}
 	}

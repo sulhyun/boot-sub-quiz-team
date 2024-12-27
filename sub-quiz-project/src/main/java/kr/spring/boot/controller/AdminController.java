@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.boot.model.vo.QuizChoiceVO;
+import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
 import kr.spring.boot.pagination.Criteria;
 import kr.spring.boot.pagination.PageMaker;
@@ -81,11 +81,21 @@ public class AdminController {
         return "admin/quiz/insert";
     } // 퀴즈 등록 화면
     
-    @PostMapping("/quiz/insert/{qt_num}")
+    @PostMapping("/quiz/insert/{qt_num}/choice")
     public String quizAddChoice(Model model, QuizChoiceVO quiz) {
-    	boolean res = adminService.addQuiz(quiz);
+    	boolean res = adminService.addQuizChoice(quiz);
     	model.addAttribute("msg", res ? "퀴즈 등록 성공" : "퀴즈 등록 실패");
     	model.addAttribute("url", res ? "/admin/quiz/detail/" + quiz.getQt_num() + "/choice" : "/admin/quiz/insert/" + quiz.getQt_num() + "/choice");
     	return "util/msg";
-    } // 객관식 퀴즈 추가
+    } // 객관식 퀴즈 등록
+    
+    @PostMapping("/quiz/insert/{qt_num}/subjective")
+    public String quizAddSubjective(Model model, QuizSubjectiveVO quiz) {
+    	System.out.println(quiz);
+    	boolean res = adminService.addQuizSubjective(quiz);
+    	model.addAttribute("msg", res ? "퀴즈 등록 성공" : "퀴즈 등록 실패");
+    	model.addAttribute("url", res ? "/admin/quiz/detail/" + quiz.getQt_num() + "/subjective" : "/admin/quiz/insert/" + quiz.getQt_num() + "/subjective");
+    	return "util/msg";
+    } // 주관식 퀴즈 등록
+    
 }

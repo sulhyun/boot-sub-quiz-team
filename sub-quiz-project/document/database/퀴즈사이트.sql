@@ -149,7 +149,7 @@ DROP TABLE IF EXISTS `quiz_subjective`;
 CREATE TABLE `quiz_subjective` (
 	`qs_num`	int primary key auto_increment	NOT NULL,
 	`qs_content`	varchar(255)	NOT NULL,
-	`qs_answer`	varchar(255)	NOT NULL,
+	`qs_answer`	varchar(255)	NULL,
 	`qs_correct_answer`	varchar(255)	NOT NULL,
 	`qt_num`	int	NOT NULL
 );
