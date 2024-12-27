@@ -79,4 +79,34 @@
     <delete id="deleteQuizSubjective">
     	DELETE FROM QUIZ_SUBJECTIVE WHERE QS_NUM = #{quiz.qs_num}
     </delete>
+    
+    <select id="selectQuizChoice" resultType="QuizChoiceVO">
+    	SELECT * FROM QUIZ_CHOICE WHERE QU_NUM = #{qu_num}
+    </select>
+    
+    <select id="selectQuizSubjective" resultType="QuizSubjectiveVO">
+    	SELECT * FROM QUIZ_SUBJECTIVE WHERE QS_NUM = #{qs_num}
+    </select>
+    
+    <update id="updateQuizChoice">
+    	UPDATE QUIZ_CHOICE 
+    	SET
+    		QU_CONTENT = #{quiz.qu_content},
+    		QU_ANSWER1 = #{quiz.qu_answer1},
+    		QU_ANSWER2 = #{quiz.qu_answer2},
+    		QU_ANSWER3 = #{quiz.qu_answer3},
+    		QU_ANSWER4 = #{quiz.qu_answer4},
+    		QU_CORRECT_ANSWER = #{quiz.qu_correct_answer}
+    	WHERE
+    		QU_NUM = ${quiz.qu_num}
+    </update>
+    
+    <update id="updateQuizSubjective">
+    	UPDATE QUIZ_SUBJECTIVE
+    	SET
+    		QS_CONTENT = #{quiz.qs_content},
+    		QS_CORRECT_ANSWER = #{quiz.qs_correct_answer}
+    	WHERE
+    		QS_NUM = #{quiz.qs_num}
+    </update>
 </mapper>

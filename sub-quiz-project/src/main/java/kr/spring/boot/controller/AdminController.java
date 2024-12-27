@@ -44,21 +44,21 @@ public class AdminController {
     @PostMapping("/quiz/type/add")
     public String quizTypeAdd(RedirectAttributes redirectAttributes, @RequestParam String qt_name) {
         boolean res = adminService.addQuizType(qt_name);
-        redirectAttributes.addFlashAttribute("msg", res ? "카테고리 추가를 성공했습니다." : "카테고리 추가를 실패했습니다.");
+        redirectAttributes.addFlashAttribute("msg", res ? "카테고리 추가에 성공하였습니다." : "카테고리 추가에 실패하였습니다.");
         return "redirect:/admin/quiz/type";
     } // 퀴즈 카테고리 추가
     
     @PostMapping("/quiz/type/del")
     public String quizTypeDel(RedirectAttributes redirectAttributes, @RequestParam int qt_num) {
 	    boolean res = adminService.delQuizType(qt_num);
-	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리 삭제를 성공했습니다." : "카테고리 삭제를 실패했습니다.");
+	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리 삭제에 성공하였습니다." : "카테고리 삭제에 실패하였습니다.");
 	    return "redirect:/admin/quiz/type";
 	} // 퀴즈 카테고리 삭제
     
     @PostMapping("/quiz/type/update")
     public String quizTypeUpdate(RedirectAttributes redirectAttributes, @RequestParam int qt_num, @RequestParam String qt_name) {
 	    boolean res = adminService.updateQuizType(qt_num, qt_name);
-	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리 수정을 성공했습니다." : "카테고리 수정을 실패했습니다.");
+	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리 수정에 성공하였습니다." : "카테고리 수정에 실패하였습니다.");
 	    return "redirect:/admin/quiz/type";
     } // 퀴즈 카테고리 수정
     
@@ -84,16 +84,15 @@ public class AdminController {
     @PostMapping("/quiz/insert/{qt_num}/choice")
     public String quizAddChoice(Model model, QuizChoiceVO quiz) {
     	boolean res = adminService.addQuizChoice(quiz);
-    	model.addAttribute("msg", res ? "퀴즈 등록 성공" : "퀴즈 등록 실패");
+    	model.addAttribute("msg", res ? "퀴즈 등록에 성공하였습니다." : "퀴즈 등록에 실패하였습니다.");
     	model.addAttribute("url", res ? "/admin/quiz/detail/" + quiz.getQt_num() + "/choice" : "/admin/quiz/insert/" + quiz.getQt_num() + "/choice");
     	return "util/msg";
     } // 객관식 퀴즈 등록
     
     @PostMapping("/quiz/insert/{qt_num}/subjective")
     public String quizAddSubjective(Model model, QuizSubjectiveVO quiz) {
-    	System.out.println(quiz);
     	boolean res = adminService.addQuizSubjective(quiz);
-    	model.addAttribute("msg", res ? "퀴즈 등록 성공" : "퀴즈 등록 실패");
+    	model.addAttribute("msg", res ? "퀴즈 등록에 성공하였습니다." : "퀴즈 등록에 실패하였습니다.");
     	model.addAttribute("url", res ? "/admin/quiz/detail/" + quiz.getQt_num() + "/subjective" : "/admin/quiz/insert/" + quiz.getQt_num() + "/subjective");
     	return "util/msg";
     } // 주관식 퀴즈 등록
@@ -101,14 +100,47 @@ public class AdminController {
     @PostMapping("/quiz/del/{qt_num}/{qu_num}/choice")
     public String quizDelChoice(RedirectAttributes redirectAttributes, QuizChoiceVO quiz) {
     	boolean res = adminService.delQuizChoice(quiz);
-	    redirectAttributes.addFlashAttribute("msg", res ? "퀴즈 삭제를 성공했습니다." : "퀴즈 삭제를 실패했습니다.");
+	    redirectAttributes.addFlashAttribute("msg", res ? "퀴즈 삭제에 성공하였습니다." : "퀴즈 삭제에 실패하였습니다.");
 	    return "redirect:/admin/quiz/detail/" + quiz.getQt_num() + "/choice";
     } // 객관식 퀴즈 삭제
     
     @PostMapping("/quiz/del/{qt_num}/{qs_num}/subjective")
     public String quizDelSubjective(RedirectAttributes redirectAttributes, QuizSubjectiveVO quiz) {
     	boolean res = adminService.delQuizSubjective(quiz);
-	    redirectAttributes.addFlashAttribute("msg", res ? "퀴즈 삭제를 성공했습니다." : "퀴즈 삭제를 실패했습니다.");
+	    redirectAttributes.addFlashAttribute("msg", res ? "퀴즈 삭제에 성공하였습니다." : "퀴즈 삭제에 실패하였습니다.");
 	    return "redirect:/admin/quiz/detail/" + quiz.getQt_num() + "/subjective";
     } // 객관식 퀴즈 삭제
+    
+    @GetMapping("/quiz/update/{qt_num}/{num}/{type}")
+    public String quizUpdate(Model model, @PathVariable int qt_num, @PathVariable int num, @PathVariable String type) {
+    	String qt_name = adminService.getQuizTypeName(qt_num);
+    	QuizChoiceVO choice = null;
+    	QuizSubjectiveVO subjective = null;
+    	switch(type) {
+    	case "choice":
+    		choice = adminService.getQuizChoice(num);
+    		break;
+    	case "subjective":
+    		subjective = adminService.getQuizSubjective(num);
+    	}
+    	model.addAttribute("quiz", choice == null ? subjective : choice);
+    	model.addAttribute("qt_name", qt_name);
+        return "admin/quiz/update";
+    } // 퀴즈 수정 화면
+    
+    @PostMapping("/quiz/update/{qt_num}/{qu_num}/choice")
+    public String quizUpdateChoice(Model model, QuizChoiceVO quiz) {
+    	boolean res = adminService.updateQuizChoice(quiz);
+    	model.addAttribute("msg", res ? "퀴즈 수정에 성공하였습니다." : "퀴즈 수정에 실패하였습니다.");
+    	model.addAttribute("url", "/admin/quiz/detail/" + quiz.getQt_num() + "/choice");
+    	return "util/msg";
+    }
+    
+    @PostMapping("/quiz/update/{qt_num}/{qs_num}/subjective")
+    public String quizUpdateSubjective(Model model, QuizSubjectiveVO quiz) {
+    	boolean res = adminService.updateQuizSubjective(quiz);
+    	model.addAttribute("msg", res ? "퀴즈 수정에 성공하였습니다." : "퀴즈 수정에 실패하였습니다.");
+    	model.addAttribute("url", "/admin/quiz/detail/" + quiz.getQt_num() + "/subjective");
+    	return "util/msg";
+    }
 }

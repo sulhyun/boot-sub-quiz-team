@@ -82,6 +82,21 @@ public class AdminServiceImp implements AdminService {
 			if(quiz == null) {
 				return false;
 			}
+			if(quiz.getQu_content() == null || quiz.getQu_content().trim().length() == 0) {
+				return false;
+			}
+			if(quiz.getQu_answer1() == null || quiz.getQu_answer1().trim().length() == 0) {
+				return false;
+			}
+			if(quiz.getQu_answer2() == null || quiz.getQu_answer2().trim().length() == 0) {
+				return false;
+			}
+			if(quiz.getQu_answer3() == null || quiz.getQu_answer3().trim().length() == 0) {
+				return false;
+			}
+			if(quiz.getQu_answer4() == null || quiz.getQu_answer4().trim().length() == 0) {
+				return false;
+			}
 			return adminDao.insertQuizChoice(quiz);
 		} catch (Exception e) {
 			return false;
@@ -92,6 +107,12 @@ public class AdminServiceImp implements AdminService {
 	public boolean addQuizSubjective(QuizSubjectiveVO quiz) {
 		try {
 			if(quiz == null) {
+				return false;
+			}
+			if(quiz.getQs_content() == null || quiz.getQs_content().trim().length() == 0) {
+				return false;
+			}
+			if(quiz.getQs_correct_answer() == null || quiz.getQs_correct_answer().trim().length() == 0) {
 				return false;
 			}
 			return adminDao.insertQuizSubjective(quiz);
@@ -119,6 +140,61 @@ public class AdminServiceImp implements AdminService {
 				return false;
 			}
 			return adminDao.deleteQuizSubjective(quiz);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public QuizChoiceVO getQuizChoice(int qu_num) {
+		return adminDao.selectQuizChoice(qu_num);
+	}
+
+	@Override
+	public QuizSubjectiveVO getQuizSubjective(int qs_num) {
+		return adminDao.selectQuizSubjective(qs_num);
+	}
+
+	@Override
+	public boolean updateQuizChoice(QuizChoiceVO quiz) {
+		try {
+			if(quiz == null) {
+				return false;
+			}
+			if(quiz.getQu_content() == null || quiz.getQu_content().trim().length() == 0) {
+				return false;
+			}
+			if(quiz.getQu_answer1() == null || quiz.getQu_answer1().trim().length() == 0) {
+				return false;
+			}
+			if(quiz.getQu_answer2() == null || quiz.getQu_answer2().trim().length() == 0) {
+				return false;
+			}
+			if(quiz.getQu_answer3() == null || quiz.getQu_answer3().trim().length() == 0) {
+				return false;
+			}
+			if(quiz.getQu_answer4() == null || quiz.getQu_answer4().trim().length() == 0) {
+				return false;
+			}
+			return adminDao.updateQuizChoice(quiz);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean updateQuizSubjective(QuizSubjectiveVO quiz) {
+		try {
+			if(quiz == null) {
+				return false;
+			}
+			if(quiz.getQs_content() == null || quiz.getQs_content().trim().length() == 0) {
+				return false;
+			}
+			if(quiz.getQs_correct_answer() == null || quiz.getQs_correct_answer().trim().length() == 0) {
+				return false;
+			}
+			return adminDao.updateQuizSubjective(quiz);
 		} catch (Exception e) {
 			return false;
 		}

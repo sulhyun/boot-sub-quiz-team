@@ -32,4 +32,12 @@ public interface AdminService {
 
 	boolean delQuizSubjective(QuizSubjectiveVO quiz);
 
+	QuizChoiceVO getQuizChoice(int qu_num);
+
+	QuizSubjectiveVO getQuizSubjective(int qs_num);
+
+	boolean updateQuizChoice(QuizChoiceVO quiz);
+
+	boolean updateQuizSubjective(QuizSubjectiveVO quiz);
+
 }

@@ -35,4 +35,12 @@ public interface AdminDAO {
 
 	boolean deleteQuizSubjective(@Param("quiz")QuizSubjectiveVO quiz);
 
+	QuizChoiceVO selectQuizChoice(@Param("qu_num")int qu_num);
+
+	QuizSubjectiveVO selectQuizSubjective(@Param("qs_num")int qs_num);
+
+	boolean updateQuizChoice(@Param("quiz")QuizChoiceVO quiz);
+
+	boolean updateQuizSubjective(@Param("quiz")QuizSubjectiveVO quiz);
+
 }
