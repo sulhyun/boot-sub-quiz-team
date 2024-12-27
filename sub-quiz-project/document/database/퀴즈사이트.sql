@@ -99,12 +99,12 @@ DROP TABLE IF EXISTS `quiz_choice`;
 
 CREATE TABLE `quiz_choice` (
 	`qu_num`	int primary key auto_increment	NOT NULL,
-	`qu_content`	longtext	NULL,
-	`qu_answer1`	varchar(255)	NULL,
-	`qu_answer2`	varchar(255)	NULL,
-	`qu_answer3`	varchar(255)	NULL,
-	`qu_answer4`	varchar(255)	NULL,
-	`qu_correct_answer`	int(11)	NULL,
+	`qu_content`	varchar(255)	NOT NULL,
+	`qu_answer1`	varchar(255)	NOT NULL,
+	`qu_answer2`	varchar(255)	NOT NULL,
+	`qu_answer3`	varchar(255)	NOT NULL,
+	`qu_answer4`	varchar(255)	NOT NULL,
+	`qu_correct_answer`	int(11)	NOT NULL,
 	`qt_num`	int	NOT NULL
 );
 
@@ -148,9 +148,9 @@ DROP TABLE IF EXISTS `quiz_subjective`;
 
 CREATE TABLE `quiz_subjective` (
 	`qs_num`	int primary key auto_increment	NOT NULL,
-	`qs_content`	longtext	NULL,
-	`qs_answer`	varchar(255)	NULL,
-	`qs_correct_answer`	varchar(255)	NULL,
+	`qs_content`	varchar(255)	NOT NULL,
+	`qs_answer`	varchar(255)	NOT NULL,
+	`qs_correct_answer`	varchar(255)	NOT NULL,
 	`qt_num`	int	NOT NULL
 );
 

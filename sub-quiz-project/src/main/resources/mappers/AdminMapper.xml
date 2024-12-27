@@ -61,4 +61,9 @@
     	WHERE
     		QT_NUM = #{qt_num}
     </select>
+    
+    <insert id="insertQuizChoice">
+    	INSERT INTO QUIZ_CHOICE(QU_CONTENT, QU_ANSWER1, QU_ANSWER2, QU_ANSWER3, QU_ANSWER4, QU_CORRECT_ANSWER, QT_NUM) VALUES
+    	(#{quiz.qu_content}, #{quiz.qu_answer1}, #{quiz.qu_answer2}, #{quiz.qu_answer3}, #{quiz.qu_answer4}, #{quiz.qu_correct_answer}, #{quiz.qt_num})
+    </insert>
 </mapper>
