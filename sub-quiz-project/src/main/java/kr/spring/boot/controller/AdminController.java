@@ -31,14 +31,14 @@ public class AdminController {
 	
 	@GetMapping("/adminhome")
 	public String admin(Model model) {
-		return "/admin/adminHome";		
+		return "admin/adminHome";		
 	}
 	
 	@GetMapping("/quiz/type")
 	public String quizType(Model model, Principal principal) {
         List<QuizTypeVO> list = adminService.getQuizType();
         model.addAttribute("list", list);
-        return "/admin/quiz/type";
+        return "admin/quiz/type";
 	} // 퀴즈 카테고리 조회
 	
     @PostMapping("/quiz/type/add")
@@ -71,19 +71,21 @@ public class AdminController {
     	model.addAttribute("qt_name", qt_name);
     	model.addAttribute("list", list);
     	model.addAttribute("pm", pm);
-        return "/admin/quiz/detail";
+        return "admin/quiz/detail";
     } // 퀴즈 조회(페이지네이션)
     
     @GetMapping("/quiz/insert/{qt_num}/{type}")
     public String quizInsert(Model model, @PathVariable int qt_num, @PathVariable String type) {
     	String qt_name = adminService.getQuizTypeName(qt_num);
     	model.addAttribute("qt_name", qt_name);
-        return "/admin/quiz/insert";
+        return "admin/quiz/insert";
     } // 퀴즈 등록 화면
     
     @PostMapping("/quiz/insert/{qt_num}")
-    public String quizInsertChoice(QuizChoiceVO quiz, @PathVariable int qt_num) {
-    	System.out.println(quiz);
-    	return "/";
-    } // 퀴즈 추가
+    public String quizAddChoice(Model model, QuizChoiceVO quiz) {
+    	boolean res = adminService.addQuiz(quiz);
+    	model.addAttribute("msg", res ? "퀴즈 등록 성공" : "퀴즈 등록 실패");
+    	model.addAttribute("url", res ? "/admin/quiz/detail/" + quiz.getQt_num() + "/choice" : "/admin/quiz/insert/" + quiz.getQt_num() + "/choice");
+    	return "util/msg";
+    } // 객관식 퀴즈 추가
 }
