@@ -14,7 +14,7 @@
 	    	<span th:text="${msg}"></span>
 		</div>
 		<div class="quiz-wrapper">
-	    	<h1 class="heading" th:text="${qt_name + ' 퀴즈'}"></h1>
+	    	<h1 class="heading">회원 목록</h1>
 	    	<div class="d-flex">
 		    	<div class="btn-list mr-auto">
 					<ul class="list-group list-group-horizontal">
@@ -71,33 +71,7 @@
 					</table>
 				</div>
 			</div>
-			<div th:if="${type == 'subjective'}">
-				<div class="quiz-box">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>문제</th>
-								<th>정답</th>
-								<th>관리</th>
-							</tr>
-						</thead>
-						<tbody>
-							 <tr th:each="list:${list}">
-				                <td class="truncate subjective" data-toggle="tooltip" th:title="${list.qs_content}" th:text="${list.qs_content}"></td>
-				                <td class="truncate subjective" data-toggle="tooltip" th:title="${list.qs_correct_answer}" th:text="${list.qs_correct_answer}"></td>
-				                <td class="btn-td">
-				                	<div class="btn-group">
-					                	<a th:href="@{/admin/quiz/update/{qt_num}/{num}/{type}(qt_num=${list.qt_num}, num=${list.qs_num}, type=${type})}" class="button btn-primary">수정</a>
-					                	<form th:action="@{/admin/quiz/del/{qt_num}/{qs_num}/subjective(qt_num=${list.qt_num}, qs_num=${list.qs_num})}" method="post">
-					                		<button class="button btn-danger" type="submit">삭제</button>
-					                	</form>
-				                	</div>
-				                </td>
-				            </tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
+			
 			<div class="page_div">
 				<ul class="pagination justify-content-center center" 
 					th:object="${pm}" 

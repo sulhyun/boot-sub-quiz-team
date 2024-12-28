@@ -143,4 +143,10 @@ public class AdminController {
     	model.addAttribute("url", "/admin/quiz/detail/" + quiz.getQt_num() + "/subjective");
     	return "util/msg";
     } // 주관식 퀴즈 수정
+    
+    @GetMapping("/member/list")
+    public String memberList() {
+        return "admin/member/list";
+    }
+    
 }
