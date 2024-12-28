@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>퀴즈 게임 : 관리자</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/adminQuizDetail.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/adminMemberList.css}">
 </head>
 <body>
 	<main layout:fragment="content">
@@ -47,19 +47,19 @@
 						</thead>
 						<tbody>
 							 <tr th:each="list:${list}">
-				                <td class="truncate" th:text="${list.mb_id}"></td>
-				                <td class="truncate" th:text="${list.mb_name}"></td>
-				                <td class="truncate" th:text="${list.mb_nick}"></td>
-				                <td class="truncate" th:text="${list.mb_hp}"></td>
-				                <td class="truncate" th:text="${list.mb_level}"></td>
-				                <td class="truncate" th:text="${list.mb_datetime}"></td>
-				                <td class="truncate" th:text="${list.mb_edit_date}"></td>
-				                <td class="truncate" th:text="${list.mb_out_date}"></td>
+				                <td th:text="${list.mb_id}"></td>
+				                <td th:text="${list.mb_name}"></td>
+				                <td th:text="${list.mb_nick}"></td>
+				                <td th:text="${list.mb_hp}"></td>
+				                <td th:text="${list.mb_level}"></td>
+				                <td th:text="${#dates.format(list.mb_datetime,'yyyy-MM-dd')}"></td>
+				                <td th:text="${#dates.format(list.mb_edit_date,'yyyy-MM-dd')}"></td>
+				                <td class="" th:text="${#dates.format(list.mb_out_date,'yyyy-MM-dd')}"></td>
 				                <td class="btn-td">
 				                	<div class="btn-group">
 					                	<a href="#" class="button btn-primary">수정</a>
 					                	<form action="#" method="post">
-					                		<button class="button btn-danger" type="submit">삭제</button>
+					                		<button class="button btn-danger" type="submit">정지</button>
 					                	</form>
 				                	</div>
 				                </td>
