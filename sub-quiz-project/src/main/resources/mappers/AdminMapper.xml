@@ -21,7 +21,7 @@
     	UPDATE QUIZ_TYPE SET QT_NAME = #{qt_name} WHERE QT_NUM = #{qt_num}
     </update>
     
-    <select id="getCount" resultType="int">
+    <select id="getQuizCount" resultType="int">
     	SELECT COUNT(*)
     	FROM
    		<if test="cri.type == 'choice'">
@@ -109,4 +109,48 @@
     	WHERE
     		QS_NUM = #{quiz.qs_num}
     </update>
+    
+    <select id="selectMemberList" resultType="MemberVO">
+    	SELECT * 
+		FROM 
+			MEMBER 
+		WHERE
+		<choose>
+			<when test="cri.type == 'id'">
+				MB_ID LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<when test="cri.type == 'nick'">
+				MB_NICK LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<when test="cri.type == 'name'">
+				MB_NAME LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<otherwise>
+				MB_ID LIKE CONCAT('%', #{cri.search}, '%') OR MB_NICK LIKE CONCAT('%', #{cri.search}, '%')
+			</otherwise>
+		</choose>
+		ORDER BY MB_NUM DESC
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+    </select>
+    
+    <select id="selectMemberCount" resultType="int">
+    	SELECT COUNT(*) 
+		FROM 
+			MEMBER
+		WHERE
+		<choose>
+			<when test="cri.type == 'id'">
+				MB_ID LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<when test="cri.type == 'nick'">
+				MB_NICK LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<when test="cri.type == 'name'">
+				MB_NAME LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<otherwise>
+				MB_ID LIKE CONCAT('%', #{cri.search}, '%') OR MB_NICK LIKE CONCAT('%', #{cri.search}, '%')
+			</otherwise>
+		</choose>
+    </select>
 </mapper>

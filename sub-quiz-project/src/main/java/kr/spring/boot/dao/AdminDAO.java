@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
 import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
@@ -19,7 +20,7 @@ public interface AdminDAO {
 
 	boolean updateQuizType(@Param("qt_num")int qt_num, @Param("qt_name")String qt_name);
 
-	int getCount(@Param("cri")Criteria cri, @Param("qt_num")int qt_num);
+	int getQuizCount(@Param("cri")Criteria cri, @Param("qt_num")int qt_num);
 
 	List<?> selectQuizListByChoice(@Param("cri")Criteria cri, @Param("qt_num")int qt_num);
 
@@ -42,5 +43,9 @@ public interface AdminDAO {
 	boolean updateQuizChoice(@Param("quiz")QuizChoiceVO quiz);
 
 	boolean updateQuizSubjective(@Param("quiz")QuizSubjectiveVO quiz);
+
+	List<MemberVO> selectMemberList(@Param("cri")Criteria cri);
+
+	int selectMemberCount(@Param("cri")Criteria cri);
 
 }

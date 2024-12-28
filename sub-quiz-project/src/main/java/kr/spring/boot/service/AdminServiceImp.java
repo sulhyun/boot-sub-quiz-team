@@ -57,12 +57,18 @@ public class AdminServiceImp implements AdminService {
 
 	@Override
 	public PageMaker getPageMakerByQuiz(Criteria cri, int qt_num) {
-		int count = adminDao.getCount(cri, qt_num);
+		if(cri == null) {
+			return null;
+		}
+		int count = adminDao.getQuizCount(cri, qt_num);
 		return new PageMaker(5, cri, count);
 	}
 
 	@Override
 	public List<?> getQuizList(Criteria cri, int qt_num) {
+		if(cri == null) {
+			return null;
+		}
 		switch(cri.getType()) {
 		case "choice":
 			return adminDao.selectQuizListByChoice(cri, qt_num);
@@ -203,14 +209,19 @@ public class AdminServiceImp implements AdminService {
 
 	@Override
 	public List<MemberVO> getMemberList(Criteria cri) {
-		// TODO Auto-generated method stub
-		return null;
+		if(cri == null) {
+			return null;
+		}
+		return adminDao.selectMemberList(cri);
 	}
 
 	@Override
 	public PageMaker getPageMakerByMember(Criteria cri) {
-		// TODO Auto-generated method stub
-		return null;
+		if(cri == null) {
+			return null;
+		}
+		int count = adminDao.selectMemberCount(cri);
+		return new PageMaker(5, cri, count);
 	}
 
 }
