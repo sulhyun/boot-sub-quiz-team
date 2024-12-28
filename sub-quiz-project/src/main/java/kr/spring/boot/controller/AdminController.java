@@ -148,7 +148,8 @@ public class AdminController {
     @GetMapping("/member/list")
     public String memberList(Model model, Criteria cri) {
     	cri.setPerPageNum(8);
-    	//List<MemberVO> list = adminService.getMemberList();
+    	List<MemberVO> list = adminService.getMemberList(cri);
+    	PageMaker pm = adminService.getPageMakerByMember(cri);
         return "admin/member/list";
     }
     
