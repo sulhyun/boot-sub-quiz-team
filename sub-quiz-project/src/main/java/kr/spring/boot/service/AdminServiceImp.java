@@ -55,7 +55,7 @@ public class AdminServiceImp implements AdminService {
 	}
 
 	@Override
-	public PageMaker getPageMaker(Criteria cri, int qt_num) {
+	public PageMaker getPageMakerByQuiz(Criteria cri, int qt_num) {
 		int count = adminDao.getCount(cri, qt_num);
 		return new PageMaker(5, cri, count);
 	}

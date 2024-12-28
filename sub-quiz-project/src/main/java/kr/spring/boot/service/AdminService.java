@@ -18,7 +18,7 @@ public interface AdminService {
 
 	boolean updateQuizType(int qt_num, String qt_name);
 
-	PageMaker getPageMaker(Criteria cri, int qt_num);
+	PageMaker getPageMakerByQuiz(Criteria cri, int qt_num);
 
 	List<?> getQuizList(Criteria cri, int qt_num);
 

@@ -103,15 +103,15 @@
 					th:object="${pm}" 
 					th:if="${pm.endPage != 0}">
 				    <li class="page-item" th:if="*{prev}">
-				    	<a class="page-link" th:href="@{/admin/quiz/{qt_num}/{type}(qt_num=${qt_num}, type=${type}, page=*{startPage-1})}">이전</a>
+				    	<a class="page-link" th:href="@{/admin/quiz/detail/{qt_num}/{type}(qt_num=${qt_num}, type=${type}, page=*{startPage-1})}">이전</a>
 				    </li>
 				    <li class="page-item" 
 				    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
 				    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
-				    	<a class="page-link" th:href="@{/admin/quiz/{qt_num}/{type}(qt_num=${qt_num} ,type=${type}, page=${i})}" th:text="${i}"></a>
+				    	<a class="page-link" th:href="@{/admin/quiz/detail/{qt_num}/{type}(qt_num=${qt_num} ,type=${type}, page=${i})}" th:text="${i}"></a>
 				    </li>
 				    <li class="page-item" th:if="*{next}">
-				    	<a class="page-link" th:href="@{/admin/quiz/{qt_num}/{type}(qt_num=${qt_num} ,type=${type}, page=*{endPage+1})}">다음</a>
+				    	<a class="page-link" th:href="@{/admin/quiz/detail/{qt_num}/{type}(qt_num=${qt_num} ,type=${type}, page=*{endPage+1})}">다음</a>
 				    </li>
 				</ul>
 			</div>
