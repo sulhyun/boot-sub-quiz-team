@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.AdminDAO;
+import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
 import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
@@ -55,7 +56,7 @@ public class AdminServiceImp implements AdminService {
 	}
 
 	@Override
-	public PageMaker getPageMaker(Criteria cri, int qt_num) {
+	public PageMaker getPageMakerByQuiz(Criteria cri, int qt_num) {
 		int count = adminDao.getCount(cri, qt_num);
 		return new PageMaker(5, cri, count);
 	}
@@ -198,6 +199,18 @@ public class AdminServiceImp implements AdminService {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	@Override
+	public List<MemberVO> getMemberList(Criteria cri) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PageMaker getPageMakerByMember(Criteria cri) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

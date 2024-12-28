@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
 import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
@@ -42,23 +43,23 @@ public class AdminController {
 	} // 퀴즈 카테고리 조회
 	
     @PostMapping("/quiz/type/add")
-    public String quizTypeAdd(RedirectAttributes redirectAttributes, @RequestParam String qt_name) {
+    public String quizTypeAdd(RedirectAttributes redirect, @RequestParam String qt_name) {
         boolean res = adminService.addQuizType(qt_name);
-        redirectAttributes.addFlashAttribute("msg", res ? "카테고리 추가에 성공하였습니다." : "카테고리 추가에 실패하였습니다.");
+        redirect.addFlashAttribute("msg", res ? "카테고리 추가에 성공하였습니다." : "카테고리 추가에 실패하였습니다.");
         return "redirect:/admin/quiz/type";
     } // 퀴즈 카테고리 추가
     
     @PostMapping("/quiz/type/del")
-    public String quizTypeDel(RedirectAttributes redirectAttributes, @RequestParam int qt_num) {
+    public String quizTypeDel(RedirectAttributes redirect, @RequestParam int qt_num) {
 	    boolean res = adminService.delQuizType(qt_num);
-	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리 삭제에 성공하였습니다." : "카테고리 삭제에 실패하였습니다.");
+	    redirect.addFlashAttribute("msg", res ? "카테고리 삭제에 성공하였습니다." : "카테고리 삭제에 실패하였습니다.");
 	    return "redirect:/admin/quiz/type";
 	} // 퀴즈 카테고리 삭제
     
     @PostMapping("/quiz/type/update")
-    public String quizTypeUpdate(RedirectAttributes redirectAttributes, @RequestParam int qt_num, @RequestParam String qt_name) {
+    public String quizTypeUpdate(RedirectAttributes redirect, @RequestParam int qt_num, @RequestParam String qt_name) {
 	    boolean res = adminService.updateQuizType(qt_num, qt_name);
-	    redirectAttributes.addFlashAttribute("msg", res ? "카테고리 수정에 성공하였습니다." : "카테고리 수정에 실패하였습니다.");
+	    redirect.addFlashAttribute("msg", res ? "카테고리 수정에 성공하였습니다." : "카테고리 수정에 실패하였습니다.");
 	    return "redirect:/admin/quiz/type";
     } // 퀴즈 카테고리 수정
     
@@ -66,7 +67,7 @@ public class AdminController {
     public String quizDetail(Model model, Criteria cri, @PathVariable int qt_num, @PathVariable String type) {
     	String qt_name = adminService.getQuizTypeName(qt_num);
     	cri.setPerPageNum(8);
-    	PageMaker pm = adminService.getPageMaker(cri, qt_num);
+    	PageMaker pm = adminService.getPageMakerByQuiz(cri, qt_num);
     	List<?> list = adminService.getQuizList(cri, qt_num);
     	model.addAttribute("qt_name", qt_name);
     	model.addAttribute("list", list);
@@ -143,4 +144,13 @@ public class AdminController {
     	model.addAttribute("url", "/admin/quiz/detail/" + quiz.getQt_num() + "/subjective");
     	return "util/msg";
     } // 주관식 퀴즈 수정
+    
+    @GetMapping("/member/list")
+    public String memberList(Model model, Criteria cri) {
+    	cri.setPerPageNum(8);
+    	List<MemberVO> list = adminService.getMemberList(cri);
+    	PageMaker pm = adminService.getPageMakerByMember(cri);
+        return "admin/member/list";
+    }
+    
 }

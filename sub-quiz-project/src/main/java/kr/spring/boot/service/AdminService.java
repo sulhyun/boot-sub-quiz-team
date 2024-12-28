@@ -2,6 +2,7 @@ package kr.spring.boot.service;
 
 import java.util.List;
 
+import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
 import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
@@ -18,7 +19,7 @@ public interface AdminService {
 
 	boolean updateQuizType(int qt_num, String qt_name);
 
-	PageMaker getPageMaker(Criteria cri, int qt_num);
+	PageMaker getPageMakerByQuiz(Criteria cri, int qt_num);
 
 	List<?> getQuizList(Criteria cri, int qt_num);
 
@@ -39,5 +40,9 @@ public interface AdminService {
 	boolean updateQuizChoice(QuizChoiceVO quiz);
 
 	boolean updateQuizSubjective(QuizSubjectiveVO quiz);
+
+	List<MemberVO> getMemberList(Criteria cri);
+
+	PageMaker getPageMakerByMember(Criteria cri);
 
 }
