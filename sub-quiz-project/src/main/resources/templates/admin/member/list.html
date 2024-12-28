@@ -15,53 +15,50 @@
 		</div>
 		<div class="quiz-wrapper">
 	    	<h1 class="heading">회원 목록</h1>
-	    	<div class="d-flex">
-		    	<div class="btn-list mr-auto">
-					<ul class="list-group list-group-horizontal">
-						<li class="list-group-item list-group-item-light">
-							<a th:href="@{/admin/quiz/detail/{qt_num}/choice(qt_num=${qt_num})}">
-								<button type="button" th:class="${type == 'choice'} ? 'btn btn-info on':'btn btn-light'">객관식</button>
-							</a>
-						</li>
-						<li class="list-group-item list-group-item-light">
-							<a th:href="@{/admin/quiz/detail/{qt_num}/subjective(qt_num=${qt_num})}">
-								<button type="button" th:class="${type == 'subjective'} ? 'btn btn-info on':'btn btn-light'">주관식</button>
-							</a>
-						</li>
-					</ul>
+	    	<form action="/admin/member/list" method="get">
+			<div class="input-group mb-3">
+				<select class="form-control col-sm-1" name="type">
+					<option value="all">전체</option>
+					<option value="id">아이디</option>
+					<option value="nick">닉네임</option>
+					<option value="name">이름</option>
+				</select>
+				<input type="text" class="form-control col-sm-2" placeholder="검색어" name="search" th:value="${pm.cri.search}">
+				<div class="input-group-append">
+					<button type="submit" class="btn btn-outline-info col-12">검색</button>
 				</div>
-				<div class="list-group-item">
-		    		<a th:href="@{/admin/quiz/insert/{qt_num}/{type} (qt_num=${qt_num}, type=${type})}">
-		    			<button type="button" class="btn btn-info">등록</button>
-		    		</a>
-				</div>
-	    	</div>
-			<div th:if="${type == 'choice'}">
+			</div>
+		</form>
+			<div>
 				<div class="quiz-box">
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>문제</th>
-								<th>보기1</th>
-								<th>보기2</th>
-								<th>보기3</th>
-								<th>보기4</th>
-								<th>정답</th>
+								<th>아이디</th>
+								<th>이름</th>
+								<th>닉네임</th>
+								<th>전화번호</th>
+								<th>레벨</th>
+								<th>가입일</th>
+								<th>수정일</th>
+								<th>정지일</th>
 								<th>관리</th>
 							</tr>
 						</thead>
 						<tbody>
 							 <tr th:each="list:${list}">
-				                <td class="truncate choice" data-toggle="tooltip" th:title="${list.qu_content}" th:text="${list.qu_content}"></td>
-				                <td class="truncate choice" data-toggle="tooltip" th:title="${list.qu_answer1}" th:text="${list.qu_answer1}"></td>
-				                <td class="truncate choice" data-toggle="tooltip" th:title="${list.qu_answer2}" th:text="${list.qu_answer2}"></td>
-				                <td class="truncate choice" data-toggle="tooltip" th:title="${list.qu_answer3}" th:text="${list.qu_answer3}"></td>
-				                <td class="truncate choice" data-toggle="tooltip" th:title="${list.qu_answer4}" th:text="${list.qu_answer4}"></td>
-				                <td class="truncate choice" th:text="${list.qu_correct_answer}"></td>
+				                <td class="truncate" th:text="${list.mb_id}"></td>
+				                <td class="truncate" th:text="${list.mb_name}"></td>
+				                <td class="truncate" th:text="${list.mb_nick}"></td>
+				                <td class="truncate" th:text="${list.mb_hp}"></td>
+				                <td class="truncate" th:text="${list.mb_level}"></td>
+				                <td class="truncate" th:text="${list.mb_datetime}"></td>
+				                <td class="truncate" th:text="${list.mb_edit_date}"></td>
+				                <td class="truncate" th:text="${list.mb_out_date}"></td>
 				                <td class="btn-td">
 				                	<div class="btn-group">
-					                	<a th:href="@{/admin/quiz/update/{qt_num}/{num}/{type}(qt_num=${list.qt_num}, num=${list.qu_num}, type=${type})}" class="button btn-primary">수정</a>
-					                	<form th:action="@{/admin/quiz/del/{qt_num}/{qu_num}/choice(qt_num=${list.qt_num}, qu_num=${list.qu_num})}" method="post">
+					                	<a href="#" class="button btn-primary">수정</a>
+					                	<form action="#" method="post">
 					                		<button class="button btn-danger" type="submit">삭제</button>
 					                	</form>
 				                	</div>
@@ -77,15 +74,15 @@
 					th:object="${pm}" 
 					th:if="${pm.endPage != 0}">
 				    <li class="page-item" th:if="*{prev}">
-				    	<a class="page-link" th:href="@{/admin/quiz/detail/{qt_num}/{type}(qt_num=${qt_num}, type=${type}, page=*{startPage-1})}">이전</a>
+				    	<a class="page-link" th:href="@{/admin/member/list(page=*{startPage-1})}">이전</a>
 				    </li>
 				    <li class="page-item" 
 				    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
 				    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
-				    	<a class="page-link" th:href="@{/admin/quiz/detail/{qt_num}/{type}(qt_num=${qt_num} ,type=${type}, page=${i})}" th:text="${i}"></a>
+				    	<a class="page-link" th:href="@{/admin/member/list(page=${i})}" th:text="${i}"></a>
 				    </li>
 				    <li class="page-item" th:if="*{next}">
-				    	<a class="page-link" th:href="@{/admin/quiz/detail/{qt_num}/{type}(qt_num=${qt_num} ,type=${type}, page=*{endPage+1})}">다음</a>
+				    	<a class="page-link" th:href="@{/admin/member/list(page=*{endPage+1})}">다음</a>
 				    </li>
 				</ul>
 			</div>

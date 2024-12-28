@@ -150,6 +150,8 @@ public class AdminController {
     	cri.setPerPageNum(8);
     	List<MemberVO> list = adminService.getMemberList(cri);
     	PageMaker pm = adminService.getPageMakerByMember(cri);
+    	model.addAttribute("list", list);
+		model.addAttribute("pm", pm);
         return "admin/member/list";
     }
     
