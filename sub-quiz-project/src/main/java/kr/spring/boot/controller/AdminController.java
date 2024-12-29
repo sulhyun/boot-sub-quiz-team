@@ -158,4 +158,9 @@ public class AdminController {
         return "admin/member/list";
     } // 회원 관리 화면(페이지 네이션)
     
+    @GetMapping("/member/insert")
+    public String memberInsert() {
+    	return "/admin/member/insert";
+    } // 회원 등록 화면
+    
 }

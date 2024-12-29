@@ -34,8 +34,8 @@ public class MemberController {
 	@PostMapping("/signup")
 	public String signupPost(Model model, SignupDTO user) {
 		boolean res = memberService.signup(user);
-		model.addAttribute("msg", res ? "회원가입 성공!!" : "회원가입 실패!!");
-		model.addAttribute("url", "/");
+		model.addAttribute("msg", res ? "회원가입에 성공하셨습니다." : "회원가입에 실패하였습니다.");
+		model.addAttribute("url", user.getWhere().equals("user") ? "/" : "/admin/member/list");
 		return "util/msg";
 	} // 회원가입
 	

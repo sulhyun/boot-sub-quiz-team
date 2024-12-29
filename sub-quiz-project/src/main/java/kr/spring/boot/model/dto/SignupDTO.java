@@ -22,4 +22,7 @@ public class SignupDTO {
 	private int mb_level = 1;		// 회원 레벨
 	private int mb_point = 500;		// 회원 포인트
 	private String mb_login_method = "internal";
+	
+	// 관리자를 통해서 회원가입 or 일반 회원가입
+	private String where;
 }

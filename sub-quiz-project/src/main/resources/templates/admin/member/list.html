@@ -81,15 +81,15 @@
 					th:object="${pm}" 
 					th:if="${pm.endPage != 0}">
 				    <li class="page-item" th:if="*{prev}">
-				    	<a class="page-link" th:href="@{/admin/member/list(page=*{startPage-1})}">이전</a>
+				    	<a class="page-link" th:href="@{/admin/member/list(page=*{startPage-1}, type=*{cri.type}, search=*{cri.search}))}">이전</a>
 				    </li>
 				    <li class="page-item" 
 				    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
 				    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
-				    	<a class="page-link" th:href="@{/admin/member/list(page=${i})}" th:text="${i}"></a>
+				    	<a class="page-link" th:href="@{/admin/member/list(page=${i}, type=*{cri.type}, search=*{cri.search})}" th:text="${i}"></a>
 				    </li>
 				    <li class="page-item" th:if="*{next}">
-				    	<a class="page-link" th:href="@{/admin/member/list(page=*{endPage+1})}">다음</a>
+				    	<a class="page-link" th:href="@{/admin/member/list(page=*{endPage+1}, type=*{cri.type}, search=*{cri.search})}">다음</a>
 				    </li>
 				</ul>
 			</div>

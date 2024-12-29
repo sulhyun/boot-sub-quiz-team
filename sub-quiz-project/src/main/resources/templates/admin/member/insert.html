@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈 게임 : 관리자</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/adminMemberInsert.css}">
+<style type="text/css">
+</style>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:replace="~{layout/adminSidebar.html}"></div>
+		<div class="member-wrapper" id="content">
+	    	<h1 class="heading">회원 등록</h1>
+	    	<div class="member-container">
+		    	<form method="post" id="form" action="/member/signup">
+					<div class="form-group">
+						<label for="id"><b>아아디</b></label>
+						<span class="error-message text-danger" id="error-id"></span>
+						<div class="input-group">
+							<input type="text" class="form-control" id="id" name="mb_id" placeholder="아이디 입력 (6~20)자">
+							<div class="input-group-append">
+								<button type="button" class="btn btn-outline-info" onclick="checkId()">중복검사</button>
+							</div>
+						</div>
+					</div>
+					<input type="hidden" id="id-check" value="n">
+					<div class="form-group">
+						<label for="pw"><b>비밀번호</b></label>
+						<span class="error-message text-danger" id="error-pw"></span>
+						<input type="password" class="form-control" id="pw" name="mb_pw" placeholder="비밀번호 입력 (영문, 숫자, 특수문자 포함 6~20)자">
+					</div>
+					<div class="form-group">
+						<label for="pw2"><b>비밀번호 재확인</b></label>
+						<span class="error-message text-danger" id="error-pw2"></span>
+						<input type="password" class="form-control" id="pw2" name="mb_pw2" placeholder="비밀번호 재입력">
+					</div>
+					<div class="form-group">
+						<label for="name"><b>이름</b></label>
+						<span class="error-message text-danger" id="error-name"></span>
+						<input type="text" class="form-control" id="name" name="mb_name" placeholder="이름 입력">
+					</div>
+					<div class="form-group">
+						<label for="nick"><b>닉네임</b></label>
+						<span class="error-message text-danger" id="error-nick"></span>
+						<input type="text" class="form-control" id="nick" name="mb_nick" placeholder="닉네임 입력">
+					</div>
+					<div class="form-group">
+						<label for="ph"><b>전화번호</b></label>
+						<span class="error-message text-danger" id="error-hp"></span>
+						<input type="text" class="form-control" id="hp" name="mb_hp" oninput="autoHyphen(this)" placeholder="휴대폰 번호 입력 ('-'제외 11자리)">
+					</div>
+					<div class="form-group">
+						<label for="email"><b>이메일</b></label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="email-input" placeholder="이메일 입력">
+							<span class="email-text">@</span>
+					    	<input type="text" class="form-control mr-2" id="email-domain" placeholder="직접 입력">
+						    <select class="form-select" id="domain-list">
+								<option value="">직접 입력</option>
+								<option value="naver.com">naver.com</option>
+								<option value="google.com">google.com</option>
+								<option value="nate.com">nate.com</option>
+								<option value="kakao.com">kakao.com</option>
+							</select>
+						</div>
+					</div>
+					<input type="hidden" id="email" name="mb_email">
+					<div class="form-group">
+					    <label for="zip_btn"><b>주소</b></label>
+					    <br>
+					    <input type="text" class="form-control mb-2 zip-num" id="zip" name="mb_zip" maxlength="10" placeholder="우편번호" readonly>
+					    <input type="button" class="btn btn-outline-info zip-find" id="zip_btn" onclick="execDaumPostcode()" value="우편번호 찾기">
+					    <br>
+					    <input type="text" class="form-control mb-2" id="addr" name="mb_addr" maxlength="40" placeholder="기본 주소를 입력" readonly>
+					    <input type="text" class="form-control" id="addr2" name="mb_addr2"  maxlength="40" placeholder="상세 주소를 입력">
+					</div>
+					<div class="form-group">
+						<label for="birth"><b>생년월일</b></label>
+						<div class="input-group">
+							<select class="form-control mr-2" id="birth-year">
+								<option value="">년도</option>
+							</select>
+							<select class="form-control mr-2" id="birth-month">
+								<option value="">월</option>
+							</select>
+							<select class="form-control" id="birth-day">
+								<option value="">일</option>
+							</select>
+						</div>		
+					</div>
+					<input type="hidden" id="birth" name="mb_birth">
+					<input type="hidden" name="where" value="admin">
+					<button type="submit" class="btn btn-outline-info col-12">회원가입</button>
+				</form>
+			</div>
+	    </div>
+	    <script type="text/javascript">
+		    function adjustSidebarHeight() {
+		        const sidebar = document.getElementById('admin-sidebar');
+		        const content = document.getElementById('content');
+		        const contentHeight = content.offsetHeight;
+		        const viewportHeight = window.innerHeight;
+	
+		        // 사이드바 높이를 컨텐츠 높이와 화면 높이 중 더 큰 값으로 설정
+		        sidebar.style.height = `${Math.max(contentHeight, viewportHeight - 80)}px`;
+		    }
+	
+		    window.addEventListener('resize', adjustSidebarHeight);
+		    window.addEventListener('load', adjustSidebarHeight);
+		    
+		    const autoHyphen = (target) => {
+			    let hp = target.value.replace(/[^0-9]/g, '');
+			    if (hp.length > 11) {
+			        hp = hp.substring(0, 11);
+			    }
+			    target.value = hp
+			        .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+			        .replace(/(\-{1,2})$/g, "");
+			}; // 전화번호 하이픈 자동 생성
+			
+			$(document).ready(function() {
+				const birthYear = $('#birth-year');
+				const birthMonth = $('#birth-month');
+				const birthDay = $('#birth-day');
+			
+				let isYear = false;
+				let isMonth = false;
+			
+				const currentYear = new Date().getFullYear();
+			
+				birthYear.on('focus', function () {
+					if (!isYear) {
+						isYear = true;
+						for (let i = 1940; i <= currentYear; i++) {
+							const optionYear = $('<option>').val(i).text(i);
+							birthYear.append(optionYear);
+						}
+					}
+				});
+			
+				birthMonth.on('focus', function () {
+					if (!isMonth) {
+						isMonth = true;
+						for (let i = 1; i <= 12; i++) {
+							const optionMonth = $('<option>').val(i).text(i);
+							birthMonth.append(optionMonth);
+						}
+					}
+				});
+			
+				function updateDays() {
+					const selectedYear = parseInt(birthYear.val());
+					const selectedMonth = parseInt(birthMonth.val());
+			
+					if (!selectedYear || !selectedMonth) {
+						birthDay.html('<option value="">일</option>').prop('disabled', true);
+						return;
+					}
+			
+					const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+					birthDay.html('<option value="">일</option>');
+			
+					for (let i = 1; i <= daysInMonth; i++) {
+						const dayOption = $('<option>').val(i).text(i);
+						birthDay.append(dayOption);
+					}
+					birthDay.prop('disabled', false);
+				}
+ 				
+ 				birthDay.prop('disabled', true);
+			
+				birthYear.on('change', updateDays);
+				birthMonth.on('change', updateDays);
+			}); // 생년월일 선택
+			
+			$('#id').change(inputId);
+			function inputId() {
+				let errId = $('#error-id');
+				if(errId.text() != '사용 가능한 아이디입니다.') {
+					$('#id-check').val('n');
+				}
+			} // 사용자가 아이디를 지우고 다시 입력하면 'n'으로 업데이트
+			
+			function checkId(){
+				const mb_id = $('#id').val().trim();
+				const errMsg = $('#error-id');
+				if(!/^\w{6,20}$/.test(mb_id)){
+					return;
+				}
+				$.ajax({
+					async : true, 
+					url : '/member/checkId', 
+					type : 'get', 
+					data : {mb_id : mb_id}, 
+					success : function (data){
+						if(data) {
+							errMsg.text("사용 가능한 아이디입니다.");
+							$('#id-check').val('y');
+						}else{
+							$('#error-id').removeClass('text-success').addClass('text-danger');
+							errMsg.text("이미 사용중인 아이디입니다.");
+							$('#id-check').val('n');
+						}
+					}, 
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
+			} // 아이디 중복검사
+	    </script>
+	    
+	    <script type="text/javascript">
+			$('#form').validate({
+				rules : {
+					mb_id : {
+						required : true,
+						regex : /^\w{6,20}$/
+					},
+					mb_pw : {
+						required : true,
+						regex : /^[a-zA-Z0-9!@#$]{6,20}$/
+					},
+					mb_pw2 : {
+						equalTo : pw
+					},
+					mb_name : {
+						required : true
+					},
+					mb_nick : {
+						required : true
+					},
+					mb_hp : {
+						required : true,
+					}
+				},
+				messages : {
+					mb_id : {
+						required : '필수 항목입니다.',
+						regex : '영어, 숫자만 가능하며, 6~20자이어야 합니다.'
+					},
+					mb_pw : {
+						required : '필수 항목입니다.',
+						regex : '영어, 숫자, 특수문자(!@#$)만 가능하며, 6~20자이어야 합니다.'
+					},
+					mb_pw2 : {
+						equalTo : '비번과 일치하지 않습니다.'
+					},
+					mb_name : {
+						required : '필수 항목입니다.'
+					},
+					mb_nick : {
+						required : ' 필수 항목입니다.'
+					},
+					mb_hp : {
+						required : '필수 항목입니다.'
+					}
+					
+				},
+			    errorPlacement: function (error, element) {
+			        var errorId = 'error-' + $(element).attr('id');
+			        $('#' + errorId).html(error).removeClass("text-success").addClass("text-danger");
+			    },
+			    success: function (label, element) {
+			        var errorId = 'error-' + $(element).attr('id');
+			        $('#' + errorId).html('').removeClass("text-danger").addClass("text-success");
+			    },
+				submitHandler : function(form){
+					let id2 = $('#id-check').val();
+					let email2 = $('#email-check').val();
+					if(id2 != 'y') {
+						alert('아이디 중복검사를 진행해 주세요.');
+						$('#id').focus();
+						return false;
+					}
+					// 이메일
+					const email = $('#email-input').val();
+					const domain = $('#email-domain').val();
+					const mb_email = email + '@' + domain;
+					
+					// 생년월일
+					const birthYear = $('#birth-year').val();
+					const birthMonth = $('#birth-month').val().padStart(2, '0');
+					const birthDay = $('#birth-day').val().padStart(2, '0');
+					const mb_birth = birthYear + '-' + birthMonth + '-' + birthDay;
+					
+					// 히든 요소의 value값에 가공된 변수들 넣어주기
+					$('#email').val(mb_email);
+					$('#birth').val(mb_birth);
+					form.submit();
+				}
+			});
+			$.validator.addMethod('regex', function(value, element, regex){
+				var re = new RegExp(regex);
+				return this.optional(element) || re.test(value);
+			}, "정규표현식을 확인하세요.");
+		</script>
+		
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	    <script>
+		    function execDaumPostcode() {
+		        new daum.Postcode({
+		            oncomplete: function(data) {
+		                // 팝업을 통한 검색 결과 항목 클릭 시 실행
+		                var addr = ''; // 주소_결과값이 없을 경우 공백 
+		                var extraAddr = ''; // 참고항목
+		
+		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		                if (data.userSelectedType === 'R') { // 도로명 주소를 선택
+		                    addr = data.roadAddress;
+		                } else { // 지번 주소를 선택
+		                    addr = data.jibunAddress;
+		                }
+		
+		                if(data.userSelectedType === 'R'){
+		                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                        extraAddr += data.bname;
+		                    }
+		                    if(data.buildingName !== '' && data.apartment === 'Y'){
+		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                    }
+		                    if(extraAddr !== ''){
+		                        extraAddr = ' (' + extraAddr + ')';
+		                    }
+		                } else {
+		                    document.getElementById("addr").value = '';
+		                }
+		
+		                // 선택된 우편번호와 주소 정보를 input 박스에 넣는다.
+		                document.getElementById('zip').value = data.zonecode;
+		                document.getElementById("addr").value = addr;
+		                document.getElementById("addr").value += extraAddr;
+		                document.getElementById("addr2").focus(); // 우편번호 + 주소 입력이 완료되었음으로 상세주소로 포커스 이동
+		            }
+		        }).open();
+		    }
+		</script>
+   </main>
+</body>
+</html>
