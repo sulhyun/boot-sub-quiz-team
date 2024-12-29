@@ -160,7 +160,26 @@ public class AdminController {
     
     @GetMapping("/member/insert")
     public String memberInsert() {
-    	return "/admin/member/insert";
+    	return "admin/member/insert";
     } // 회원 등록 화면
     
+    @PostMapping("/member/del/{mb_num}")
+    public String memberDel(RedirectAttributes redirect, @PathVariable int mb_num) {
+    	MemberVO user = adminService.getMember(mb_num);
+    	boolean res = adminService.delMember(user);
+    	if(user.getMb_out_date() == null) {
+    		redirect.addFlashAttribute("msg", res ? "회원 정지에 성공하였습니다." : "회원 정지에 실패하였습니다.");
+    	} else {
+    		redirect.addFlashAttribute("msg", res ? "회원 정지 해제에 성공하였습니다." : "회원 정지 해제에 실패하였습니다.");
+    	}
+    	return "redirect:/admin/member/list";
+    } // 회원 정지
+    
+    @GetMapping("/member/update/{mb_num}")
+    public String memberUpdate(Model model, @PathVariable int mb_num) {
+    	MemberVO user = adminService.getMember(mb_num);
+    	user.setMb_hp(customUtil.autoHyphen(user.getMb_hp()));
+    	model.addAttribute("user", user);
+    	return "admin/member/update";
+    } // 회원 수정
 }

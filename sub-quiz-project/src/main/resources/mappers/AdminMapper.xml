@@ -153,4 +153,24 @@
 			</otherwise>
 		</choose>
     </select>
+    
+    <select id="selectMember" resultType="MemberVO">
+    	SELECT *
+    	FROM
+    		MEMBER
+    	WHERE MB_NUM = #{mb_num}
+    </select>
+    
+    <update id="deleteMember">
+    	UPDATE MEMBER
+    	SET
+   		<if test="user.mb_out_date == null">
+   			MB_OUT_DATE = NOW()
+   		</if>
+   		<if test="user.mb_out_date != null">
+   			MB_OUT_DATE = NULL
+   		</if>
+   		WHERE
+   			MB_NUM = #{user.mb_num}
+    </update>
 </mapper>

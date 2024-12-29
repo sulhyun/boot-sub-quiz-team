@@ -48,7 +48,7 @@
 					<input type="text" class="form-control" id="nick" name="mb_nick" placeholder="닉네임 입력">
 				</div>
 				<div class="form-group">
-					<label for="ph"><b>전화번호</b></label>
+					<label for="hp"><b>전화번호</b></label>
 					<span class="error-message text-danger" id="error-hp"></span>
 					<input type="text" class="form-control" id="hp" name="mb_hp" oninput="autoHyphen(this)" placeholder="휴대폰 번호 입력 ('-'제외 11자리)">
 				</div>
@@ -376,6 +376,7 @@
 					},
 					mb_hp : {
 						required : true,
+						regex: /^010-\d{4}-\d{4}$/
 					}
 				},
 				messages : {
@@ -397,9 +398,9 @@
 						required : ' 필수 항목입니다.'
 					},
 					mb_hp : {
-						required : '필수 항목입니다.'
+						required : '필수 항목입니다.',
+						regex: '010-XXXX-XXXX 형식으로 입력해주세요.'
 					}
-					
 				},
 			    errorPlacement: function (error, element) {
 			        var errorId = 'error-' + $(element).attr('id');

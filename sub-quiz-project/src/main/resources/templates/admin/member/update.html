@@ -13,51 +13,39 @@
 	<main layout:fragment="content">
 		<div th:replace="~{layout/adminSidebar.html}"></div>
 		<div class="member-wrapper" id="content">
-	    	<h1 class="heading">회원 등록</h1>
+	    	<h1 class="heading">회원 수정</h1>
 	    	<div class="member-container">
 		    	<form method="post" id="form" action="/member/signup">
 					<div class="form-group">
 						<label for="id"><b>아아디</b></label>
 						<span class="error-message text-danger" id="error-id"></span>
-						<div class="input-group">
-							<input type="text" class="form-control" id="id" name="mb_id" placeholder="아이디 입력 (6~20)자">
-							<div class="input-group-append">
-								<button type="button" class="btn btn-outline-info" onclick="checkId()">중복검사</button>
-							</div>
-						</div>
-					</div>
-					<input type="hidden" id="id-check" value="n">
-					<div class="form-group">
-						<label for="pw"><b>비밀번호</b></label>
-						<span class="error-message text-danger" id="error-pw"></span>
-						<input type="password" class="form-control" id="pw" name="mb_pw" placeholder="비밀번호 입력 (영문, 숫자, 특수문자 포함 6~20)자">
+						<input type="text" class="form-control" id="id" name="mb_id" placeholder="아이디 입력 (6~20)자" th:value="${user.mb_id}" readonly>
 					</div>
 					<div class="form-group">
-						<label for="pw2"><b>비밀번호 재확인</b></label>
-						<span class="error-message text-danger" id="error-pw2"></span>
-						<input type="password" class="form-control" id="pw2" name="mb_pw2" placeholder="비밀번호 재입력">
+						<label for="pw"><b>비밀번호 변경</b></label>
+						<input type="button" class="btn btn-outline-info col-12" id="pw" value="비밀번호 변경">
 					</div>
 					<div class="form-group">
 						<label for="name"><b>이름</b></label>
 						<span class="error-message text-danger" id="error-name"></span>
-						<input type="text" class="form-control" id="name" name="mb_name" placeholder="이름 입력">
+						<input type="text" class="form-control" id="name" name="mb_name" placeholder="이름 입력" th:value="${user.mb_name}">
 					</div>
 					<div class="form-group">
 						<label for="nick"><b>닉네임</b></label>
 						<span class="error-message text-danger" id="error-nick"></span>
-						<input type="text" class="form-control" id="nick" name="mb_nick" placeholder="닉네임 입력">
+						<input type="text" class="form-control" id="nick" name="mb_nick" placeholder="닉네임 입력" th:value="${user.mb_nick}">
 					</div>
 					<div class="form-group">
-						<label for="ph"><b>전화번호</b></label>
+						<label for="hp"><b>전화번호</b></label>
 						<span class="error-message text-danger" id="error-hp"></span>
-						<input type="text" class="form-control" id="hp" name="mb_hp" oninput="autoHyphen(this)" placeholder="휴대폰 번호 입력 ('-'제외 11자리)">
+						<input type="text" class="form-control" id="hp" name="mb_hp" oninput="autoHyphen(this)" placeholder="휴대폰 번호 입력 ('-'제외 11자리)" th:value="${user.mb_hp}">
 					</div>
 					<div class="form-group">
-						<label for="email"><b>이메일</b></label>
+						<label for="email-input"><b>이메일</b></label>
 						<div class="input-group">
-							<input type="text" class="form-control" id="email-input" placeholder="이메일 입력">
+							<input type="text" class="form-control" id="email-input" placeholder="이메일 입력" th:value="${#strings.substringBefore(user.mb_email, '@')}">
 							<span class="email-text">@</span>
-					    	<input type="text" class="form-control mr-2" id="email-domain" placeholder="직접 입력">
+					    	<input type="text" class="form-control mr-2" id="email-domain" placeholder="직접 입력" th:value="${#strings.contains(user.mb_email, '@') ? #strings.substringAfter(user.mb_email, '@') : ''}">
 						    <select class="form-select" id="domain-list">
 								<option value="">직접 입력</option>
 								<option value="naver.com">naver.com</option>
@@ -71,29 +59,18 @@
 					<div class="form-group">
 					    <label for="zip_btn"><b>주소</b></label>
 					    <br>
-					    <input type="text" class="form-control mb-2 zip-num" id="zip" name="mb_zip" maxlength="10" placeholder="우편번호" readonly>
+					    <input type="text" class="form-control mb-2 zip-num" id="zip" name="mb_zip" maxlength="10" placeholder="우편번호" readonly th:value="${user.mb_zip}">
 					    <input type="button" class="btn btn-outline-info zip-find" id="zip_btn" onclick="execDaumPostcode()" value="우편번호 찾기">
 					    <br>
-					    <input type="text" class="form-control mb-2" id="addr" name="mb_addr" maxlength="40" placeholder="기본 주소를 입력" readonly>
-					    <input type="text" class="form-control" id="addr2" name="mb_addr2"  maxlength="40" placeholder="상세 주소를 입력">
+					    <input type="text" class="form-control mb-2" id="addr" name="mb_addr" maxlength="40" placeholder="기본 주소를 입력" readonly th:value="${user.mb_addr}">
+					    <input type="text" class="form-control" id="addr2" name="mb_addr2"  maxlength="40" placeholder="상세 주소를 입력" th:value="${user.mb_addr2}">
 					</div>
 					<div class="form-group">
 						<label for="birth"><b>생년월일</b></label>
-						<div class="input-group">
-							<select class="form-control mr-2" id="birth-year">
-								<option value="">년도</option>
-							</select>
-							<select class="form-control mr-2" id="birth-month">
-								<option value="">월</option>
-							</select>
-							<select class="form-control" id="birth-day">
-								<option value="">일</option>
-							</select>
-						</div>		
+						<input type="text" class="form-control" id="birth" name="mb_birth" th:value="${user.mb_birth}" maxlength="10" placeholder="YYYY-MM-DD" oninput="autoHyphenBirth(this)">	
 					</div>
-					<input type="hidden" id="birth" name="mb_birth">
 					<input type="hidden" name="where" value="admin">
-					<button type="submit" class="btn btn-outline-info col-12">등록</button>
+					<button type="submit" class="btn btn-outline-info col-12">수정</button>
 				</form>
 			</div>
 	    </div>
@@ -119,97 +96,18 @@
 			    target.value = hp
 			        .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
 			        .replace(/(\-{1,2})$/g, "");
-			}; // 전화번호 하이픈 자동 생성
+			} // 전화번호 하이픈 자동 생성
 			
-			$(document).ready(function() {
-				const birthYear = $('#birth-year');
-				const birthMonth = $('#birth-month');
-				const birthDay = $('#birth-day');
-			
-				let isYear = false;
-				let isMonth = false;
-			
-				const currentYear = new Date().getFullYear();
-			
-				birthYear.on('focus', function () {
-					if (!isYear) {
-						isYear = true;
-						for (let i = 1940; i <= currentYear; i++) {
-							const optionYear = $('<option>').val(i).text(i);
-							birthYear.append(optionYear);
-						}
-					}
-				});
-			
-				birthMonth.on('focus', function () {
-					if (!isMonth) {
-						isMonth = true;
-						for (let i = 1; i <= 12; i++) {
-							const optionMonth = $('<option>').val(i).text(i);
-							birthMonth.append(optionMonth);
-						}
-					}
-				});
-			
-				function updateDays() {
-					const selectedYear = parseInt(birthYear.val());
-					const selectedMonth = parseInt(birthMonth.val());
-			
-					if (!selectedYear || !selectedMonth) {
-						birthDay.html('<option value="">일</option>').prop('disabled', true);
-						return;
-					}
-			
-					const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
-					birthDay.html('<option value="">일</option>');
-			
-					for (let i = 1; i <= daysInMonth; i++) {
-						const dayOption = $('<option>').val(i).text(i);
-						birthDay.append(dayOption);
-					}
-					birthDay.prop('disabled', false);
-				}
- 				
- 				birthDay.prop('disabled', true);
-			
-				birthYear.on('change', updateDays);
-				birthMonth.on('change', updateDays);
-			}); // 생년월일 선택
-			
-			$('#id').change(inputId);
-			function inputId() {
-				let errId = $('#error-id');
-				if(errId.text() != '사용 가능한 아이디입니다.') {
-					$('#id-check').val('n');
-				}
-			} // 사용자가 아이디를 지우고 다시 입력하면 'n'으로 업데이트
-			
-			function checkId(){
-				const mb_id = $('#id').val().trim();
-				const errMsg = $('#error-id');
-				if(!/^\w{6,20}$/.test(mb_id)){
-					return;
-				}
-				$.ajax({
-					async : true, 
-					url : '/member/checkId', 
-					type : 'get', 
-					data : {mb_id : mb_id}, 
-					success : function (data){
-						if(data) {
-							errMsg.text("사용 가능한 아이디입니다.");
-							$('#id-check').val('y');
-						}else{
-							$('#error-id').removeClass('text-success').addClass('text-danger');
-							errMsg.text("이미 사용중인 아이디입니다.");
-							$('#id-check').val('n');
-						}
-					}, 
-					error : function(jqXHR, textStatus, errorThrown){
-						console.log(jqXHR);
-					}
-				});
-			} // 아이디 중복검사
+			function autoHyphenBirth(input) {
+			    let value = input.value.replace(/\D/g, '');
+			    if (value.length > 4) {
+			        value = value.substring(0, 4) + '-' + value.substring(4);
+			    }
+			    if (value.length > 7) {
+			        value = value.substring(0, 7) + '-' + value.substring(7);
+			    }
+			    input.value = value.substring(0, 10);
+			} // 생년월일 하이픈 자동 생성
 	    </script>
 	    
 	    <script type="text/javascript">
@@ -218,13 +116,6 @@
 					mb_id : {
 						required : true,
 						regex : /^\w{6,20}$/
-					},
-					mb_pw : {
-						required : true,
-						regex : /^[a-zA-Z0-9!@#$]{6,20}$/
-					},
-					mb_pw2 : {
-						equalTo : pw
 					},
 					mb_name : {
 						required : true
@@ -242,13 +133,6 @@
 						required : '필수 항목입니다.',
 						regex : '영어, 숫자만 가능하며, 6~20자이어야 합니다.'
 					},
-					mb_pw : {
-						required : '필수 항목입니다.',
-						regex : '영어, 숫자, 특수문자(!@#$)만 가능하며, 6~20자이어야 합니다.'
-					},
-					mb_pw2 : {
-						equalTo : '비번과 일치하지 않습니다.'
-					},
 					mb_name : {
 						required : '필수 항목입니다.'
 					},
@@ -259,7 +143,6 @@
 						required : '필수 항목입니다.',
 						regex: '010-XXXX-XXXX 형식으로 입력해주세요.'
 					}
-					
 				},
 			    errorPlacement: function (error, element) {
 			        var errorId = 'error-' + $(element).attr('id');
@@ -270,27 +153,13 @@
 			        $('#' + errorId).html('').removeClass("text-danger").addClass("text-success");
 			    },
 				submitHandler : function(form){
-					let id2 = $('#id-check').val();
-					let email2 = $('#email-check').val();
-					if(id2 != 'y') {
-						alert('아이디 중복검사를 진행해 주세요.');
-						$('#id').focus();
-						return false;
-					}
 					// 이메일
 					const email = $('#email-input').val();
 					const domain = $('#email-domain').val();
 					const mb_email = email + '@' + domain;
 					
-					// 생년월일
-					const birthYear = $('#birth-year').val();
-					const birthMonth = $('#birth-month').val().padStart(2, '0');
-					const birthDay = $('#birth-day').val().padStart(2, '0');
-					const mb_birth = birthYear + '-' + birthMonth + '-' + birthDay;
-					
 					// 히든 요소의 value값에 가공된 변수들 넣어주기
 					$('#email').val(mb_email);
-					$('#birth').val(mb_birth);
 					form.submit();
 				}
 			});

@@ -223,5 +223,23 @@ public class AdminServiceImp implements AdminService {
 		int count = adminDao.selectMemberCount(cri);
 		return new PageMaker(5, cri, count);
 	}
+	
+	@Override
+	public MemberVO getMember(int mb_num) {
+		return adminDao.selectMember(mb_num);
+	}
+
+	@Override
+	public boolean delMember(MemberVO user) {
+		try {
+			if(user == null) {
+				return false;
+			}
+			return adminDao.deleteMember(user);
+		}
+		catch (Exception e) {
+			return false;
+		}
+	}
 
 }

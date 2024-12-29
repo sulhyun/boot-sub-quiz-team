@@ -48,4 +48,8 @@ public interface AdminDAO {
 
 	int selectMemberCount(@Param("cri")Criteria cri);
 
+	MemberVO selectMember(@Param("mb_num")int mb_num);
+
+	boolean deleteMember(@Param("user")MemberVO user);
+
 }
