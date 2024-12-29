@@ -3,7 +3,6 @@ package kr.spring.boot.controller;
 import java.security.Principal;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.spring.boot.model.util.CustomUtil;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
 import kr.spring.boot.model.vo.QuizSubjectiveVO;
@@ -27,8 +27,8 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	@Autowired
 	private AdminService adminService;
+	private CustomUtil customUtil;
 	
 	@GetMapping("/adminhome")
 	public String admin(Model model) {
@@ -149,10 +149,13 @@ public class AdminController {
     public String memberList(Model model, Criteria cri) {
     	cri.setPerPageNum(8);
     	List<MemberVO> list = adminService.getMemberList(cri);
+    	for(MemberVO user : list) {
+    		user.setMb_hp(customUtil.autoHyphen(user.getMb_hp()));
+    	}
     	PageMaker pm = adminService.getPageMakerByMember(cri);
     	model.addAttribute("list", list);
 		model.addAttribute("pm", pm);
         return "admin/member/list";
-    }
+    } // 회원 관리 화면(페이지 네이션)
     
 }

@@ -13,48 +13,55 @@
 		<div class="flash-message" id="flash-message" th:if="${msg}" th:classappend="${msg.contains('성공') ? '' : 'error'}" >
 	    	<span th:text="${msg}"></span>
 		</div>
-		<div class="quiz-wrapper">
+		<div class="member-wrapper">
 	    	<h1 class="heading">회원 목록</h1>
-	    	<form action="/admin/member/list" method="get">
-			<div class="input-group mb-3">
-				<select class="form-control col-sm-1" name="type">
-					<option value="all">전체</option>
-					<option value="id">아이디</option>
-					<option value="nick">닉네임</option>
-					<option value="name">이름</option>
-				</select>
-				<input type="text" class="form-control col-sm-2" placeholder="검색어" name="search" th:value="${pm.cri.search}">
-				<div class="input-group-append">
-					<button type="submit" class="btn btn-outline-info col-12">검색</button>
+    		<div class="d-flex">
+		    	<form class="mr-auto form-container" action="/admin/member/list" method="get">
+					<div class="input-group mb-3">
+						<select class="form-control col-sm-1" name="type">
+							<option value="all">전체</option>
+							<option value="id">아이디</option>
+							<option value="nick">닉네임</option>
+							<option value="name">이름</option>
+						</select>
+						<input type="text" class="form-control col-sm-2" placeholder="검색어" name="search" th:value="${pm.cri.search}">
+						<div class="input-group-append">
+							<button type="submit" class="btn btn-outline-info col-12">검색</button>
+						</div>
+					</div>
+				</form>
+	    		<div class="list-group-item">
+		    		<a th:href="@{/admin/member/insert}">
+		    			<button type="button" class="btn btn-outline-info">등록</button>
+		    		</a>
 				</div>
-			</div>
-		</form>
+    		</div>
 			<div>
-				<div class="quiz-box">
+				<div class="member-box">
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>아이디</th>
-								<th>이름</th>
-								<th>닉네임</th>
-								<th>전화번호</th>
-								<th>레벨</th>
-								<th>가입일</th>
-								<th>수정일</th>
-								<th>정지일</th>
-								<th>관리</th>
+								<th class="th-item">아이디</th>
+								<th class="th-item">이름</th>
+								<th class="th-item">닉네임</th>
+								<th class="th-item">전화번호</th>
+								<th class="th-item">레벨</th>
+								<th class="th-item">가입일</th>
+								<th class="th-item">수정일</th>
+								<th class="th-item">정지일</th>
+								<th class="th-item">관리</th>
 							</tr>
 						</thead>
 						<tbody>
 							 <tr th:each="list:${list}">
-				                <td th:text="${list.mb_id}"></td>
-				                <td th:text="${list.mb_name}"></td>
-				                <td th:text="${list.mb_nick}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.mb_id}" th:text="${list.mb_id}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.mb_name}" th:text="${list.mb_name}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.mb_nick}" th:text="${list.mb_nick}"></td>
 				                <td th:text="${list.mb_hp}"></td>
 				                <td th:text="${list.mb_level}"></td>
 				                <td th:text="${#dates.format(list.mb_datetime,'yyyy-MM-dd')}"></td>
 				                <td th:text="${#dates.format(list.mb_edit_date,'yyyy-MM-dd')}"></td>
-				                <td class="" th:text="${#dates.format(list.mb_out_date,'yyyy-MM-dd')}"></td>
+				                <td th:text="${#dates.format(list.mb_out_date,'yyyy-MM-dd')}"></td>
 				                <td class="btn-td">
 				                	<div class="btn-group">
 					                	<a href="#" class="button btn-primary">수정</a>
