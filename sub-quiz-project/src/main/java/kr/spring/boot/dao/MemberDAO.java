@@ -15,4 +15,6 @@ public interface MemberDAO {
 
 	boolean updateMember(@Param("user")MemberVO user);
 
+	boolean updatePw(@Param("user")MemberVO user);
+
 }

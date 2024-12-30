@@ -1,0 +1,8 @@
+.member-wrapper{width: 40%;padding: 20px;margin-left: 650px;}
+.heading{font-size: 2em;font-weight: bold;text-align: center;margin-bottom: 20px;}
+.email-text{font-size: 17px;line-height: 38px;}
+.zip-num{width: 50%; display: inline;}
+.zip-find{margin-bottom: 5px;}
+.flash-message {position: fixed;bottom: 20px;right: 20px; background-color: #4caf50;color: white;padding: 15px;border-radius: 5px;box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);font-size: 16px;z-index: 1000;transition: opacity 0.5s ease-in-out;}
+.flash-message.error {background-color: #f44336;}
+#error-pw{text-align: center;color: red;}

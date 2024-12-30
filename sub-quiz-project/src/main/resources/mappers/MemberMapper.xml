@@ -35,4 +35,8 @@
     	WHERE
     		MB_NUM = #{user.mb_num}
     </update>
+    
+    <update id="updatePw">
+    	UPDATE MEMBER SET MB_PW = #{user.mb_pw}, MB_EDIT_DATE = NOW() WHERE MB_NUM = #{user.mb_num}
+    </update>
 </mapper>

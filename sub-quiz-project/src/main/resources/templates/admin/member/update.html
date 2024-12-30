@@ -5,13 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>퀴즈 게임 : 관리자</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/adminMemberInsert.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/adminMemberUpdate.css}">
 <style type="text/css">
 </style>
 </head>
 <body>
 	<main layout:fragment="content">
 		<div th:replace="~{layout/adminSidebar.html}"></div>
+		<div class="flash-message" id="flash-message" th:if="${msg}" th:classappend="${msg.contains('성공') ? '' : 'error'}" >
+	    	<span th:text="${msg}"></span>
+		</div>
 		<div class="member-wrapper" id="content">
 	    	<h1 class="heading">회원 수정</h1>
 	    	<div class="member-container">
@@ -23,7 +26,7 @@
 					</div>
 					<div class="form-group">
 						<label for="pw"><b>비밀번호 변경</b></label>
-						<input type="button" class="btn btn-outline-info col-12" id="pw" value="비밀번호 변경">
+						<input type="button" class="btn btn-outline-info col-12" id="pw" value="비밀번호 변경" data-toggle="modal" data-target="#myModal-pw">
 					</div>
 					<div class="form-group">
 						<label for="name"><b>이름</b></label>
@@ -83,6 +86,37 @@
 					<input type="hidden" name="where" value="admin">
 					<button type="submit" class="btn btn-outline-info col-12">수정</button>
 				</form>
+				<!-- The Modal -->
+				<div class="modal" id="myModal-pw">
+					<div class="modal-dialog">
+						<div class="modal-content">
+				     		 <!-- Modal Header -->
+							<div class="modal-header">
+								<h5 class="modal-title">비밀번호 변경</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<!-- Modal body -->
+			  				<form th:action="@{/member/password/{mb_num}(mb_num=${user.mb_num})}" method="post" id="form-pw">
+								<div class="modal-body">
+				  					<div class="form-group">
+										<label for="mb_pw2"><b>새 비밀번호</b></label>
+										<input type="password" class="form-control" id="mb_pw" name="mb_pw">
+									</div>
+									<div class="form-group">
+										<label for="mb_pw3"><b>새 비밀번호 확인</b></label>
+										<input type="password" class="form-control" id="mb_pw2">
+									</div>
+								</div>
+								<div id="error-pw"></div>
+								<!-- Modal footer -->
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+									<button type="button" class="btn btn-success" onclick="checkPw()">변경</button>
+								</div>
+			  				</form>
+						</div>
+					</div>
+				</div>
 			</div>
 	    </div>
 	    <script type="text/javascript">
@@ -92,12 +126,12 @@
 		        const contentHeight = content.offsetHeight;
 		        const viewportHeight = window.innerHeight;
 	
-		        // 사이드바 높이를 컨텐츠 높이와 화면 높이 중 더 큰 값으로 설정
 		        sidebar.style.height = `${Math.max(contentHeight, viewportHeight - 80)}px`;
 		    }
 	
 		    window.addEventListener('resize', adjustSidebarHeight);
 		    window.addEventListener('load', adjustSidebarHeight);
+		    // 사이드바 컨텐트 길이만큼 동적으로 늘리기
 		    
 		    const autoHyphen = (target) => {
 			    let hp = target.value.replace(/[^0-9]/g, '');
@@ -132,6 +166,22 @@
 			    }
 			    input.value = value.substring(0, 10);
 			} // 생년월일 하이픈 자동 생성
+			
+			function checkPw(){
+		    	const mb_pw = $('#mb_pw').val();
+	        	const mb_pw2 = $('#mb_pw2').val();
+	        	const error = $('#error-pw');
+	        	const pattern = /^[a-zA-Z0-9!@#$]{6,20}$/;
+	        	if(!pattern.test(mb_pw)) {
+	        		error.text('비밀번호 형식이 일치하지 않습니다.');
+	        		return;
+	        	}
+	        	if(mb_pw != mb_pw2) {
+	        		error.text('비밀번호가 일치하지 않습니다.');
+	        		return;
+	        	}
+	        	$('#form-pw').submit();
+	    	}
 	    </script>
 	    
 	    <script type="text/javascript">

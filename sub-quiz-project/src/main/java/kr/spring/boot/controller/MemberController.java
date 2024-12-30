@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.boot.model.dto.SignupDTO;
 import kr.spring.boot.model.vo.MemberVO;
@@ -46,10 +47,16 @@ public class MemberController {
 	
 	@PostMapping("/update/{mb_num}")
 	public String update(Model model, MemberVO user) {
-		System.out.println(user);
 		boolean res = memberService.updateMember(user);
 		model.addAttribute("msg", res ? "회원 정보 수정에 성공하셨습니다." : "회원 정보 수정에 실패하였습니다.");
 		model.addAttribute("url", res ? "/admin/member/list" : "/admin/member/update/" + user.getMb_num());
 		return "util/msg";
+	} // (관리자) 회원 정보 수정
+	
+	@PostMapping("/password/{mb_num}")
+	public String password(RedirectAttributes redirect, MemberVO user) {
+		boolean res = memberService.updatePw(user);
+		redirect.addFlashAttribute("msg", res ? "비밀번호 변경에 성공하셨습니다." : "비밀번호 변경에 실패하셨습니다.");
+		return "redirect:/admin/member/update/" + user.getMb_num();
 	}
 }

@@ -89,4 +89,16 @@ public class MemberServiceImp implements MemberService {
 		}
 		return memberDao.updateMember(user);
 	}
+
+	@Override
+	public boolean updatePw(MemberVO user) {
+		if (user.getMb_pw() == null || user.getMb_pw().trim().length() == 0) {
+			return false;
+		}
+		if (!checkRegex(user.getMb_pw(), "^[a-zA-Z0-9!@#$]{6,20}$")) {
+			return false;
+		}
+		user.setMb_pw(passwordEncoder.encode(user.getMb_pw()));
+		return memberDao.updatePw(user);
+	}
 }

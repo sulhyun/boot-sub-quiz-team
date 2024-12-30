@@ -99,16 +99,16 @@ public class AdminController {
     } // 주관식 퀴즈 등록
     
     @PostMapping("/quiz/del/{qt_num}/{qu_num}/choice")
-    public String quizDelChoice(RedirectAttributes redirectAttributes, QuizChoiceVO quiz) {
+    public String quizDelChoice(RedirectAttributes redirect, QuizChoiceVO quiz) {
     	boolean res = adminService.delQuizChoice(quiz);
-	    redirectAttributes.addFlashAttribute("msg", res ? "퀴즈 삭제에 성공하였습니다." : "퀴즈 삭제에 실패하였습니다.");
+    	redirect.addFlashAttribute("msg", res ? "퀴즈 삭제에 성공하였습니다." : "퀴즈 삭제에 실패하였습니다.");
 	    return "redirect:/admin/quiz/detail/" + quiz.getQt_num() + "/choice";
     } // 객관식 퀴즈 삭제
     
     @PostMapping("/quiz/del/{qt_num}/{qs_num}/subjective")
-    public String quizDelSubjective(RedirectAttributes redirectAttributes, QuizSubjectiveVO quiz) {
+    public String quizDelSubjective(RedirectAttributes redirect, QuizSubjectiveVO quiz) {
     	boolean res = adminService.delQuizSubjective(quiz);
-	    redirectAttributes.addFlashAttribute("msg", res ? "퀴즈 삭제에 성공하였습니다." : "퀴즈 삭제에 실패하였습니다.");
+    	redirect.addFlashAttribute("msg", res ? "퀴즈 삭제에 성공하였습니다." : "퀴즈 삭제에 실패하였습니다.");
 	    return "redirect:/admin/quiz/detail/" + quiz.getQt_num() + "/subjective";
     } // 객관식 퀴즈 삭제
     
