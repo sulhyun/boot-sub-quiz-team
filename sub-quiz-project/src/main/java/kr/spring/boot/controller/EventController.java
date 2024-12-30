@@ -51,7 +51,7 @@ public class EventController {
 	// 아직 미구현
 	@GetMapping("/eventpageWinner")
 	public String eventWinner(Model model) {
-		List<EventVO> eventVO = eventService.getevent();
+		List<EventVO> eventVO = eventService.geteventEnd();
 		model.addAttribute("list", eventVO);
 		return "/event/eventpageWinner";		
 	}
@@ -106,6 +106,7 @@ public class EventController {
 		return "redirect:/event/eventpage";
 	}
 	
+	// 이벤트 응모하기
     @ResponseBody
     @PostMapping("/eventdetail/eventapply")
     public Map<String, Object> applyEvent(@RequestBody EventListDTO request) {
@@ -125,5 +126,17 @@ public class EventController {
         }
         return response;
     }
+    
+    // 이벤트 당첨자 확인 페이지
+ 	@GetMapping("/eventwindetail/{ev_num}")
+ 	public String eventWinDetail(Model model, @PathVariable int ev_num) {
+ 		EventPrizeVO evtprizeVO = eventService.eventPrize(ev_num);
+ 		EventVO eventVO = eventService.eventDetail(ev_num);
+ 		model.addAttribute("event", eventVO);
+ 		model.addAttribute("eventprize", evtprizeVO);
+ 		
+ 		return "/event/eventwindetail";
+ 	}
+    
     
 }

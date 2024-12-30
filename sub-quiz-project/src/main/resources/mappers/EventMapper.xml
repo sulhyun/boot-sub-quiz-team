@@ -12,8 +12,8 @@
     )
 </insert>
 
-
-<select id="selectEvent" resultType="EventVO"> SELECT * FROM quizgame.event; </select>
+<!-- 이벤트 페이지 -->
+<select id="selectEvent" resultType="EventVO"> SELECT * FROM quizgame.event WHERE ev_end >= CURDATE(); </select>
 
 <!-- 이벤트 상세 페이지 -->
 <select id="selectEventDetail" resultType="EventVO"> SELECT * FROM quizgame.event where ev_num = #{ev_num} </select>

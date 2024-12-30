@@ -188,44 +188,47 @@ li {
     padding: 0; 
 }
 
-/* 이벤트 리스트의 공통 스타일 */
-.event-list ul {
-    list-style: none;
+.event-list--a {
+    border-bottom: 1px solid #ebebeb;
+    border-collapse: collapse;
     display: flex;
-    flex-wrap: wrap;
-    padding: 0;
-    margin: 0;
+    align-items: center; /* 텍스트를 수직 중앙 정렬 */
+    justify-content: space-between; /* 제목과 날짜를 양쪽 끝으로 배치 */
+    padding: 15px 10px; /* 내부 여백 조정 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: #333; /* 기본 텍스트 색상 */
+    height: 70px; /* 리스트 항목 높이 고정 */
+    box-sizing: border-box; /* 높이에 패딩 포함 */
 }
 
-.event-list li {
-    width: 48%; /* 한 줄에 두 개씩 배치 */
-    margin: 10px 1%;
+.event-list--a:hover {
+    background-color: #f9f9f9; /* 호버 효과 */
+}
+
+.event-title {
+    margin: 0; /* 제목 여백 제거 */
+    font-size: 18px; /* 제목 폰트 크기 */
+    font-weight: bold; /* 제목 강조 */
+    flex: 1; /* 제목 영역 확장 */
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
+    align-items: center; /* 제목 텍스트를 수직 중앙 정렬 */
 }
 
-/* Z 형식 배치를 위한 스타일 */
-.event-list li.left {
-    align-self: flex-start;
-    text-align: left;
+.event-date {
+    margin: 0; /* 날짜 여백 제거 */
+    font-size: 14px; /* 날짜 폰트 크기 */
+    color: #666; /* 날짜 텍스트 색상 */
+    text-align: right; /* 텍스트 오른쪽 정렬 */
+    white-space: nowrap; /* 날짜가 줄바꿈되지 않도록 설정 */
+    display: flex;
+    align-items: center; /* 날짜 텍스트를 수직 중앙 정렬 */
 }
 
-.event-list li.right {
-    align-self: flex-end;
-    text-align: right;
+p{
+margin: 0;
 }
 
-.event-list--a{
-width: 500px;
-height: 300px;
-text-decoration: none;
-display: block;
-}
+
 </style>
 <meta charset="UTF-8">
 <title>Event Page</title>
@@ -274,19 +277,21 @@ display: block;
                     <a href="/event/eventpageWinner" class="tab__item--active">당첨자 발표</a>
                 </div>
                 <div class="event-list">
-                    <ul>
-                        <li th:each="list : ${list}">
-                        	<a class="event-list--a" href="#">
-                        		<div>
-	                        		<h3 th:text="${list.ev_title}"></h3>
-                        		</div>
-                        		<div>
-	                        		<p th:text="${#dates.format(list.ev_start, 'yyyy-MM-dd') + ' ~ ' + #dates.format(list.ev_end, 'yyyy-MM-dd')}"></p>
-                        		</div>
-                        	</a>
-                        </li>
-                    </ul>
-                </div>
+				    <ul>
+				        <li th:each="list : ${list}">
+				            <a class="event-list--a" th:href="@{/event/eventwindetail/{ev_num}(ev_num=${list.ev_num})}">
+				                <div>
+				                    <!-- 제목 표시 -->
+				                    <h3 th:text="${list.ev_title}" style="margin: 0;"></h3>
+				                </div>
+				                <div>
+				                    <!-- 날짜 표시 -->
+				                    <p th:text="${#dates.format(list.ev_start, 'yyyy-MM-dd') + ' ~ ' + #dates.format(list.ev_end, 'yyyy-MM-dd')}"></p>
+				                </div>
+				            </a>
+				        </li>
+				    </ul>
+				</div>
                 <div>
                     <a href="/event/addevent">이벤트 등록</a>
                 </div>

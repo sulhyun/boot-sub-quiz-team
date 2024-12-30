@@ -111,17 +111,6 @@ text-align: center;
 				<h3>경품안내</h3>
 				<img src="/img/고양이2.jpg"> <!-- 첨부파일로 변경해야함 -->
 			</div>
-			<div class="event-prize">
-				<h3>경품목록</h3>
-				<select name="ev_num">
-					<option value=""> 경품을 선택하세요 </option>
-					<option th:each="eventprize : ${eventprize}" th:value="${eventprize.ev_num}" th:text="${eventprize.ep_prize}">
-				</select>
-			</div>
-			<div class="event-pay">
-				<h3>경품지급 안내</h3>
-				<p>즉시 지급</p>
-			</div>
 			<div class="btn-center">
 			    <input name="ev_num" id="ev_num" th:value="${event.ev_num}" type="hidden">
 			    <button class="btn btn-outline-info btn-size" id="evtNumBtn">응모하기</button>
