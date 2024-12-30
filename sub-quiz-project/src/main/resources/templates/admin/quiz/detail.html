@@ -32,7 +32,7 @@
 				</div>
 				<div class="list-group-item">
 		    		<a th:href="@{/admin/quiz/insert/{qt_num}/{type} (qt_num=${qt_num}, type=${type})}">
-		    			<button type="button" class="btn btn-info">등록</button>
+		    			<button type="button" class="btn btn-outline-info">등록</button>
 		    		</a>
 				</div>
 	    	</div>
@@ -41,24 +41,24 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>문제</th>
-								<th>보기1</th>
-								<th>보기2</th>
-								<th>보기3</th>
-								<th>보기4</th>
-								<th>정답</th>
-								<th>관리</th>
+								<th class="choice">문제</th>
+								<th class="choice">보기1</th>
+								<th class="choice">보기2</th>
+								<th class="choice">보기3</th>
+								<th class="choice">보기4</th>
+								<th class="choice">정답</th>
+								<th class="btn-td">관리</th>
 							</tr>
 						</thead>
 						<tbody>
 							 <tr th:each="list:${list}">
-				                <td class="truncate choice" data-toggle="tooltip" th:title="${list.qu_content}" th:text="${list.qu_content}"></td>
-				                <td class="truncate choice" data-toggle="tooltip" th:title="${list.qu_answer1}" th:text="${list.qu_answer1}"></td>
-				                <td class="truncate choice" data-toggle="tooltip" th:title="${list.qu_answer2}" th:text="${list.qu_answer2}"></td>
-				                <td class="truncate choice" data-toggle="tooltip" th:title="${list.qu_answer3}" th:text="${list.qu_answer3}"></td>
-				                <td class="truncate choice" data-toggle="tooltip" th:title="${list.qu_answer4}" th:text="${list.qu_answer4}"></td>
-				                <td class="truncate choice" th:text="${list.qu_correct_answer}"></td>
-				                <td class="btn-td">
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qu_content}" th:text="${list.qu_content}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qu_answer1}" th:text="${list.qu_answer1}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qu_answer2}" th:text="${list.qu_answer2}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qu_answer3}" th:text="${list.qu_answer3}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qu_answer4}" th:text="${list.qu_answer4}"></td>
+				                <td class="truncate" th:text="${list.qu_correct_answer}"></td>
+				                <td>
 				                	<div class="btn-group">
 					                	<a th:href="@{/admin/quiz/update/{qt_num}/{num}/{type}(qt_num=${list.qt_num}, num=${list.qu_num}, type=${type})}" class="button btn-primary">수정</a>
 					                	<form th:action="@{/admin/quiz/del/{qt_num}/{qu_num}/choice(qt_num=${list.qt_num}, qu_num=${list.qu_num})}" method="post">
@@ -76,16 +76,16 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>문제</th>
-								<th>정답</th>
-								<th>관리</th>
+								<th class="subjective">문제</th>
+								<th class="subjective">정답</th>
+								<th class="btn-td">관리</th>
 							</tr>
 						</thead>
 						<tbody>
 							 <tr th:each="list:${list}">
-				                <td class="truncate subjective" data-toggle="tooltip" th:title="${list.qs_content}" th:text="${list.qs_content}"></td>
-				                <td class="truncate subjective" data-toggle="tooltip" th:title="${list.qs_correct_answer}" th:text="${list.qs_correct_answer}"></td>
-				                <td class="btn-td">
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qs_content}" th:text="${list.qs_content}"></td>
+				                <td class="truncate" data-toggle="tooltip" th:title="${list.qs_correct_answer}" th:text="${list.qs_correct_answer}"></td>
+				                <td>
 				                	<div class="btn-group">
 					                	<a th:href="@{/admin/quiz/update/{qt_num}/{num}/{type}(qt_num=${list.qt_num}, num=${list.qs_num}, type=${type})}" class="button btn-primary">수정</a>
 					                	<form th:action="@{/admin/quiz/del/{qt_num}/{qs_num}/subjective(qt_num=${list.qt_num}, qs_num=${list.qs_num})}" method="post">

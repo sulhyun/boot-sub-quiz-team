@@ -25,10 +25,18 @@ public class CustomUtil {
     }
     
     // 전화번호 하이픈 생성
-    public String autoHyphen(String hp) {
+    public String autoHyphenSecret(String hp) {
     	if(hp == null || hp.length() != 11) {
     		return hp;
     	}
     	return hp.substring(0, 3) + "-" + hp.substring(3, 4) + "***-" + hp.substring(7, 8) + "***";
+    }
+    
+    // 전화번호 하이픈 생성
+    public String autoHyphen(String hp) {
+    	if(hp == null || hp.length() != 11) {
+    		return hp;
+    	}
+    	return hp.substring(0, 3) + "-" + hp.substring(3, 7) + "-" + hp.substring(7, 11);
     }
 }

@@ -3,7 +3,6 @@ package kr.spring.boot.controller;
 import java.security.Principal;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.spring.boot.model.util.CustomUtil;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
 import kr.spring.boot.model.vo.QuizSubjectiveVO;
@@ -27,8 +27,8 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	@Autowired
 	private AdminService adminService;
+	private CustomUtil customUtil;
 	
 	@GetMapping("/adminhome")
 	public String admin(Model model) {
@@ -99,16 +99,16 @@ public class AdminController {
     } // 주관식 퀴즈 등록
     
     @PostMapping("/quiz/del/{qt_num}/{qu_num}/choice")
-    public String quizDelChoice(RedirectAttributes redirectAttributes, QuizChoiceVO quiz) {
+    public String quizDelChoice(RedirectAttributes redirect, QuizChoiceVO quiz) {
     	boolean res = adminService.delQuizChoice(quiz);
-	    redirectAttributes.addFlashAttribute("msg", res ? "퀴즈 삭제에 성공하였습니다." : "퀴즈 삭제에 실패하였습니다.");
+    	redirect.addFlashAttribute("msg", res ? "퀴즈 삭제에 성공하였습니다." : "퀴즈 삭제에 실패하였습니다.");
 	    return "redirect:/admin/quiz/detail/" + quiz.getQt_num() + "/choice";
     } // 객관식 퀴즈 삭제
     
     @PostMapping("/quiz/del/{qt_num}/{qs_num}/subjective")
-    public String quizDelSubjective(RedirectAttributes redirectAttributes, QuizSubjectiveVO quiz) {
+    public String quizDelSubjective(RedirectAttributes redirect, QuizSubjectiveVO quiz) {
     	boolean res = adminService.delQuizSubjective(quiz);
-	    redirectAttributes.addFlashAttribute("msg", res ? "퀴즈 삭제에 성공하였습니다." : "퀴즈 삭제에 실패하였습니다.");
+    	redirect.addFlashAttribute("msg", res ? "퀴즈 삭제에 성공하였습니다." : "퀴즈 삭제에 실패하였습니다.");
 	    return "redirect:/admin/quiz/detail/" + quiz.getQt_num() + "/subjective";
     } // 객관식 퀴즈 삭제
     
@@ -149,10 +149,37 @@ public class AdminController {
     public String memberList(Model model, Criteria cri) {
     	cri.setPerPageNum(8);
     	List<MemberVO> list = adminService.getMemberList(cri);
+    	for(MemberVO user : list) {
+    		user.setMb_hp(customUtil.autoHyphen(user.getMb_hp()));
+    	}
     	PageMaker pm = adminService.getPageMakerByMember(cri);
     	model.addAttribute("list", list);
 		model.addAttribute("pm", pm);
         return "admin/member/list";
-    }
+    } // 회원 관리 화면(페이지 네이션)
     
+    @GetMapping("/member/insert")
+    public String memberInsert() {
+    	return "admin/member/insert";
+    } // 회원 등록 화면
+    
+    @PostMapping("/member/del/{mb_num}")
+    public String memberDel(RedirectAttributes redirect, @PathVariable int mb_num) {
+    	MemberVO user = adminService.getMember(mb_num);
+    	boolean res = adminService.delMember(user);
+    	if(user.getMb_out_date() == null) {
+    		redirect.addFlashAttribute("msg", res ? "회원 정지에 성공하였습니다." : "회원 정지에 실패하였습니다.");
+    	} else {
+    		redirect.addFlashAttribute("msg", res ? "회원 정지 해제에 성공하였습니다." : "회원 정지 해제에 실패하였습니다.");
+    	}
+    	return "redirect:/admin/member/list";
+    } // 회원 정지
+    
+    @GetMapping("/member/update/{mb_num}")
+    public String memberUpdate(Model model, @PathVariable int mb_num) {
+    	MemberVO user = adminService.getMember(mb_num);
+    	user.setMb_hp(customUtil.autoHyphen(user.getMb_hp()));
+    	model.addAttribute("user", user);
+    	return "admin/member/update";
+    } // 회원 수정
 }

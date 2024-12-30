@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈 게임 : 관리자</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/adminMemberUpdate.css}">
+<style type="text/css">
+</style>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:replace="~{layout/adminSidebar.html}"></div>
+		<div class="flash-message" id="flash-message" th:if="${msg}" th:classappend="${msg.contains('성공') ? '' : 'error'}" >
+	    	<span th:text="${msg}"></span>
+		</div>
+		<div class="member-wrapper" id="content">
+	    	<h1 class="heading">회원 수정</h1>
+	    	<div class="member-container">
+		    	<form method="post" id="form" th:action="@{/member/update/{mb_num}(mb_num=${user.mb_num})}">
+					<div class="form-group">
+						<label for="id"><b>아아디</b></label>
+						<span class="error-message text-danger" id="error-id"></span>
+						<input type="text" class="form-control" id="id" name="mb_id" placeholder="아이디 입력 (6~20)자" th:value="${user.mb_id}" readonly>
+					</div>
+					<div class="form-group">
+						<label for="pw"><b>비밀번호 변경</b></label>
+						<input type="button" class="btn btn-outline-info col-12" id="pw" value="비밀번호 변경" data-toggle="modal" data-target="#myModal-pw">
+					</div>
+					<div class="form-group">
+						<label for="name"><b>이름</b></label>
+						<span class="error-message text-danger" id="error-name"></span>
+						<input type="text" class="form-control" id="name" name="mb_name" placeholder="이름 입력" th:value="${user.mb_name}">
+					</div>
+					<div class="form-group">
+						<label for="nick"><b>닉네임</b></label>
+						<span class="error-message text-danger" id="error-nick"></span>
+						<input type="text" class="form-control" id="nick" name="mb_nick" placeholder="닉네임 입력" th:value="${user.mb_nick}">
+					</div>
+					<div class="form-group">
+						<label for="hp"><b>전화번호</b></label>
+						<span class="error-message text-danger" id="error-hp"></span>
+						<input type="text" class="form-control" id="hp" name="mb_hp" oninput="autoHyphen(this)" placeholder="휴대폰 번호 입력 ('-'제외 11자리)" th:value="${user.mb_hp}">
+					</div>
+					<div class="form-group">
+						<label for="email-input"><b>이메일</b></label>
+						<div class="input-group">
+							<input type="text" class="form-control" id="email-input" placeholder="이메일 입력" th:value="${#strings.substringBefore(user.mb_email, '@')}">
+							<span class="email-text">@</span>
+					    	<input type="text" class="form-control mr-2" id="email-domain" placeholder="직접 입력" th:value="${#strings.contains(user.mb_email, '@') ? #strings.substringAfter(user.mb_email, '@') : ''}">
+						    <select class="form-select" id="domain-list">
+								<option value="">직접 입력</option>
+								<option value="naver.com">naver.com</option>
+								<option value="google.com">google.com</option>
+								<option value="nate.com">nate.com</option>
+								<option value="kakao.com">kakao.com</option>
+							</select>
+						</div>
+					</div>
+					<input type="hidden" id="email" name="mb_email">
+					<div class="form-group">
+					    <label for="zip_btn"><b>주소</b></label>
+					    <br>
+					    <input type="text" class="form-control mb-2 zip-num" id="zip" name="mb_zip" maxlength="10" placeholder="우편번호" readonly th:value="${user.mb_zip}">
+					    <input type="button" class="btn btn-outline-info zip-find" id="zip_btn" onclick="execDaumPostcode()" value="우편번호 찾기">
+					    <br>
+					    <input type="text" class="form-control mb-2" id="addr" name="mb_addr" maxlength="40" placeholder="기본 주소를 입력" readonly th:value="${user.mb_addr}">
+					    <input type="text" class="form-control" id="addr2" name="mb_addr2"  maxlength="40" placeholder="상세 주소를 입력" th:value="${user.mb_addr2}">
+					</div>
+					<div class="form-group">
+						<label for="birth"><b>생년월일</b></label>
+						<input type="text" class="form-control" id="birth" name="mb_birth" th:value="${user.mb_birth}" maxlength="10" placeholder="YYYY-MM-DD" oninput="autoHyphenBirth(this)">	
+					</div>
+					<div class="from-group">
+						<label for="level"><b>레벨</b></label>
+						<select class="form-control col-sm-2" th:field="${user.mb_level}" name="mb_level">
+							<option value="1">1Lv</option>
+							<option value="2">2Lv</option>
+							<option value="3">3Lv</option>
+							<option value="4">4Lv</option>
+							<option value="5">5Lv</option>
+						</select>
+					</div>
+					<br>
+					<input type="hidden" name="where" value="admin">
+					<button type="submit" class="btn btn-outline-info col-12">수정</button>
+				</form>
+				<!-- The Modal -->
+				<div class="modal" id="myModal-pw">
+					<div class="modal-dialog">
+						<div class="modal-content">
+				     		 <!-- Modal Header -->
+							<div class="modal-header">
+								<h5 class="modal-title">비밀번호 변경</h5>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<!-- Modal body -->
+			  				<form th:action="@{/member/password/{mb_num}(mb_num=${user.mb_num})}" method="post" id="form-pw">
+								<div class="modal-body">
+				  					<div class="form-group">
+										<label for="mb_pw2"><b>새 비밀번호</b></label>
+										<input type="password" class="form-control" id="mb_pw" name="mb_pw">
+									</div>
+									<div class="form-group">
+										<label for="mb_pw3"><b>새 비밀번호 확인</b></label>
+										<input type="password" class="form-control" id="mb_pw2">
+									</div>
+								</div>
+								<div id="error-pw"></div>
+								<!-- Modal footer -->
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+									<button type="button" class="btn btn-success" onclick="checkPw()">변경</button>
+								</div>
+			  				</form>
+						</div>
+					</div>
+				</div>
+			</div>
+	    </div>
+	    <script type="text/javascript">
+		    function adjustSidebarHeight() {
+		        const sidebar = document.getElementById('admin-sidebar');
+		        const content = document.getElementById('content');
+		        const contentHeight = content.offsetHeight;
+		        const viewportHeight = window.innerHeight;
+	
+		        sidebar.style.height = `${Math.max(contentHeight, viewportHeight - 80)}px`;
+		    }
+	
+		    window.addEventListener('resize', adjustSidebarHeight);
+		    window.addEventListener('load', adjustSidebarHeight);
+		    // 사이드바 컨텐트 길이만큼 동적으로 늘리기
+		    
+		    const autoHyphen = (target) => {
+			    let hp = target.value.replace(/[^0-9]/g, '');
+			    if (hp.length > 11) {
+			        hp = hp.substring(0, 11);
+			    }
+			    target.value = hp
+			        .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+			        .replace(/(\-{1,2})$/g, "");
+			} // 전화번호 하이픈 자동 생성
+			
+			document.getElementById('domain-list').addEventListener('change', function () {
+				const domainInput = document.getElementById('email-domain');
+				const selectedDomain = this.value;
+			
+				if (selectedDomain) {
+					domainInput.value = selectedDomain;
+					domainInput.readOnly = true;
+				} else {
+					domainInput.value = '';
+					domainInput.readOnly = false;
+				}
+			}); // 이메일 도메인 선택
+			
+			function autoHyphenBirth(input) {
+			    let value = input.value.replace(/\D/g, '');
+			    if (value.length > 4) {
+			        value = value.substring(0, 4) + '-' + value.substring(4);
+			    }
+			    if (value.length > 7) {
+			        value = value.substring(0, 7) + '-' + value.substring(7);
+			    }
+			    input.value = value.substring(0, 10);
+			} // 생년월일 하이픈 자동 생성
+			
+			function checkPw(){
+		    	const mb_pw = $('#mb_pw').val();
+	        	const mb_pw2 = $('#mb_pw2').val();
+	        	const error = $('#error-pw');
+	        	const pattern = /^[a-zA-Z0-9!@#$]{6,20}$/;
+	        	if(!pattern.test(mb_pw)) {
+	        		error.text('비밀번호 형식이 일치하지 않습니다.');
+	        		return;
+	        	}
+	        	if(mb_pw != mb_pw2) {
+	        		error.text('비밀번호가 일치하지 않습니다.');
+	        		return;
+	        	}
+	        	$('#form-pw').submit();
+	    	}
+	    </script>
+	    
+	    <script type="text/javascript">
+			$('#form').validate({
+				rules : {
+					mb_id : {
+						required : true,
+						regex : /^\w{6,20}$/
+					},
+					mb_name : {
+						required : true
+					},
+					mb_nick : {
+						required : true
+					},
+					mb_hp : {
+						required : true,
+						regex: /^010-\d{4}-\d{4}$/
+					}
+				},
+				messages : {
+					mb_id : {
+						required : '필수 항목입니다.',
+						regex : '영어, 숫자만 가능하며, 6~20자이어야 합니다.'
+					},
+					mb_name : {
+						required : '필수 항목입니다.'
+					},
+					mb_nick : {
+						required : ' 필수 항목입니다.'
+					},
+					mb_hp : {
+						required : '필수 항목입니다.',
+						regex: '010-XXXX-XXXX 형식으로 입력해주세요.'
+					}
+				},
+			    errorPlacement: function (error, element) {
+			        var errorId = 'error-' + $(element).attr('id');
+			        $('#' + errorId).html(error).removeClass("text-success").addClass("text-danger");
+			    },
+			    success: function (label, element) {
+			        var errorId = 'error-' + $(element).attr('id');
+			        $('#' + errorId).html('').removeClass("text-danger").addClass("text-success");
+			    },
+				submitHandler : function(form){
+					// 이메일
+					const email = $('#email-input').val();
+					const domain = $('#email-domain').val();
+					const mb_email = email + '@' + domain;
+					
+					// 히든 요소의 value값에 가공된 변수들 넣어주기
+					$('#email').val(mb_email);
+					form.submit();
+				}
+			});
+			$.validator.addMethod('regex', function(value, element, regex){
+				var re = new RegExp(regex);
+				return this.optional(element) || re.test(value);
+			}, "정규표현식을 확인하세요.");
+		</script>
+		
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	    <script>
+		    function execDaumPostcode() {
+		        new daum.Postcode({
+		            oncomplete: function(data) {
+		                // 팝업을 통한 검색 결과 항목 클릭 시 실행
+		                var addr = ''; // 주소_결과값이 없을 경우 공백 
+		                var extraAddr = ''; // 참고항목
+		
+		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		                if (data.userSelectedType === 'R') { // 도로명 주소를 선택
+		                    addr = data.roadAddress;
+		                } else { // 지번 주소를 선택
+		                    addr = data.jibunAddress;
+		                }
+		
+		                if(data.userSelectedType === 'R'){
+		                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                        extraAddr += data.bname;
+		                    }
+		                    if(data.buildingName !== '' && data.apartment === 'Y'){
+		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                    }
+		                    if(extraAddr !== ''){
+		                        extraAddr = ' (' + extraAddr + ')';
+		                    }
+		                } else {
+		                    document.getElementById("addr").value = '';
+		                }
+		
+		                // 선택된 우편번호와 주소 정보를 input 박스에 넣는다.
+		                document.getElementById('zip').value = data.zonecode;
+		                document.getElementById("addr").value = addr;
+		                document.getElementById("addr").value += extraAddr;
+		                document.getElementById("addr2").focus(); // 우편번호 + 주소 입력이 완료되었음으로 상세주소로 포커스 이동
+		            }
+		        }).open();
+		    }
+		</script>
+   </main>
+</body>
+</html>

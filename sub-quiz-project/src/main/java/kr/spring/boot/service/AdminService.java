@@ -44,5 +44,9 @@ public interface AdminService {
 	List<MemberVO> getMemberList(Criteria cri);
 
 	PageMaker getPageMakerByMember(Criteria cri);
+	
+	MemberVO getMember(int mb_num);
+
+	boolean delMember(MemberVO user);
 
 }

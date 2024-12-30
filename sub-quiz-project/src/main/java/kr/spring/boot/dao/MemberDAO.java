@@ -13,4 +13,8 @@ public interface MemberDAO {
 
 	boolean socialSignup(@Param("user")MemberVO user);
 
+	boolean updateMember(@Param("user")MemberVO user);
+
+	boolean updatePw(@Param("user")MemberVO user);
+
 }

@@ -39,7 +39,7 @@ public class InfoController {
 	@GetMapping("/profile")
 	public String basic(Model model, Principal principal) {
 		MemberVO user = memberService.selectMember(principal.getName());
-		user.setMb_hp(customUtil.autoHyphen(user.getMb_hp()));
+		user.setMb_hp(customUtil.autoHyphenSecret(user.getMb_hp()));
 		model.addAttribute("user", user);
 		return "info/profile";
 	} // 회원 정보 화면
