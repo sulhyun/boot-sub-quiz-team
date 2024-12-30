@@ -121,6 +121,19 @@
 			        .replace(/(\-{1,2})$/g, "");
 			}; // 전화번호 하이픈 자동 생성
 			
+			document.getElementById('domain-list').addEventListener('change', function () {
+				const domainInput = document.getElementById('email-domain');
+				const selectedDomain = this.value;
+			
+				if (selectedDomain) {
+					domainInput.value = selectedDomain;
+					domainInput.readOnly = true;
+				} else {
+					domainInput.value = '';
+					domainInput.readOnly = false;
+				}
+			}); // 이메일 도메인 선택
+			
 			$(document).ready(function() {
 				const birthYear = $('#birth-year');
 				const birthMonth = $('#birth-month');

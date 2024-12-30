@@ -8,12 +8,31 @@
     	WHERE
     		MB_ID = #{mb_id}
     </select>
+    
     <insert id="signup">
     	INSERT INTO MEMBER(MB_ID, MB_PW, MB_NAME, MB_NICK, MB_HP, MB_EMAIL, MB_ZIP, MB_ADDR, MB_ADDR2, MB_BIRTH, MB_LEVEL, MB_DATETIME, MB_POINT, MB_LOGIN_METHOD) VALUES
     	(#{user.mb_id}, #{user.mb_pw}, #{user.mb_name}, #{user.mb_nick}, #{user.mb_hp}, #{user.mb_email}, #{user.mb_zip}, #{user.mb_addr}, #{user.mb_addr2}, #{user.mb_birth}, #{user.mb_level}, NOW(), #{user.mb_point}, #{user.mb_login_method})
     </insert>
+    
     <insert id="socialSignup">
     	INSERT INTO MEMBER(MB_ID, MB_NICK, MB_EMAIL, MB_LEVEL, MB_DATETIME, MB_POINT, MB_LOGIN_METHOD) VALUES
     	(#{user.mb_id}, #{user.mb_nick}, #{user.mb_email}, #{user.mb_level}, NOW(), #{user.mb_point}, #{user.mb_login_method})
     </insert>
+    
+    <update id="updateMember">
+    	UPDATE MEMBER
+    	SET
+    		MB_NAME = #{user.mb_name},
+    		MB_NICK = #{user.mb_nick},
+    		MB_HP = #{user.mb_hp},
+    		MB_EMAIL = #{user.mb_email},
+    		MB_ZIP = #{user.mb_zip},
+    		MB_ADDR = #{user.mb_addr},
+    		MB_ADDR2 = #{user.mb_addr2},
+    		MB_BIRTH = #{user.mb_birth},
+    		MB_LEVEL = #{user.mb_level},
+    		MB_EDIT_DATE = NOW()
+    	WHERE
+    		MB_NUM = #{user.mb_num}
+    </update>
 </mapper>

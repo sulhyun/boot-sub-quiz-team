@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.MemberDAO;
-import kr.spring.boot.model.dto.LoginDTO;
 import kr.spring.boot.model.dto.SignupDTO;
 import kr.spring.boot.model.vo.MemberVO;
 import lombok.AllArgsConstructor;
@@ -69,5 +68,25 @@ public class MemberServiceImp implements MemberService {
 		 } 
 	 	return null; 
 	 } // 소셜 로그인 첫 회원이면 자동 회원가입
-	 
+
+	@Override
+	public boolean updateMember(MemberVO user) {
+		if (user == null) {
+			return false;
+		}
+		if (user.getMb_id() == null || user.getMb_id().trim().length() == 0) {
+			return false;
+		}
+		if (!checkRegex(user.getMb_id(), "^\\w{6,20}$")) {
+			return false;
+		}
+		if (user.getMb_hp().contains("-")) {
+			String[] arr = user.getMb_hp().split("-");
+			if (arr.length != 3) {
+				return false;
+			}
+			user.setMb_hp(arr[0] + arr[1] + arr[2]);
+		}
+		return memberDao.updateMember(user);
+	}
 }

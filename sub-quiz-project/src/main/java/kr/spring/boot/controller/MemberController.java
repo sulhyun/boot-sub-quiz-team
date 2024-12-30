@@ -44,4 +44,12 @@ public class MemberController {
 		return "/member/login";
 	}
 	
+	@PostMapping("/update/{mb_num}")
+	public String update(Model model, MemberVO user) {
+		System.out.println(user);
+		boolean res = memberService.updateMember(user);
+		model.addAttribute("msg", res ? "회원 정보 수정에 성공하셨습니다." : "회원 정보 수정에 실패하였습니다.");
+		model.addAttribute("url", res ? "/admin/member/list" : "/admin/member/update/" + user.getMb_num());
+		return "util/msg";
+	}
 }

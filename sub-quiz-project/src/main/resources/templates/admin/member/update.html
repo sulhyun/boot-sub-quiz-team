@@ -15,7 +15,7 @@
 		<div class="member-wrapper" id="content">
 	    	<h1 class="heading">회원 수정</h1>
 	    	<div class="member-container">
-		    	<form method="post" id="form" action="/member/signup">
+		    	<form method="post" id="form" th:action="@{/member/update/{mb_num}(mb_num=${user.mb_num})}">
 					<div class="form-group">
 						<label for="id"><b>아아디</b></label>
 						<span class="error-message text-danger" id="error-id"></span>
@@ -69,6 +69,17 @@
 						<label for="birth"><b>생년월일</b></label>
 						<input type="text" class="form-control" id="birth" name="mb_birth" th:value="${user.mb_birth}" maxlength="10" placeholder="YYYY-MM-DD" oninput="autoHyphenBirth(this)">	
 					</div>
+					<div class="from-group">
+						<label for="level"><b>레벨</b></label>
+						<select class="form-control col-sm-2" th:field="${user.mb_level}" name="mb_level">
+							<option value="1">1Lv</option>
+							<option value="2">2Lv</option>
+							<option value="3">3Lv</option>
+							<option value="4">4Lv</option>
+							<option value="5">5Lv</option>
+						</select>
+					</div>
+					<br>
 					<input type="hidden" name="where" value="admin">
 					<button type="submit" class="btn btn-outline-info col-12">수정</button>
 				</form>
@@ -97,6 +108,19 @@
 			        .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
 			        .replace(/(\-{1,2})$/g, "");
 			} // 전화번호 하이픈 자동 생성
+			
+			document.getElementById('domain-list').addEventListener('change', function () {
+				const domainInput = document.getElementById('email-domain');
+				const selectedDomain = this.value;
+			
+				if (selectedDomain) {
+					domainInput.value = selectedDomain;
+					domainInput.readOnly = true;
+				} else {
+					domainInput.value = '';
+					domainInput.readOnly = false;
+				}
+			}); // 이메일 도메인 선택
 			
 			function autoHyphenBirth(input) {
 			    let value = input.value.replace(/\D/g, '');

@@ -11,4 +11,6 @@ public interface MemberService {
 
 	MemberVO socialSignup(MemberVO member);
 
+	boolean updateMember(MemberVO user);
+
 }
