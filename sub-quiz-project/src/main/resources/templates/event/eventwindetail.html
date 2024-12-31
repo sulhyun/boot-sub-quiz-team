@@ -95,25 +95,25 @@
     <div class="container">
         <!-- Header Section -->
         <div class="header">
-            <h1>2024 LOA ON WINTER 사전 질문 등록하기 이벤트 당첨자 발표</h1>
+            <h1 th:text="${event.ev_title}"></h1>
             <p>2024.12.20 13:57</p>
         </div>
 
         <!-- Event Card Section -->
         <div class="event-card">
-            <img src="/img/sample-event.jpg" alt="이벤트 이미지">
+            <img src="/img/sample-event.jpg" alt="이벤트 이미지 없어!">
             <div class="event-card-content">
-                <div class="event-card-title">로아온 윈터 사전 신청</div>
+                <div class="event-card-title">서브타이틀인데 만들까 말까?</div>
                 <div class="event-card-details">
                     <p>종료</p>
-                    <p>당첨확인 및 배송지 입력기간: 2024.12.20 ~ 2025.01.05</p>
+                    <p th:text="'당첨확인 및 배송지 입력기간:' + ${#dates.format(event.ev_start, 'yyyy-MM-dd') + ' ~ ' + #dates.format(event.ev_end, 'yyyy-MM-dd')}" />
                 </div>
             </div>
         </div>
 
         <!-- Winner Section -->
         <div class="winner-section">
-            <strong>STOVE169325687213님의 검증당첨 확인내역입니다.</strong>
+            <strong>너의 아이디! 미구현이 되지않을까?</strong>
         </div>
 
         <!-- Notice Section -->
@@ -125,7 +125,7 @@
         <div class="info-box">
             <p><strong>유의사항</strong></p>
             <ul>
-                <li>본 이벤트는 로스트아크 이벤트 규칙에 따릅니다.</li>
+                <li>본 이벤트는 퀴즈 이벤트 규칙에 따릅니다.</li>
                 <li>당첨자의 정확한 정보와 주소 입력 전 오류 발생 시 배송이 진행되지 않습니다.</li>
                 <li>이벤트 사정에 따라 제공되는 경품 품목이 변경될 수 있습니다.</li>
                 <li>부정한 방법으로 당첨된 경우 당첨이 취소될 수 있습니다.</li>
@@ -133,6 +133,10 @@
                 <li>개인정보 및 주소 변경은 이벤트 기간 내에만 가능합니다.</li>
             </ul>
         </div>
+        
+        <div class="btn-center">
+				<button class="btn btn-outline-info btn-size" type="button" onclick="location.href='/event/eventpage'">목록으로</button>
+			</div>
     </div>
 </body>
 </html>

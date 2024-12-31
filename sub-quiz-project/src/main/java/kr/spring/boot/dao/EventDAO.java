@@ -25,4 +25,6 @@ public interface EventDAO {
 
 	int insertEvent(int ev_num);
 
+	boolean checkEventHasWinners(int eventNum);
+
 }

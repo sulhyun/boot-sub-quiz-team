@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -138,5 +139,15 @@ public class EventController {
  		return "/event/eventwindetail";
  	}
     
+ 	// 이벤트 추첨 진행
+ 	@Scheduled(cron = "0 * * * * *")
+ 	public void processExpiredEvents() {
+ 		System.out.println("날짜 지난 이벤트 추첨 진행중");
+ 		
+ 		eventService.updateExpiredEvents();
+ 		
+ 		System.out.println("추첨 완료");
+ 		
+ 	}
     
 }

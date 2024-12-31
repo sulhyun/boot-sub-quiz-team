@@ -1,5 +1,6 @@
 package kr.spring.boot.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,20 @@ public class EventService {
         int result = eventDAO.insertEvent(ev_num);
         return result > 0;
     }
+
+	public void updateExpiredEvents() {
+		LocalDate today = LocalDate.now();
+		// 이벤트 참여자에서
+		List<EventVO> eventVO = eventDAO.selectEventEnd();
+		for(EventVO event : eventVO) {
+			int eventNum = event.getEv_num();
+			
+			boolean hasWinners = eventDAO.checkEventHasWinners(eventNum);
+			if (!hasWinners) {
+                System.out.println("이벤트 ID " + eventNum + "에 당첨자가 없어! 없으니까 그걸해!");
+                
+            }
+		}
+	}
 	
 }

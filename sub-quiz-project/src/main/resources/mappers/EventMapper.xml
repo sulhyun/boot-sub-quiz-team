@@ -41,4 +41,11 @@
     )
 </insert>
 
+<!-- 이벤트 당첨자 확인용 -->
+<select id="checkEventHasWinners" resultType="boolean">SELECT EXISTS (
+        SELECT 1
+        FROM quizgame.event_prize
+        WHERE ev_num = #{eventNum}
+    )</select>
+
 </mapper>
