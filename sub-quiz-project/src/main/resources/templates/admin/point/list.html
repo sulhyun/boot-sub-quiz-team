@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>퀴즈 게임 : 관리자</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/adminMemberList.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/adminPointList.css}">
 </head>
 <body>
 	<main layout:fragment="content">
@@ -13,16 +13,15 @@
 		<div class="flash-message" id="flash-message" th:if="${msg}" th:classappend="${msg.contains('성공') ? '' : 'error'}" >
 	    	<span th:text="${msg}"></span>
 		</div>
-		<div class="member-wrapper">
-	    	<h1 class="heading">회원 목록</h1>
-    		<div class="d-flex">
-		    	<form class="mr-auto form-container" action="/admin/member/list" method="get">
+		<div class="point-wrapper">
+	    	<h1 class="heading">포인트 목록</h1>
+	    	<div class="d-flex">
+		    	<form class="form-container" action="/admin/member/list" method="get">
 					<div class="input-group mb-3">
 						<select class="form-control col-sm-1" name="type">
 							<option value="all" th:selected="${pm.cri.type == 'all'}">전체</option>
 							<option value="id" th:selected="${pm.cri.type == 'id'}">아이디</option>
-							<option value="nick" th:selected="${pm.cri.type == 'nick'}">닉네임</option>
-							<option value="name" th:selected="${pm.cri.type == 'name'}">이름</option>
+							<option value="content" th:selected="${pm.cri.type == 'content'}">내용</option>
 						</select>
 						<input type="text" class="form-control col-sm-2" placeholder="검색어" name="search" th:value="${pm.cri.search}">
 						<div class="input-group-append">
@@ -30,42 +29,33 @@
 						</div>
 					</div>
 				</form>
-	    		<div class="list-group-item">
-		    		<a th:href="@{/admin/member/insert}">
-		    			<button type="button" class="btn btn-outline-info">등록</button>
+				<div class="list-group-item">
+		    		<a th:href="@{/admin/point/insert}">
+		    			<button type="button" class="btn btn-outline-info">추가</button>
 		    		</a>
 				</div>
-    		</div>
-			<div class="member-box">
+	   		</div>
+			<div class="point-box">
 				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th class="th-item">아이디</th>
-							<th class="th-item">이름</th>
-							<th class="th-item">닉네임</th>
-							<th class="th-item">전화번호</th>
-							<th class="th-item">레벨</th>
-							<th class="th-item">가입일</th>
-							<th class="th-item">수정일</th>
-							<th class="th-item">정지일</th>
+							<th class="th-item">포인트</th>
+							<th class="th-item2">내용</th>
+							<th class="th-item3">날짜</th>
 							<th class="th-item">관리</th>
 						</tr>
 					</thead>
 					<tbody>
 						 <tr th:each="list:${list}">
 			                <td class="truncate" data-toggle="tooltip" th:title="${list.mb_id}" th:text="${list.mb_id}"></td>
-			                <td class="truncate" data-toggle="tooltip" th:title="${list.mb_name}" th:text="${list.mb_name}"></td>
-			                <td class="truncate" data-toggle="tooltip" th:title="${list.mb_nick}" th:text="${list.mb_nick}"></td>
-			                <td th:text="${list.mb_hp}"></td>
-			                <td th:text="${list.mb_level}"></td>
-			                <td th:text="${#dates.format(list.mb_datetime,'yyyy-MM-dd')}"></td>
-			                <td th:text="${#dates.format(list.mb_edit_date,'yyyy-MM-dd')}"></td>
-			                <td th:text="${#dates.format(list.mb_out_date,'yyyy-MM-dd')}"></td>
+			                <td class="truncate" data-toggle="tooltip" th:title="${#numbers.formatInteger(list.pi_no,0,'COMMA')}" th:text="${#numbers.formatInteger(list.pi_no,0,'COMMA')}"></td>
+			                <td class="truncate" data-toggle="tooltip" th:title="${list.pi_content}" th:text="${list.pi_content}"></td>
+			                <td th:text="${#dates.format(list.pi_datetime,'yyyy년 MM월 dd일 HH시 mm분')}"></td>
 			                <td class="btn-td">
 			                	<div class="btn-group">
-				                	<a th:href="@{/admin/member/update/{mb_num}(mb_num=${list.mb_num})}" class="button btn-primary">수정</a>
-				                	<form th:action="@{/admin/member/del/{mb_num}(mb_num=${list.mb_num})}" method="post">
-				                		<button class="button btn-danger" type="submit" th:text="${list.mb_out_date == null ? '정지' : '해제'}"></button>
+				                	<form action="#" method="post">
+				                		<button class="button btn-danger">삭제</button>
 				                	</form>
 			                	</div>
 			                </td>
@@ -78,18 +68,21 @@
 					th:object="${pm}" 
 					th:if="${pm.endPage != 0}">
 				    <li class="page-item" th:if="*{prev}">
-				    	<a class="page-link" th:href="@{/admin/member/list(page=*{startPage-1}, type=*{cri.type}, search=*{cri.search}))}">이전</a>
+				    	<a class="page-link" th:href="@{/admin/point/list(page=*{startPage-1}, type=*{cri.type}, search=*{cri.search}))}">이전</a>
 				    </li>
 				    <li class="page-item" 
 				    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
 				    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
-				    	<a class="page-link" th:href="@{/admin/member/list(page=${i}, type=*{cri.type}, search=*{cri.search})}" th:text="${i}"></a>
+				    	<a class="page-link" th:href="@{/admin/point/list(page=${i}, type=*{cri.type}, search=*{cri.search})}" th:text="${i}"></a>
 				    </li>
 				    <li class="page-item" th:if="*{next}">
-				    	<a class="page-link" th:href="@{/admin/member/list(page=*{endPage+1}, type=*{cri.type}, search=*{cri.search})}">다음</a>
+				    	<a class="page-link" th:href="@{/admin/point/list(page=*{endPage+1}, type=*{cri.type}, search=*{cri.search})}">다음</a>
 				    </li>
 				</ul>
 			</div>
+			<section>
+
+			</section>
 		</div>
 		<script type="text/javascript">
 			$(document).ready(function(){

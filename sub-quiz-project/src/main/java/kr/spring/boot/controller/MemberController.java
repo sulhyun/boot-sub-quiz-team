@@ -58,5 +58,5 @@ public class MemberController {
 		boolean res = memberService.updatePw(user);
 		redirect.addFlashAttribute("msg", res ? "비밀번호 변경에 성공하셨습니다." : "비밀번호 변경에 실패하셨습니다.");
 		return "redirect:/admin/member/update/" + user.getMb_num();
-	}
+	} // (관리자) 회원 비밀번호 수정
 }

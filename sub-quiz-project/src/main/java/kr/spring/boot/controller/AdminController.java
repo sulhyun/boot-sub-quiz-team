@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.boot.model.util.CustomUtil;
 import kr.spring.boot.model.vo.MemberVO;
+import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
 import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
@@ -182,4 +183,25 @@ public class AdminController {
     	model.addAttribute("user", user);
     	return "admin/member/update";
     } // 회원 수정
+    
+    @GetMapping("/point/list")
+    public String pointList(Model model, Criteria cri) {
+    	cri.setPerPageNum(8);
+    	List<MemberVO> list = adminService.getPointList(cri);
+    	PageMaker pm = adminService.getPageMakerByPoint(cri);
+    	model.addAttribute("list", list);
+		model.addAttribute("pm", pm);
+    	return "/admin/point/list";
+    } // 포인트 관리 화면(페이지 네이션)
+    
+    @GetMapping("/point/insert")
+    public String pointInsert() {
+    	return "/admin/point/insert";
+    }
+    
+    @PostMapping("/point/insert")
+    public String PointInsertPost(Model model, PointVO point) {
+    	System.out.println(point);
+    	return "/admin/point/insert";
+    }
 }

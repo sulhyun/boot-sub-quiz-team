@@ -49,4 +49,8 @@ public interface AdminService {
 
 	boolean delMember(MemberVO user);
 
+	List<MemberVO> getPointList(Criteria cri);
+
+	PageMaker getPageMakerByPoint(Criteria cri);
+
 }

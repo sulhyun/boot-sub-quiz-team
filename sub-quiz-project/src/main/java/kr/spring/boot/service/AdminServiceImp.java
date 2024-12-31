@@ -242,4 +242,21 @@ public class AdminServiceImp implements AdminService {
 		}
 	}
 
+	@Override
+	public List<MemberVO> getPointList(Criteria cri) {
+		if(cri == null) {
+			return null;
+		}
+		return adminDao.selectPointList(cri);
+	}
+
+	@Override
+	public PageMaker getPageMakerByPoint(Criteria cri) {
+		if(cri == null) {
+			return null;
+		}
+		int count = adminDao.selectPointCount(cri);
+		return new PageMaker(5, cri, count);
+	}
+
 }

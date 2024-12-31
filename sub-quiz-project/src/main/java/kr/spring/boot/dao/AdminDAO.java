@@ -52,4 +52,8 @@ public interface AdminDAO {
 
 	boolean deleteMember(@Param("user")MemberVO user);
 
+	List<MemberVO> selectPointList(@Param("cri")Criteria cri);
+
+	int selectPointCount(@Param("cri")Criteria cri);
+
 }
