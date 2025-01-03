@@ -60,4 +60,6 @@ public interface AdminService {
 
 	boolean updatePoint(PointVO point);
 
+	boolean delPoint(PointVO point);
+
 }

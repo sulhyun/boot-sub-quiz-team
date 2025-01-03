@@ -236,4 +236,12 @@
     <update id="updatePoint">
     	UPDATE POINT SET PI_CONTENT = #{point.pi_content} WHERE PI_NUM = #{point.pi_num}
     </update>
+    
+    <update id="deleteMemberPoint">
+    	UPDATE MEMBER SET MB_POINT = MB_POINT - #{point.pi_no} WHERE MB_ID = #{point.mb_id} AND MB_POINT >= #{point.pi_no} 
+    </update>
+    
+    <delete id="deletPoint">
+    	DELETE FROM POINT WHERE PI_NUM = #{point.pi_num}
+    </delete>
 </mapper>

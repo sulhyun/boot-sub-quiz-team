@@ -262,18 +262,18 @@ public class AdminServiceImp implements AdminService {
 
 	@Override
 	public boolean addPoint(PointVO point) {
-		if(point == null) {
+		try {
+			if(point == null) {
+				return false;
+			}
+			boolean res = adminDao.updateMemberPoint(point);
+			if(res) {
+				return adminDao.insertPoint(point);
+			}
+			return false;
+		} catch (Exception e) {
 			return false;
 		}
-		MemberVO user = adminDao.selectMemberById(point.getMb_id());
-		if(user == null) {
-			return false;
-		}
-		boolean res = adminDao.updateMemberPoint(point);
-		if(res) {
-			return adminDao.insertPoint(point);
-		}
-		return false;
 	}
 
 	@Override
@@ -287,6 +287,24 @@ public class AdminServiceImp implements AdminService {
 			return false;
 		}
 		return adminDao.updatePoint(point);
+	}
+
+	@Override
+	public boolean delPoint(PointVO point) {
+		try {
+			if(point == null) {
+				return false;
+			}
+			boolean res = adminDao.deleteMemberPoint(point);
+			if(res) {
+				return adminDao.deletPoint(point);
+			}
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 
 }

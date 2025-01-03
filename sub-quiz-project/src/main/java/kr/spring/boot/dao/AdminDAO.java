@@ -67,4 +67,8 @@ public interface AdminDAO {
 
 	boolean updatePoint(@Param("point")PointVO point);
 
+	boolean deleteMemberPoint(@Param("point")PointVO point);
+
+	boolean deletPoint(@Param("point")PointVO point);
+
 }

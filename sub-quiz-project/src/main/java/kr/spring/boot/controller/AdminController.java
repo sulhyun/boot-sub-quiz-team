@@ -216,11 +216,17 @@ public class AdminController {
     
     @PostMapping("/point/update/{pi_num}")
     public String pointUpdatePost(Model model, PointVO point) {
-    	System.out.println(point);
     	boolean res = adminService.updatePoint(point);
     	model.addAttribute("msg", res ? "포인트 수정에 성공하셨습니다." : "포인트 수정에 실패하였습니다.");
     	model.addAttribute("url", "/admin/point/list");
     	return "util/msg";
     } // 포인트 수정
     
+    @PostMapping("/point/del/{pi_num}")
+    public String pointDel(RedirectAttributes redirect, @PathVariable int pi_num) {
+    	PointVO point = adminService.getPoint(pi_num);
+    	boolean res = adminService.delPoint(point);
+    	redirect.addFlashAttribute("msg", res ? "포인트 삭제에 성공하셨습니다." : "포인트 삭제에 실패했습니다.");
+    	return "redirect:/admin/point/list";
+    }
 }
