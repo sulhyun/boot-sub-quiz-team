@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,7 +27,6 @@ import kr.spring.boot.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @AllArgsConstructor
 @RequestMapping("/info")
@@ -45,9 +45,9 @@ public class InfoController {
 	} // 회원 정보 화면
 	
 	@PostMapping("/profile")
-	public String basicPost(Model model, Principal principal, @RequestParam Map<String, String> params) {
+	public String basicPost(RedirectAttributes redirect, Principal principal, @RequestParam Map<String, String> params) {
 		boolean res = infoService.updateInfo(principal.getName(), params);
-		log.info("update Info : {}", res);
+		redirect.addFlashAttribute("msg", res ? "회원 정보 수정에 성공하셨습니다." : "회원 정보 수정에 실패하였습니다.");
 		return "redirect:/info/profile";
 	} // 회원 정보 수정
 	

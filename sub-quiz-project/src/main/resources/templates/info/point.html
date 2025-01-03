@@ -14,7 +14,7 @@
 		<div class="point-wrapper">
 			<div class="header-box">
 				<h4>포인트</h4>
-				<p>사용 가능 포인트 · <span th:text="${user.mb_point}"></span>P</p>
+				<p>사용 가능 포인트 · <span th:text="${#numbers.formatInteger(user.mb_point,0,'COMMA')}"></span>P</p>
 			</div>
 			<div class="btn-list">
 				<ul class="list-group list-group-horizontal">

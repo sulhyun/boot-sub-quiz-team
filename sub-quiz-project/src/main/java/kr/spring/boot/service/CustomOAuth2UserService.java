@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -30,7 +31,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-		System.out.println("소셜 로그인 작동 시작");
 		OAuth2User oAuth2User = delegate.loadUser(userRequest);
 		Map<String, Object> attributes = oAuth2User.getAttributes();
 		log.info("getAttributes : {}", attributes);
@@ -58,7 +58,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             user = memberService.socialSignup(user);     
 		}
 		log.info("MemberVO : {}", user);
-		System.out.println("소셜 로그인 작동 종료");
 		return new OAuth2CustomUser(user, attributes, accessToken);
 	}
 

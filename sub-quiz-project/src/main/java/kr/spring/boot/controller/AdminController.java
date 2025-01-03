@@ -228,5 +228,5 @@ public class AdminController {
     	boolean res = adminService.delPoint(point);
     	redirect.addFlashAttribute("msg", res ? "포인트 삭제에 성공하셨습니다." : "포인트 삭제에 실패했습니다.");
     	return "redirect:/admin/point/list";
-    }
+    } // 포인트 삭제
 }
