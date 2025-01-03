@@ -55,7 +55,7 @@
 			                <td class="btn-td">
 			                	<div class="btn-group">
 			                		<a th:href="@{/admin/point/update/{pi_num}(pi_num=${list.pi_num})}" class="button btn-primary">수정</a>
-				                	<form action="#" method="post">
+				                	<form th:action="@{/admin/point/del/{pi_num}(pi_num=${list.pi_num})}" method="post">
 				                		<button class="button btn-danger">삭제</button>
 				                	</form>
 			                	</div>

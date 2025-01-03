@@ -63,4 +63,8 @@ public interface AdminDAO {
 
 	boolean insertPoint(@Param("point")PointVO point);
 
+	PointVO selectPoint(@Param("pi_num")int pi_num);
+
+	boolean updatePoint(@Param("point")PointVO point);
+
 }

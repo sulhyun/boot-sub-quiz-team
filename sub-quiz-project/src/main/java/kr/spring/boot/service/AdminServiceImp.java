@@ -276,4 +276,17 @@ public class AdminServiceImp implements AdminService {
 		return false;
 	}
 
+	@Override
+	public PointVO getPoint(int pi_num) {
+		return adminDao.selectPoint(pi_num) ;
+	}
+
+	@Override
+	public boolean updatePoint(PointVO point) {
+		if(point == null) {
+			return false;
+		}
+		return adminDao.updatePoint(point);
+	}
+
 }

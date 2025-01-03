@@ -56,4 +56,8 @@ public interface AdminService {
 
 	boolean addPoint(PointVO point);
 
+	PointVO getPoint(int pi_num);
+
+	boolean updatePoint(PointVO point);
+
 }

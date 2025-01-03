@@ -229,4 +229,11 @@
     	(#{point.pi_no}, #{point.pi_content}, NOW(), #{point.mb_id})
     </insert>
     
+    <select id="selectPoint">
+    	SELECT * FROM POINT WHERE PI_NUM = #{pi_num}
+    </select>
+    
+    <update id="updatePoint">
+    	UPDATE POINT SET PI_CONTENT = #{point.pi_content} WHERE PI_NUM = #{point.pi_num}
+    </update>
 </mapper>
