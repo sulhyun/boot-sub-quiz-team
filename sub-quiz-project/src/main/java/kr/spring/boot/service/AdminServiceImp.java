@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.AdminDAO;
 import kr.spring.boot.model.vo.MemberVO;
+import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
 import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
@@ -257,6 +258,22 @@ public class AdminServiceImp implements AdminService {
 		}
 		int count = adminDao.selectPointCount(cri);
 		return new PageMaker(5, cri, count);
+	}
+
+	@Override
+	public boolean addPoint(PointVO point) {
+		if(point == null) {
+			return false;
+		}
+		MemberVO user = adminDao.selectMemberById(point.getMb_id());
+		if(user == null) {
+			return false;
+		}
+		boolean res = adminDao.updateMemberPoint(point);
+		if(res) {
+			return adminDao.insertPoint(point);
+		}
+		return false;
 	}
 
 }

@@ -16,7 +16,7 @@
 		<div class="point-wrapper">
 	    	<h1 class="heading">포인트 목록</h1>
 	    	<div class="d-flex">
-		    	<form class="form-container" action="/admin/member/list" method="get">
+		    	<form class="form-container mr-auto" action="/admin/member/list" method="get">
 					<div class="input-group mb-3">
 						<select class="form-control col-sm-1" name="type">
 							<option value="all" th:selected="${pm.cri.type == 'all'}">전체</option>
@@ -54,6 +54,7 @@
 			                <td th:text="${#dates.format(list.pi_datetime,'yyyy년 MM월 dd일 HH시 mm분')}"></td>
 			                <td class="btn-td">
 			                	<div class="btn-group">
+			                		<a th:href="@{/admin/point/update/{pi_num}(pi_num=${list.pi_num})}" class="button btn-primary">수정</a>
 				                	<form action="#" method="post">
 				                		<button class="button btn-danger">삭제</button>
 				                	</form>

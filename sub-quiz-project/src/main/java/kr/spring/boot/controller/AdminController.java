@@ -197,11 +197,14 @@ public class AdminController {
     @GetMapping("/point/insert")
     public String pointInsert() {
     	return "/admin/point/insert";
-    }
+    } // 포인트 등록 화면
     
     @PostMapping("/point/insert")
     public String PointInsertPost(Model model, PointVO point) {
     	System.out.println(point);
-    	return "/admin/point/insert";
-    }
+    	boolean res = adminService.addPoint(point);
+    	model.addAttribute("msg", res ? "포인트 등록에 성공하셨습니다." : "포인트 등록에 실패하였습니다.");
+    	model.addAttribute("url", "/admin/point/list");
+    	return "util/msg";
+    } // 포인트 등록
 }

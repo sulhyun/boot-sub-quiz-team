@@ -3,6 +3,7 @@ package kr.spring.boot.service;
 import java.util.List;
 
 import kr.spring.boot.model.vo.MemberVO;
+import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
 import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
@@ -52,5 +53,7 @@ public interface AdminService {
 	List<MemberVO> getPointList(Criteria cri);
 
 	PageMaker getPageMakerByPoint(Criteria cri);
+
+	boolean addPoint(PointVO point);
 
 }

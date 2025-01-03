@@ -96,18 +96,14 @@
 			</div>
 	    </div>
 	    <script type="text/javascript">
-		    function adjustSidebarHeight() {
-		        const sidebar = document.getElementById('admin-sidebar');
-		        const content = document.getElementById('content');
-		        const contentHeight = content.offsetHeight;
-		        const viewportHeight = window.innerHeight;
+		    $(window).on('resize load', function() {
+		        const sidebar = $('#admin-sidebar');
+		        const content = $('#content');
+		        const contentHeight = content.outerHeight();
+		        const viewportHeight = $(window).height();
 	
-		        // 사이드바 높이를 컨텐츠 높이와 화면 높이 중 더 큰 값으로 설정
-		        sidebar.style.height = `${Math.max(contentHeight, viewportHeight - 80)}px`;
-		    }
-	
-		    window.addEventListener('resize', adjustSidebarHeight);
-		    window.addEventListener('load', adjustSidebarHeight);
+		        sidebar.css('height', Math.max(contentHeight, viewportHeight - 80) + 'px');
+		    });
 		    
 		    const autoHyphen = (target) => {
 			    let hp = target.value.replace(/[^0-9]/g, '');
