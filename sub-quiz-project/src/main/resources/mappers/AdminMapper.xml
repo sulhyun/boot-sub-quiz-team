@@ -211,4 +211,37 @@
 			</otherwise>
 		</choose>
     </select>
+    
+    <select id="selectMemberById">
+    	SELECT *
+    	FROM
+    		MEMBER
+    	WHERE
+    		MB_ID = #{mb_id}
+    </select>
+    
+    <update id="updateMemberPoint">
+    	UPDATE MEMBER SET MB_POINT = MB_POINT + #{point.pi_no} WHERE MB_ID = #{point.mb_id} AND MB_POINT + #{point.pi_no} > 0
+    </update>
+    
+    <insert id="insertPoint">
+    	INSERT INTO POINT(PI_NO, PI_CONTENT, PI_DATETIME, MB_ID) VALUES
+    	(#{point.pi_no}, #{point.pi_content}, NOW(), #{point.mb_id})
+    </insert>
+    
+    <select id="selectPoint">
+    	SELECT * FROM POINT WHERE PI_NUM = #{pi_num}
+    </select>
+    
+    <update id="updatePoint">
+    	UPDATE POINT SET PI_CONTENT = #{point.pi_content} WHERE PI_NUM = #{point.pi_num}
+    </update>
+    
+    <update id="deleteMemberPoint">
+    	UPDATE MEMBER SET MB_POINT = MB_POINT - #{point.pi_no} WHERE MB_ID = #{point.mb_id} AND MB_POINT >= #{point.pi_no} 
+    </update>
+    
+    <delete id="deletPoint">
+    	DELETE FROM POINT WHERE PI_NUM = #{point.pi_num}
+    </delete>
 </mapper>

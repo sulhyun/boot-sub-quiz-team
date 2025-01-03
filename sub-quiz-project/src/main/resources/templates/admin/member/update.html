@@ -120,17 +120,14 @@
 			</div>
 	    </div>
 	    <script type="text/javascript">
-		    function adjustSidebarHeight() {
-		        const sidebar = document.getElementById('admin-sidebar');
-		        const content = document.getElementById('content');
-		        const contentHeight = content.offsetHeight;
-		        const viewportHeight = window.innerHeight;
+		    $(window).on('resize load', function() {
+		        const sidebar = $('#admin-sidebar');
+		        const content = $('#content');
+		        const contentHeight = content.outerHeight();
+		        const viewportHeight = $(window).height();
 	
-		        sidebar.style.height = `${Math.max(contentHeight, viewportHeight - 80)}px`;
-		    }
-	
-		    window.addEventListener('resize', adjustSidebarHeight);
-		    window.addEventListener('load', adjustSidebarHeight);
+		        sidebar.css('height', Math.max(contentHeight, viewportHeight - 80) + 'px');
+		    });
 		    // 사이드바 컨텐트 길이만큼 동적으로 늘리기
 		    
 		    const autoHyphen = (target) => {

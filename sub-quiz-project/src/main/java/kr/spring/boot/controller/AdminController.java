@@ -191,17 +191,42 @@ public class AdminController {
     	PageMaker pm = adminService.getPageMakerByPoint(cri);
     	model.addAttribute("list", list);
 		model.addAttribute("pm", pm);
-    	return "/admin/point/list";
+    	return "admin/point/list";
     } // 포인트 관리 화면(페이지 네이션)
     
     @GetMapping("/point/insert")
     public String pointInsert() {
-    	return "/admin/point/insert";
-    }
+    	return "admin/point/insert";
+    } // 포인트 등록 화면
     
     @PostMapping("/point/insert")
-    public String PointInsertPost(Model model, PointVO point) {
-    	System.out.println(point);
-    	return "/admin/point/insert";
+    public String pointInsertPost(Model model, PointVO point) {
+    	boolean res = adminService.addPoint(point);
+    	model.addAttribute("msg", res ? "포인트 등록에 성공하셨습니다." : "포인트 등록에 실패하였습니다.");
+    	model.addAttribute("url", "/admin/point/list");
+    	return "util/msg";
+    } // 포인트 등록
+    
+    @GetMapping("/point/update/{pi_num}")
+    public String pointUpdate(Model model, @PathVariable int pi_num) {
+    	PointVO point = adminService.getPoint(pi_num);
+    	model.addAttribute("point", point);
+    	return "admin/point/update";
+    } // 포인트 수정 화면
+    
+    @PostMapping("/point/update/{pi_num}")
+    public String pointUpdatePost(Model model, PointVO point) {
+    	boolean res = adminService.updatePoint(point);
+    	model.addAttribute("msg", res ? "포인트 수정에 성공하셨습니다." : "포인트 수정에 실패하였습니다.");
+    	model.addAttribute("url", "/admin/point/list");
+    	return "util/msg";
+    } // 포인트 수정
+    
+    @PostMapping("/point/del/{pi_num}")
+    public String pointDel(RedirectAttributes redirect, @PathVariable int pi_num) {
+    	PointVO point = adminService.getPoint(pi_num);
+    	boolean res = adminService.delPoint(point);
+    	redirect.addFlashAttribute("msg", res ? "포인트 삭제에 성공하셨습니다." : "포인트 삭제에 실패했습니다.");
+    	return "redirect:/admin/point/list";
     }
 }

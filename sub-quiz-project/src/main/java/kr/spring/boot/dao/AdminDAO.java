@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.spring.boot.model.vo.MemberVO;
+import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
 import kr.spring.boot.model.vo.QuizSubjectiveVO;
 import kr.spring.boot.model.vo.QuizTypeVO;
@@ -55,5 +56,19 @@ public interface AdminDAO {
 	List<MemberVO> selectPointList(@Param("cri")Criteria cri);
 
 	int selectPointCount(@Param("cri")Criteria cri);
+
+	MemberVO selectMemberById(@Param("mb_id")String mb_id);
+
+	boolean updateMemberPoint(@Param("point")PointVO point);
+
+	boolean insertPoint(@Param("point")PointVO point);
+
+	PointVO selectPoint(@Param("pi_num")int pi_num);
+
+	boolean updatePoint(@Param("point")PointVO point);
+
+	boolean deleteMemberPoint(@Param("point")PointVO point);
+
+	boolean deletPoint(@Param("point")PointVO point);
 
 }
