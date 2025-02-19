@@ -62,4 +62,8 @@ public interface AdminService {
 
 	boolean delPoint(PointVO point);
 
+	List<MemberVO> getInquiryList(Criteria cri);
+
+	PageMaker getPageMakerByInquiry(Criteria cri);
+
 }

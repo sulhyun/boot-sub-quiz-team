@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈 게임 : 관리자</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/adminInQuiryList.css}">
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:replace="~{layout/adminSidebar.html}"></div>
+		<div class="flash-message" id="flash-message" th:if="${msg}" th:classappend="${msg.contains('성공') ? '' : 'error'}" >
+	    	<span th:text="${msg}"></span>
+		</div>
+		<div class="member-wrapper">
+	    	<h1 class="heading">문의 목록</h1>
+    		<div class="d-flex">
+		    	<form class="form-container mr-auto" action="/admin/inquiry/list" method="get">
+					<div class="input-group mb-3">
+						<select class="form-control col-sm-1" name="type">
+							<option value="all" th:selected="${pm.cri.type == 'all'}">전체</option>
+							<option value="id" th:selected="${pm.cri.type == 'id'}">아이디</option>
+							<option value="nick" th:selected="${pm.cri.type == 'content'}">내용</option>
+						</select>
+						<input type="text" class="form-control col-sm-2" placeholder="검색어" name="search" th:value="${pm.cri.search}">
+						<div class="input-group-append">
+							<button type="submit" class="btn btn-outline-info col-12">검색</button>
+						</div>
+					</div>
+				</form>
+	    		<div class="list-group-item">
+		    		<a th:href="@{/admin/inquiry/insert}">
+		    			<button type="button" class="btn btn-outline-info">등록</button>
+		    		</a>
+				</div>
+    		</div>
+			<div class="member-box">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th class="th-item">아이디</th>
+							<th class="th-item">문의 내용</th>
+							<th class="th-item">작성일</th>
+							<th class="th-item">답변 내용</th>
+							<th class="th-item">답변일</th>
+							<th class="th-item">조회수</th>
+							<th class="th-item">관리</th>
+						</tr>
+					</thead>
+					<tbody>
+						 <tr th:each="list:${list}">
+			                <td class="truncate" data-toggle="tooltip" th:title="${list.mb_id}" th:text="${list.mb_id}"></td>
+			                <td class="truncate" data-toggle="tooltip" th:title="${list.iq_content}" th:text="${list.iq_content}"></td>
+			                <td th:text="${#dates.format(list.iq_datetime1,'yyyy-MM-dd')}"></td>
+			                <td class="truncate" data-toggle="tooltip" th:title="${list.iq_comment}" th:text="${list.iq_comment}"></td>
+			                <td th:text="${#dates.format(list.iq_datetime2,'yyyy-MM-dd')}"></td>
+			                <td class="truncate" th:text="${list.iq_view}"></td>
+			                <td class="btn-td">
+			                	<div class="btn-group">
+				                	<a th:href="@{/admin/inquiry/update/{mb_num}(mb_num=${list.mb_num})}" class="button btn-primary">수정</a>
+				                	<form th:action="@{/admin/inquiry/del/{mb_num}(mb_num=${list.mb_num})}" method="post">
+				                		<button class="button btn-danger" type="submit">삭제</button>
+				                	</form>
+			                	</div>
+			                </td>
+			            </tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="page_div">
+				<ul class="pagination justify-content-center center" 
+					th:object="${pm}" 
+					th:if="${pm.endPage != 0}">
+				    <li class="page-item" th:if="*{prev}">
+				    	<a class="page-link" th:href="@{/admin/inquiry/list(page=*{startPage-1}, type=*{cri.type}, search=*{cri.search}))}">이전</a>
+				    </li>
+				    <li class="page-item" 
+				    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
+				    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
+				    	<a class="page-link" th:href="@{/admin/inquiry/list(page=${i}, type=*{cri.type}, search=*{cri.search})}" th:text="${i}"></a>
+				    </li>
+				    <li class="page-item" th:if="*{next}">
+				    	<a class="page-link" th:href="@{/admin/inquiry/list(page=*{endPage+1}, type=*{cri.type}, search=*{cri.search})}">다음</a>
+				    </li>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('[data-toggle="tooltip"]').tooltip();
+			});
+			
+			$(document).ready(function () {
+			    setTimeout(function () {
+			        var flashMessage = $("#flash-message");
+			        if(flashMessage.length) {
+			            flashMessage.fadeOut(500);
+			        }
+			    }, 5000);
+			});
+		</script>
+   </main>
+</body>
+</html>

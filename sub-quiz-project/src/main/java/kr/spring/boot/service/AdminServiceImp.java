@@ -307,4 +307,21 @@ public class AdminServiceImp implements AdminService {
 		
 	}
 
+	@Override
+	public List<MemberVO> getInquiryList(Criteria cri) {
+		if(cri == null) {
+			return null;
+		}
+		return adminDao.selectInquiryList(cri);
+	}
+
+	@Override
+	public PageMaker getPageMakerByInquiry(Criteria cri) {
+		if(cri == null) {
+			return null;
+		}
+		int count = adminDao.selectInquiryCount(cri);
+		return new PageMaker(5, cri, count);
+	}
+
 }

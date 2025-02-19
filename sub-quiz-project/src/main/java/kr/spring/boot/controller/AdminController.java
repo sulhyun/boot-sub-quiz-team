@@ -229,4 +229,15 @@ public class AdminController {
     	redirect.addFlashAttribute("msg", res ? "포인트 삭제에 성공하셨습니다." : "포인트 삭제에 실패했습니다.");
     	return "redirect:/admin/point/list";
     } // 포인트 삭제
+    
+    @GetMapping("/inquiry/list")
+    public String inquiryList(Model model, Criteria cri) {
+    	cri.setPerPageNum(8);
+    	List<MemberVO> list = adminService.getInquiryList(cri);
+    	PageMaker pm = adminService.getPageMakerByInquiry(cri);
+    	model.addAttribute("list", list);
+		model.addAttribute("pm", pm);
+    	return "admin/inquiry/list";
+    } // 문의 관리 화면 (페이지네이션)
+    
 }

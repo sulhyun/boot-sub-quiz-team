@@ -244,4 +244,42 @@
     <delete id="deletPoint">
     	DELETE FROM POINT WHERE PI_NUM = #{point.pi_num}
     </delete>
+    
+    <select id="selectInquiryList" resultType="InquiryVO">
+    	SELECT * 
+		FROM 
+			INQUIRY
+		WHERE
+		<choose>
+			<when test="cri.type == 'id'">
+				MB_ID LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<when test="cri.type == 'content'">
+				IQ_CONTENT LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<otherwise>
+				MB_ID LIKE CONCAT('%', #{cri.search}, '%') OR IQ_CONTENT LIKE CONCAT('%', #{cri.search}, '%')
+			</otherwise>
+		</choose>
+		ORDER BY IQ_NUM DESC
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+    </select>
+    
+    <select id="selectInquiryCount" resultType="int">
+    	SELECT COUNT(*) 
+		FROM 
+			INQUIRY
+		WHERE
+		<choose>
+			<when test="cri.type == 'id'">
+				MB_ID LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<when test="cri.type == 'CONTENT'">
+				IQ_CONTENT LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<otherwise>
+				MB_ID LIKE CONCAT('%', #{cri.search}, '%') OR IQ_CONTENT LIKE CONCAT('%', #{cri.search}, '%')
+			</otherwise>
+		</choose>
+    </select>
 </mapper>

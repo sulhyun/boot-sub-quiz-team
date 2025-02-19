@@ -71,4 +71,8 @@ public interface AdminDAO {
 
 	boolean deletPoint(@Param("point")PointVO point);
 
+	List<MemberVO> selectInquiryList(@Param("cri")Criteria cri);
+
+	int selectInquiryCount(@Param("cri")Criteria cri);
+
 }
