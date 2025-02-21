@@ -11,6 +11,7 @@ public class InquiryVO {
 
 	private int iq_num;			// 문의 기본키
 	private String mb_id;		// 회원아이디
+	private String iq_title;	// 문의 제목
 	private String iq_content;	// 문의 내용
 	private Date iq_datetime1;	// 작성일
 	private String iq_comment;	// 답변 내용
