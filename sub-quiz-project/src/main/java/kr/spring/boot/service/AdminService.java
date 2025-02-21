@@ -2,6 +2,7 @@ package kr.spring.boot.service;
 
 import java.util.List;
 
+import kr.spring.boot.model.vo.InquiryVO;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
@@ -65,5 +66,7 @@ public interface AdminService {
 	List<MemberVO> getInquiryList(Criteria cri);
 
 	PageMaker getPageMakerByInquiry(Criteria cri);
+
+	boolean addInquiry(InquiryVO inquiry);
 
 }

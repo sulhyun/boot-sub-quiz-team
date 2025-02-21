@@ -247,8 +247,11 @@ public class AdminController {
     } // 문의 등록 화면
     
     @PostMapping("/inquiry/insert")
-    public String inquiryInsertPost(Model model, InquiryVO inquiry) {
-    	System.out.println(inquiry);
+    public String inquiryInsertPost(Model model, InquiryVO inquiry, Principal principal) {
+    	inquiry.setMb_id(principal.getName());
+    	boolean res = adminService.addInquiry(inquiry);
+    	model.addAttribute("msg", res ? "문의 등록에 성공하셨습니다." : "문의 등록에 실패하였습니다.");
+    	model.addAttribute("url", "/admin/inquiry/list");
     	return "util/msg";
     } // 문의 등록
 }

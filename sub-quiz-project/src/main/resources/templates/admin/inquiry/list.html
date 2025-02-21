@@ -58,8 +58,8 @@
 			                <td class="truncate" th:text="${list.iq_view}"></td>
 			                <td class="btn-td">
 			                	<div class="btn-group">
-				                	<a th:href="@{/admin/inquiry/update/{mb_num}(mb_num=${list.mb_num})}" class="button btn-primary">수정</a>
-				                	<form th:action="@{/admin/inquiry/del/{mb_num}(mb_num=${list.mb_num})}" method="post">
+				                	<a th:href="@{/admin/inquiry/update}" class="button btn-primary">수정</a>
+				                	<form th:action="@{/admin/inquiry/del}" method="post">
 				                		<button class="button btn-danger" type="submit">삭제</button>
 				                	</form>
 			                	</div>

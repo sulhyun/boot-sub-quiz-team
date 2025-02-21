@@ -282,4 +282,9 @@
 			</otherwise>
 		</choose>
     </select>
+    
+    <insert id="insertInquiry">
+    	INSERT INTO INQUIRY(MB_ID, IQ_TITLE, IQ_CONTENT, IQ_DATETIME1, IQ_COMMENT, IQ_DATETIME2) VALUE
+    	(#{inquiry.mb_id}, #{inquiry.iq_title}, #{inquiry.iq_content}, NOW(), #{inquiry.iq_comment}, NOW())
+    </insert>
 </mapper>
