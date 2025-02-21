@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.boot.model.util.CustomUtil;
+import kr.spring.boot.model.vo.InquiryVO;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
@@ -238,6 +239,16 @@ public class AdminController {
     	model.addAttribute("list", list);
 		model.addAttribute("pm", pm);
     	return "admin/inquiry/list";
-    } // 문의 관리 화면 (페이지네이션)
+    } // 문의 관리 화면(페이지네이션)
     
+    @GetMapping("/inquiry/insert")
+    public String inquiryInsert(Model model) {
+    	return "admin/inquiry/insert";
+    } // 문의 등록 화면
+    
+    @PostMapping("/inquiry/insert")
+    public String inquiryInsertPost(Model model, InquiryVO inquiry) {
+    	System.out.println(inquiry);
+    	return "util/msg";
+    } // 문의 등록
 }
