@@ -244,4 +244,58 @@
     <delete id="deletPoint">
     	DELETE FROM POINT WHERE PI_NUM = #{point.pi_num}
     </delete>
+    
+    <select id="selectInquiryList" resultType="InquiryVO">
+    	SELECT * 
+		FROM 
+			INQUIRY
+		WHERE
+		<choose>
+			<when test="cri.type == 'id'">
+				MB_ID LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<when test="cri.type == 'content'">
+				IQ_CONTENT LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<otherwise>
+				MB_ID LIKE CONCAT('%', #{cri.search}, '%') OR IQ_CONTENT LIKE CONCAT('%', #{cri.search}, '%')
+			</otherwise>
+		</choose>
+		ORDER BY IQ_NUM DESC
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+    </select>
+    
+    <select id="selectInquiryCount" resultType="int">
+    	SELECT COUNT(*) 
+		FROM 
+			INQUIRY
+		WHERE
+		<choose>
+			<when test="cri.type == 'id'">
+				MB_ID LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<when test="cri.type == 'CONTENT'">
+				IQ_CONTENT LIKE CONCAT('%', #{cri.search}, '%')
+			</when>
+			<otherwise>
+				MB_ID LIKE CONCAT('%', #{cri.search}, '%') OR IQ_CONTENT LIKE CONCAT('%', #{cri.search}, '%')
+			</otherwise>
+		</choose>
+    </select>
+    
+    <insert id="insertInquiry">
+    	INSERT INTO INQUIRY(MB_ID, IQ_TITLE, IQ_CONTENT, IQ_DATETIME1, IQ_COMMENT, IQ_DATETIME2) VALUE
+    	(#{inquiry.mb_id}, #{inquiry.iq_title}, #{inquiry.iq_content}, NOW(), #{inquiry.iq_comment}, NOW())
+    </insert>
+    
+    <select id="selectInquiry" resultType="InquiryVO">
+    	SELECT *
+    	FROM
+    		INQUIRY
+    	WHERE IQ_NUM = #{iq_num}
+    </select>
+    
+    <update id="updateInquiry">
+    	UPDATE INQUIRY SET IQ_COMMENT = #{inquiry.iq_comment} WHERE IQ_NUM = #{inquiry.iq_num}
+    </update>
 </mapper>

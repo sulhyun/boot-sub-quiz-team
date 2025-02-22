@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.AdminDAO;
+import kr.spring.boot.model.vo.InquiryVO;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
@@ -305,6 +306,44 @@ public class AdminServiceImp implements AdminService {
 			return false;
 		}
 		
+	}
+
+	@Override
+	public List<MemberVO> getInquiryList(Criteria cri) {
+		if(cri == null) {
+			return null;
+		}
+		return adminDao.selectInquiryList(cri);
+	}
+
+	@Override
+	public PageMaker getPageMakerByInquiry(Criteria cri) {
+		if(cri == null) {
+			return null;
+		}
+		int count = adminDao.selectInquiryCount(cri);
+		return new PageMaker(5, cri, count);
+	}
+
+	@Override
+	public boolean addInquiry(InquiryVO inquiry) {
+		if(inquiry == null) {
+			return false;
+		}
+		return adminDao.insertInquiry(inquiry);
+	}
+
+	@Override
+	public InquiryVO getInquiry(int iq_num) {
+		return adminDao.selectInquiry(iq_num);
+	}
+
+	@Override
+	public boolean updateInquiry(InquiryVO inquiry) {
+		if(inquiry == null) {
+			return false;
+		}
+		return adminDao.updateInquiry(inquiry);
 	}
 
 }

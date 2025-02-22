@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.spring.boot.model.util.CustomUtil;
+import kr.spring.boot.model.vo.InquiryVO;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.model.vo.QuizChoiceVO;
@@ -228,5 +229,45 @@ public class AdminController {
     	boolean res = adminService.delPoint(point);
     	redirect.addFlashAttribute("msg", res ? "포인트 삭제에 성공하셨습니다." : "포인트 삭제에 실패했습니다.");
     	return "redirect:/admin/point/list";
-    }
+    } // 포인트 삭제
+    
+    @GetMapping("/inquiry/list")
+    public String inquiryList(Model model, Criteria cri) {
+    	cri.setPerPageNum(8);
+    	List<MemberVO> list = adminService.getInquiryList(cri);
+    	PageMaker pm = adminService.getPageMakerByInquiry(cri);
+    	model.addAttribute("list", list);
+		model.addAttribute("pm", pm);
+    	return "admin/inquiry/list";
+    } // 문의 관리 화면(페이지네이션)
+    
+    @GetMapping("/inquiry/insert")
+    public String inquiryInsert(Model model) {
+    	return "admin/inquiry/insert";
+    } // 문의 등록 화면
+    
+    @PostMapping("/inquiry/insert")
+    public String inquiryInsertPost(Model model, InquiryVO inquiry, Principal principal) {
+    	inquiry.setMb_id(principal.getName());
+    	boolean res = adminService.addInquiry(inquiry);
+    	model.addAttribute("msg", res ? "문의 등록에 성공하셨습니다." : "문의 등록에 실패하였습니다.");
+    	model.addAttribute("url", "/admin/inquiry/list");
+    	return "util/msg";
+    } // 문의 등록
+    
+    @GetMapping("inquiry/update/{iq_num}")
+    public String inquiryUpdate(Model model, @PathVariable int iq_num) {
+    	InquiryVO inquiry = adminService.getInquiry(iq_num);
+    	model.addAttribute("inquiry", inquiry);
+    	return "admin/inquiry/update";
+    } // 문의 수정 화면
+    
+    @PostMapping("inquiry/update/{iq_num}")
+    public String inquiryUpdatePost(Model model, InquiryVO inquiry) {
+    	System.out.println(inquiry);
+    	boolean res = adminService.updateInquiry(inquiry);
+    	model.addAttribute("msg", res ? "문의 수정에 성공하셨습니다." : "문의 수정에 실패하였습니다.");
+    	model.addAttribute("url", "/admin/inquiry/list");
+    	return "util/msg";
+    } // 문의 수정
 }

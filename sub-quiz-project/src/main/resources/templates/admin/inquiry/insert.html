@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈 게임 : 관리자</title>
+<link rel="stylesheet" type="text/css" href="/css/adminInquiryInsert.css">
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:replace="~{layout/adminSidebar.html}"></div>
+		<div class="point-wrapper" id="content">
+	    	<h1 class="heading">문의 등록</h1>
+	    	<div class="member-container">
+				<form action="/admin/inquiry/insert" method="post">
+					<div class="form-group">
+						<label>문의 제목</label>
+						<input type="text" class="form-control" name="iq_title" id="title">
+					</div>
+					<div class="form-group">
+						<label>문의 내용</label>
+						<textarea class="form-control text-box" name="iq_content" id="iq_content"></textarea>
+					</div>
+					<div class="form-group">
+						<label>답변 내용</label>
+						<textarea class="form-control text-box" name="iq_comment" id="iq_comment"></textarea>
+					</div>
+					<button type="submit" class="btn btn-outline-info col-12">등록</button>
+				</form>
+			</div>
+	    </div>
+   </main>
+</body>
+</html>

@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import kr.spring.boot.model.util.OAuth2CustomUser;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,7 +22,6 @@ public class CustomLogoutHandler implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-    	System.out.println("로그아웃 핸들러 작동 시작");
         if (authentication != null && authentication.getPrincipal() instanceof OAuth2CustomUser) {
             OAuth2CustomUser customUser = (OAuth2CustomUser) authentication.getPrincipal();
             String provider = customUser.getMember().getMb_login_method();
@@ -35,8 +33,8 @@ public class CustomLogoutHandler implements LogoutHandler {
             	logoutNaver(accessToken);
             }
         }
-        System.out.println("로그아웃 핸들러 작동 종료");
     }
+    
     private void logoutKakao(String accessToken) {
         String logoutUrl = "https://kapi.kakao.com/v1/user/unlink";
         try {
