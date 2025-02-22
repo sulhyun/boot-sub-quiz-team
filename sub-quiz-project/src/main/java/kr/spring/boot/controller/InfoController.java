@@ -81,4 +81,9 @@ public class InfoController {
 		model.addAttribute("list", list);
 		return "info/point";
 	} // 포인트 내역 화면(페이지네이션)
+	
+	@GetMapping("/inquiry/{type}")
+	public String inquiry() {
+		return "info/inquiry";
+	}
 }
