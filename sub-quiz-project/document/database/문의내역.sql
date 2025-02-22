@@ -7,5 +7,5 @@ CREATE TABLE quizgame.inquiry (
 	iq_datetime1 DATETIME NOT NULL,
 	iq_comment LONGTEXT NOT NULL,
 	iq_datetime2 DATETIME NOT NULL,
-	iq_view INT DEFAULT 0
+	iq_view INT DEFAULT 1
 );
