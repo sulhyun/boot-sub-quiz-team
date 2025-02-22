@@ -69,4 +69,8 @@ public interface AdminService {
 
 	boolean addInquiry(InquiryVO inquiry);
 
+	InquiryVO getInquiry(int iq_num);
+
+	boolean updateInquiry(InquiryVO inquiry);
+
 }

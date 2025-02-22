@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>퀴즈 게임 : 관리자</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/adminInquiryInsert.css}">
+<link rel="stylesheet" type="text/css" href="/css/adminInquiryInsert.css">
 </head>
 <body>
 	<main layout:fragment="content">
@@ -30,16 +30,6 @@
 				</form>
 			</div>
 	    </div>
-	    <script type="text/javascript">
-		    $(window).on('resize load', function() {
-		        const sidebar = $('#admin-sidebar');
-		        const content = $('#content');
-		        const contentHeight = content.outerHeight();
-		        const viewportHeight = $(window).height();
-	
-		        sidebar.css('height', Math.max(contentHeight, viewportHeight - 80) + 'px');
-		    });
-	    </script>
    </main>
 </body>
 </html>

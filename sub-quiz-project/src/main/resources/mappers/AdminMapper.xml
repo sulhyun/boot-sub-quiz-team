@@ -287,4 +287,15 @@
     	INSERT INTO INQUIRY(MB_ID, IQ_TITLE, IQ_CONTENT, IQ_DATETIME1, IQ_COMMENT, IQ_DATETIME2) VALUE
     	(#{inquiry.mb_id}, #{inquiry.iq_title}, #{inquiry.iq_content}, NOW(), #{inquiry.iq_comment}, NOW())
     </insert>
+    
+    <select id="selectInquiry" resultType="InquiryVO">
+    	SELECT *
+    	FROM
+    		INQUIRY
+    	WHERE IQ_NUM = #{iq_num}
+    </select>
+    
+    <update id="updateInquiry">
+    	UPDATE INQUIRY SET IQ_COMMENT = #{inquiry.iq_comment} WHERE IQ_NUM = #{inquiry.iq_num}
+    </update>
 </mapper>

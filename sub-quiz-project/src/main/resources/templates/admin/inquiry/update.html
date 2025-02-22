@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈 게임 : 관리자</title>
+<link rel="stylesheet" type="text/css" href="/css/adminInquiryUpdate.css">
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:replace="~{layout/adminSidebar.html}"></div>
+		<div class="point-wrapper">
+	    	<h1 class="heading">문의 수정</h1>
+	    	<div class="member-container">
+				<form th:action="@{/admin/inquiry/update/{iq_num}(iq_num=${inquiry.iq_num})}" method="post">
+					<div class="form-group">
+						<label>문의 제목</label>
+						<input type="text" class="form-control" name="iq_title" id="title" th:value="${inquiry.iq_title}" readonly>
+					</div>
+					<div class="form-group">
+						<label>문의 내용</label>
+						<textarea class="form-control text-box" name="iq_content" id="iq_content" th:text="${inquiry.iq_content}" readonly></textarea>
+					</div>
+					<div class="form-group">
+						<label>답변 내용</label>
+						<textarea class="form-control text-box" name="iq_comment" id="iq_comment" th:text="${inquiry.iq_comment}"></textarea>
+					</div>
+					<button type="submit" class="btn btn-outline-info col-12">수정</button>
+				</form>
+			</div>
+	    </div>
+   </main>
+</body>
+</html>

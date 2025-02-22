@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>퀴즈 게임 : 관리자</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/adminInQuiryList.css}">
+<link rel="stylesheet" type="text/css" href="/css/adminInQuiryList.css">
 </head>
 <body>
 	<main layout:fragment="content">
@@ -58,8 +58,8 @@
 			                <td class="truncate" th:text="${list.iq_view}"></td>
 			                <td class="btn-td">
 			                	<div class="btn-group">
-				                	<a th:href="@{/admin/inquiry/update}" class="button btn-primary">수정</a>
-				                	<form th:action="@{/admin/inquiry/del}" method="post">
+				                	<a th:href="@{/admin/inquiry/update/{iq_num}(iq_num=${list.iq_num})}" class="button btn-primary">수정</a>
+				                	<form th:action="@{/admin/inquiry/del/{iq_num}(iq_num=${list.iq_num})}" method="post">
 				                		<button class="button btn-danger" type="submit">삭제</button>
 				                	</form>
 			                	</div>

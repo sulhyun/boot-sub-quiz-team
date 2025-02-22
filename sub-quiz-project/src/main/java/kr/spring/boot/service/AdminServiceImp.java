@@ -333,4 +333,17 @@ public class AdminServiceImp implements AdminService {
 		return adminDao.insertInquiry(inquiry);
 	}
 
+	@Override
+	public InquiryVO getInquiry(int iq_num) {
+		return adminDao.selectInquiry(iq_num);
+	}
+
+	@Override
+	public boolean updateInquiry(InquiryVO inquiry) {
+		if(inquiry == null) {
+			return false;
+		}
+		return adminDao.updateInquiry(inquiry);
+	}
+
 }

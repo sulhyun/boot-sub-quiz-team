@@ -254,4 +254,20 @@ public class AdminController {
     	model.addAttribute("url", "/admin/inquiry/list");
     	return "util/msg";
     } // 문의 등록
+    
+    @GetMapping("inquiry/update/{iq_num}")
+    public String inquiryUpdate(Model model, @PathVariable int iq_num) {
+    	InquiryVO inquiry = adminService.getInquiry(iq_num);
+    	model.addAttribute("inquiry", inquiry);
+    	return "admin/inquiry/update";
+    } // 문의 수정 화면
+    
+    @PostMapping("inquiry/update/{iq_num}")
+    public String inquiryUpdatePost(Model model, InquiryVO inquiry) {
+    	System.out.println(inquiry);
+    	boolean res = adminService.updateInquiry(inquiry);
+    	model.addAttribute("msg", res ? "문의 수정에 성공하셨습니다." : "문의 수정에 실패하였습니다.");
+    	model.addAttribute("url", "/admin/inquiry/list");
+    	return "util/msg";
+    } // 문의 수정
 }

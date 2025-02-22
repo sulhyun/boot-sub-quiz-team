@@ -78,4 +78,8 @@ public interface AdminDAO {
 
 	boolean insertInquiry(@Param("inquiry")InquiryVO inquiry);
 
+	InquiryVO selectInquiry(@Param("iq_num")int iq_num);
+
+	boolean updateInquiry(@Param("inquiry")InquiryVO inquiry);
+
 }
