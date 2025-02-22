@@ -10,9 +10,9 @@
 <body>
 	<main layout:fragment="content">
 		<div th:replace="~{layout/adminSidebar.html}"></div>
-		<div class="point-wrapper">
+		<div class="inquiry-wrapper">
 	    	<h1 class="heading">문의 수정</h1>
-	    	<div class="member-container">
+	    	<div class="inquiry-container">
 				<form th:action="@{/admin/inquiry/update/{iq_num}(iq_num=${inquiry.iq_num})}" method="post">
 					<div class="form-group">
 						<label>문의 제목</label>

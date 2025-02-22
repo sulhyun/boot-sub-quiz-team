@@ -274,7 +274,7 @@ public class AdminController {
     public String InquiryDel(RedirectAttributes redirect, @PathVariable int iq_num) {
     	InquiryVO inquiry = adminService.getInquiry(iq_num);
     	boolean res = adminService.delInquiry(inquiry);
-    	redirect.addFlashAttribute("msg", res ? "포인트 삭제에 성공하셨습니다." : "포인트 삭제에 실패했습니다.");
+    	redirect.addFlashAttribute("msg", res ? "문의 삭제에 성공하셨습니다." : "문의 삭제에 실패했습니다.");
     	return "redirect:/admin/inquiry/list";
     } // 문의 삭제
 }

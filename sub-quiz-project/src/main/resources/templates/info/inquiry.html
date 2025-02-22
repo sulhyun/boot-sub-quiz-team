@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈Q : 문의</title>
+<link rel="stylesheet" type="text/css" href="/css/inquiry.css">
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:replace="~{layout/infoheader.html}"></div>
+		<div class="inquiry-wrapper">
+			<div class="header-box">
+				<h4>문의 내역</h4>
+			</div>
+			<div class="btn-list">
+				<ul class="list-group list-group-horizontal">
+					<li class="list-group-item list-group-item-light">
+						<a th:href="@{/info/inquiry/entire}">
+							<button type="button" th:class="${type == 'entire'} ? 'btn btn-info on':'btn btn-light'">전체</button>
+						</a>
+					</li>
+					<li class="list-group-item list-group-item-light">
+						<a th:href="@{/info/inquiry/mine}">
+							<button type="button" th:class="${type == 'use'} ? 'btn btn-info on':'btn btn-light'">내 문의내역</button>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="inquiry-box">
+				<table class="table table-hover">
+					<tr th:each="list:${list}">
+					    <td th:text="${#dates.format(list.iq_datetime1,'yyyy-MM-dd')}"></td>
+					    <td class="truncate" data-toggle="tooltip" th:title="${list.iq_content}" th:text="${list.iq_content}"></td>
+					    <td class="truncate" th:text="${list.iq_view}"></td>
+					</tr>
+				</table>
+				<div class="none-list" th:if="${list == null or #lists.isEmpty(list)}">
+					<div class="none-content">
+						<p class="no-title">내역이 없어요</p>
+					</div>
+				</div>
+			</div>
+			<div class="page_div">
+				<ul class="pagination justify-content-center center" 
+					th:object="${pm}" 
+					th:if="${pm.endPage != 0}">
+				    <li class="page-item" th:if="*{prev}">
+				    	<a class="page-link" th:href="@{/info/inquiry/{type}(type=${type}, page=*{startPage-1})}">이전</a>
+				    </li>
+				    <li class="page-item" 
+				    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
+				    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
+				    	<a class="page-link" th:href="@{/info/inquiry/{type}(type=${type}, page=${i})}" th:text="${i}"></a>
+				    </li>
+				    <li class="page-item" th:if="*{next}">
+				    	<a class="page-link" th:href="@{/info/inquiry/{type}(type=${type}, page=*{endPage+1})}">다음</a>
+				    </li>
+				</ul>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

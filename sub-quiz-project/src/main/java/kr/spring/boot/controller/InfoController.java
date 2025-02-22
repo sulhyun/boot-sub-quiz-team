@@ -25,7 +25,6 @@ import kr.spring.boot.pagination.PageMaker;
 import kr.spring.boot.service.InfoService;
 import kr.spring.boot.service.MemberService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @AllArgsConstructor
