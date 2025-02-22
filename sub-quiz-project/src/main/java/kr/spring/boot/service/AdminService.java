@@ -73,4 +73,6 @@ public interface AdminService {
 
 	boolean updateInquiry(InquiryVO inquiry);
 
+	boolean delInquiry(InquiryVO inquiry);
+
 }

@@ -305,7 +305,6 @@ public class AdminServiceImp implements AdminService {
 			e.printStackTrace();
 			return false;
 		}
-		
 	}
 
 	@Override
@@ -344,6 +343,19 @@ public class AdminServiceImp implements AdminService {
 			return false;
 		}
 		return adminDao.updateInquiry(inquiry);
+	}
+
+	@Override
+	public boolean delInquiry(InquiryVO inquiry) {
+		try {
+			if(inquiry == null) {
+				return false;
+			}
+			return adminDao.deleteInquiry(inquiry);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }

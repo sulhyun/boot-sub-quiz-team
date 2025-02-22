@@ -212,7 +212,7 @@
 		</choose>
     </select>
     
-    <select id="selectMemberById">
+    <select id="selectMemberById" resultType="MemberVO">
     	SELECT *
     	FROM
     		MEMBER
@@ -229,7 +229,7 @@
     	(#{point.pi_no}, #{point.pi_content}, NOW(), #{point.mb_id})
     </insert>
     
-    <select id="selectPoint">
+    <select id="selectPoint" resultType="PointVO">
     	SELECT * FROM POINT WHERE PI_NUM = #{pi_num}
     </select>
     
@@ -298,4 +298,8 @@
     <update id="updateInquiry">
     	UPDATE INQUIRY SET IQ_COMMENT = #{inquiry.iq_comment} WHERE IQ_NUM = #{inquiry.iq_num}
     </update>
+    
+    <delete id="deleteInquiry">
+    	DELETE FROM INQUIRY WHERE IQ_NUM = #{inquiry.iq_num}
+    </delete>
 </mapper>

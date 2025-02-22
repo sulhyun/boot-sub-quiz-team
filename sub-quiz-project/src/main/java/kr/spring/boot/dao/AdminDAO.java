@@ -82,4 +82,6 @@ public interface AdminDAO {
 
 	boolean updateInquiry(@Param("inquiry")InquiryVO inquiry);
 
+	boolean deleteInquiry(@Param("inquiry")InquiryVO inquiry);
+
 }
