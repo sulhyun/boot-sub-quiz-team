@@ -84,7 +84,7 @@ public class InfoController {
 	
 	@GetMapping("/inquiry/{type}")
 	public String inquiry(Model model, Principal principal, Criteria cri, @PathVariable String type) {
-		cri.setPerPageNum(9);
+		cri.setPerPageNum(10);
 		PageMaker pm = infoService.getPageMakerByInquiry(cri, principal.getName());
 		List<PointVO> list = infoService.getInquiryList(cri, principal.getName());
 		model.addAttribute("pm", pm);

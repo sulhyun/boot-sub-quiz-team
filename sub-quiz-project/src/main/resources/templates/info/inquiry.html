@@ -13,7 +13,10 @@
 		<div th:replace="~{layout/infoheader.html}"></div>
 		<div class="inquiry-wrapper">
 			<div class="header-box">
-				<h4>문의 내역</h4>
+				<div class="d-flex">
+					<h4 class="mr-auto">문의 내역</h4>
+					<div class="mt-1"><a href="#">문의하기</a></div>					
+				</div>
 			</div>
 			<div class="d-flex">
 				<div class="btn-list mr-auto">
@@ -47,7 +50,9 @@
 						<tr th:each="list:${list}" 
 							th:if="${(type == 'entire' and list.iq_comment != null and !#lists.isEmpty(list.iq_comment))or (type == 'mine')}">
 						    <td class="td-item td-color" th:text="${#dates.format(list.iq_datetime1,'yyyy-MM-dd')}"></td>
-						    <td class="truncate td-color" data-toggle="tooltip" th:title="${list.iq_title}" th:text="${list.iq_title}"></td>
+							<td>
+							    <a href="#" class="text-dark truncate td-color display-block" data-toggle="tooltip" th:title="${list.iq_title}" th:text="${list.iq_title}" ></a>
+							</td>
 						   	<td class="td-item td-color-gray text-center" 
 					          	th:if="${type == 'mine'}" 
 					          	th:text="${(list.iq_comment != null and !#lists.isEmpty(list.iq_comment)) ? '해결' : '검토중'}">

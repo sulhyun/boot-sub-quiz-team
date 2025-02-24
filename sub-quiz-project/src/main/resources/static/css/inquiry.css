@@ -1,5 +1,5 @@
 .inquiry-wrapper{width: 900px;margin: 40px auto;}
-.inquiry-box{height: 450px;}
+.inquiry-box{height: 490px;}
 li{cursor:pointer; color:#0c5460 !important;}
 .list-group-item{border:none !important;padding: .3rem 0.25rem !important;}
 .btn{width: 100% !important; text-align: left; border-radius: 20px;}
@@ -12,4 +12,5 @@ li{cursor:pointer; color:#0c5460 !important;}
 .no-title{margin-top: 2%; font-weight: bold; color: #888; font-size: 0.9em;}
 .inquiry-box{padding: 10px;border: 1px solid #eee;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);border-radius: 8px;margin-top: 10px;margin-bottom: 13px;}
 .error-pw{padding:7px;text-align: center;color:red;}
-.truncate{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 150px;}
+.truncate{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 590px;}
+.display-block{display: block;}
