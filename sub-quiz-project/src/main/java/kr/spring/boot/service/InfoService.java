@@ -15,8 +15,12 @@ public interface InfoService {
 	
 	boolean cancelMember(String mb_id, Map<String, String> params);
 
-	PageMaker getPageMaker(Criteria cri, String mb_id);
+	PageMaker getPageMakerByPoint(Criteria cri, String mb_id);
 
 	List<PointVO> getPointList(Criteria cri, String mb_id);
+
+	PageMaker getPageMakerByInquiry(Criteria cri, String mb_id);
+
+	List<PointVO> getInquiryList(Criteria cri, String mb_id);
 
 }

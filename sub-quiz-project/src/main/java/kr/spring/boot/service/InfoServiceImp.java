@@ -90,8 +90,8 @@ public class InfoServiceImp implements InfoService {
 	}
 	
 	@Override
-	public PageMaker getPageMaker(Criteria cri, String mb_id) {
-		int count = infoDao.getCount(cri, mb_id);
+	public PageMaker getPageMakerByPoint(Criteria cri, String mb_id) {
+		int count = infoDao.getCountByPoint(cri, mb_id);
 		return new PageMaker(5, cri, count);
 	}
 
@@ -101,6 +101,20 @@ public class InfoServiceImp implements InfoService {
 			return null;
 		}
 		return infoDao.selectPointList(cri, mb_id);
+	}
+
+	@Override
+	public PageMaker getPageMakerByInquiry(Criteria cri, String mb_id) {
+		int count = infoDao.getCountByInquiry(cri, mb_id);
+		return new PageMaker(5, cri, count);
+	}
+
+	@Override
+	public List<PointVO> getInquiryList(Criteria cri, String mb_id) {
+		if(mb_id == null) {
+			return null;
+		}
+		return infoDao.selectInquiryList(cri, mb_id);
 	}
 
 }

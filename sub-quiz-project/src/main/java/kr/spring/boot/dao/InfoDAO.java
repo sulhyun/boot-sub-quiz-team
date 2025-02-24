@@ -16,8 +16,12 @@ public interface InfoDAO {
 	
 	boolean cancelMember(@Param("mb_id")String mb_id, @Param("params")Map<String, String> params);
 
-	int getCount(@Param("cri")Criteria cri, @Param("mb_id")String mb_id);
+	int getCountByPoint(@Param("cri")Criteria cri, @Param("mb_id")String mb_id);
 
 	List<PointVO> selectPointList(@Param("cri")Criteria cri, @Param("mb_id")String mb_id);
+
+	int getCountByInquiry(@Param("cri")Criteria cri, @Param("mb_id")String mb_id);
+
+	List<PointVO> selectInquiryList(@Param("cri")Criteria cri, @Param("mb_id")String mb_id);
 
 }

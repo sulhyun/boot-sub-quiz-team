@@ -74,7 +74,7 @@ public class InfoController {
 	public String point(Model model, Principal principal, Criteria cri, @PathVariable String type) {
 		cri.setPerPageNum(5);
 		MemberVO user = memberService.selectMember(principal.getName());
-		PageMaker pm = infoService.getPageMaker(cri, principal.getName());
+		PageMaker pm = infoService.getPageMakerByPoint(cri, principal.getName());
 		List<PointVO> list = infoService.getPointList(cri, principal.getName());
 		model.addAttribute("user", user);
 		model.addAttribute("pm", pm);
@@ -83,7 +83,12 @@ public class InfoController {
 	} // 포인트 내역 화면(페이지네이션)
 	
 	@GetMapping("/inquiry/{type}")
-	public String inquiry() {
+	public String inquiry(Model model, Principal principal, Criteria cri, @PathVariable String type) {
+		cri.setPerPageNum(9);
+		PageMaker pm = infoService.getPageMakerByInquiry(cri, principal.getName());
+		List<PointVO> list = infoService.getInquiryList(cri, principal.getName());
+		model.addAttribute("pm", pm);
+		model.addAttribute("list", list);
 		return "info/inquiry";
-	}
+	} // 문의 내역 화면(페이지네이션)
 }

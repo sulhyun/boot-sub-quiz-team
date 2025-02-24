@@ -43,7 +43,7 @@
 		WHERE 
 			MB_ID = #{mb_id}
 	</update>
-	<select id="getCount" resultType="int">
+	<select id="getCountByPoint" resultType="int">
 		SELECT COUNT(*)
 		FROM
 			POINT
@@ -63,6 +63,27 @@
 				AND PI_NO > 0
 			</if>
 		ORDER BY PI_NUM DESC
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	<select id="getCountByInquiry" resultType="int">
+		SELECT COUNT(*)
+		FROM
+			INQUIRY
+		<if test="cri.type == 'mine'">
+		WHERE
+			MB_ID = #{mb_id}
+		</if>
+	</select>
+	<select id="selectInquiryList" resultType="InquiryVO">
+		SELECT *
+		FROM
+			INQUIRY
+		WHERE
+			IQ_TITLE LIKE CONCAT('%', #{cri.search}, '%')
+			<if test="cri.type == 'mine'">
+				AND MB_ID = #{mb_id}
+			</if>
+		ORDER BY IQ_NUM DESC
 		LIMIT #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 </mapper>
