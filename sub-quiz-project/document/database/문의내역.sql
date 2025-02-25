@@ -5,7 +5,7 @@ CREATE TABLE quizgame.inquiry (
 	iq_title VARCHAR(255) NOT NULL,
 	iq_content LONGTEXT NOT NULL,
 	iq_datetime1 DATETIME NOT NULL,
-	iq_comment LONGTEXT NOT NULL,
-	iq_datetime2 DATETIME NOT NULL,
+	iq_comment LONGTEXT NULL,
+	iq_datetime2 DATETIME NULL,
 	iq_view INT DEFAULT 1
 );

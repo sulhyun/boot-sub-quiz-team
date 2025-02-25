@@ -86,4 +86,8 @@
 		ORDER BY IQ_NUM DESC
 		LIMIT #{cri.pageStart}, #{cri.perPageNum}
 	</select>
+	<insert id="insertInquiry">
+		INSERT INTO INQUIRY(IQ_TITLE, IQ_CONTENT, MB_ID, IQ_DATETIME1)VALUE
+		(#{inquiry.iq_title}, #{inquiry.iq_content}, #{inquiry.mb_id}, NOW());
+	</insert>
 </mapper>

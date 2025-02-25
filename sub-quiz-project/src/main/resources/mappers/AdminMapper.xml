@@ -266,7 +266,7 @@
     	WHERE IQ_NUM = #{iq_num}
     </select>
     <update id="updateInquiry">
-    	UPDATE INQUIRY SET IQ_COMMENT = #{inquiry.iq_comment} WHERE IQ_NUM = #{inquiry.iq_num}
+    	UPDATE INQUIRY SET IQ_COMMENT = #{inquiry.iq_comment}, IQ_DATETIME2 = NOW() WHERE IQ_NUM = #{inquiry.iq_num}
     </update>
     <delete id="deleteInquiry">
     	DELETE FROM INQUIRY WHERE IQ_NUM = #{inquiry.iq_num}

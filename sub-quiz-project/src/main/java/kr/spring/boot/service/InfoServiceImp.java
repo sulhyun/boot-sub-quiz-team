@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.InfoDAO;
 import kr.spring.boot.dao.MemberDAO;
+import kr.spring.boot.model.vo.InquiryVO;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.pagination.Criteria;
@@ -115,6 +116,14 @@ public class InfoServiceImp implements InfoService {
 			return null;
 		}
 		return infoDao.selectInquiryList(cri, mb_id);
+	}
+
+	@Override
+	public boolean addInquiry(InquiryVO inquiry) {
+		if(inquiry == null) {
+			return false;
+		}
+		return infoDao.insertInquiry(inquiry);
 	}
 
 }

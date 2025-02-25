@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.spring.boot.model.util.CustomUtil;
+import kr.spring.boot.model.vo.InquiryVO;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.pagination.Criteria;
@@ -66,7 +67,7 @@ public class InfoController {
 	        logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
 		}
 		model.addAttribute("msg", res ? "탈퇴 성공!!" : "탈퇴 실패!!");
-		model.addAttribute("url", res ? "/member/login" : "/user/profile");
+		model.addAttribute("url", res ? "/member/login" : "/info/profile");
 		return "util/msg";
 	} // 회원 탈퇴
 	
@@ -91,4 +92,19 @@ public class InfoController {
 		model.addAttribute("list", list);
 		return "info/inquiry";
 	} // 문의 내역 화면(페이지네이션)
+	
+	@GetMapping("/inquiry/insert")
+	public String inquiryInsert() {
+		return "info/inquiry/insert";
+	} // 문의 등록 화면
+	
+	@PostMapping("/inquiry/insert")
+	public String inquiryInsertPost(Model model, Principal principal, InquiryVO inquiry) {
+		inquiry.setMb_id(principal.getName());
+		System.out.println(inquiry);
+		boolean res = infoService.addInquiry(inquiry);
+		model.addAttribute("msg", res ? "" : "");
+		model.addAttribute("url", "/info/inquiry/mine");
+		return "util/msg";
+	} // 문의 등록
 }

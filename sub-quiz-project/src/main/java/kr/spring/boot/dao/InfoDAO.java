@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.spring.boot.model.vo.InquiryVO;
 import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.pagination.Criteria;
 
@@ -23,5 +24,7 @@ public interface InfoDAO {
 	int getCountByInquiry(@Param("cri")Criteria cri, @Param("mb_id")String mb_id);
 
 	List<PointVO> selectInquiryList(@Param("cri")Criteria cri, @Param("mb_id")String mb_id);
+
+	boolean insertInquiry(@Param("inquiry")InquiryVO inquiry);
 
 }
