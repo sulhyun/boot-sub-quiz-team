@@ -101,10 +101,16 @@ public class InfoController {
 	@PostMapping("/inquiry/insert")
 	public String inquiryInsertPost(Model model, Principal principal, InquiryVO inquiry) {
 		inquiry.setMb_id(principal.getName());
-		System.out.println(inquiry);
 		boolean res = infoService.addInquiry(inquiry);
-		model.addAttribute("msg", res ? "" : "");
+		model.addAttribute("msg", res ? "문의 등록에 성공하셨습니다." : "문의 등록에 실패하셨습니다.");
 		model.addAttribute("url", "/info/inquiry/mine");
 		return "util/msg";
 	} // 문의 등록
+	
+	@GetMapping("/inquiry/detail/{iq_num}")
+	public String inquirtDeail(Model model, @PathVariable int iq_num) {
+		InquiryVO inquiry = infoService.getInquiry(iq_num);
+		model.addAttribute("inquiry", inquiry);
+		return "info/inquiry/detail";
+	} // 문의 상세
 }

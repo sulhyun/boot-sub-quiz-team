@@ -26,4 +26,6 @@ public interface InfoService {
 
 	boolean addInquiry(InquiryVO inquiry);
 
+	InquiryVO getInquiry(int iq_num);
+
 }

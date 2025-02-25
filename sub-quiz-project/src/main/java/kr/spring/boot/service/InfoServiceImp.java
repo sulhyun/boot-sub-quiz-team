@@ -126,4 +126,9 @@ public class InfoServiceImp implements InfoService {
 		return infoDao.insertInquiry(inquiry);
 	}
 
+	@Override
+	public InquiryVO getInquiry(int iq_num) {
+		return infoDao.selectInquiry(iq_num);
+	}
+
 }

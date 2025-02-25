@@ -51,7 +51,7 @@
 							th:if="${(type == 'entire' and list.iq_comment != null and !#lists.isEmpty(list.iq_comment))or (type == 'mine')}">
 						    <td class="td-item td-color" th:text="${#dates.format(list.iq_datetime1,'yyyy-MM-dd')}"></td>
 							<td>
-							    <a href="#" class="text-dark truncate td-color display-block" data-toggle="tooltip" th:title="${list.iq_title}" th:text="${list.iq_title}" ></a>
+							    <a th:href="@{/info/inquiry/detail/{iq_num}(iq_num=${list.iq_num})}" class="text-dark truncate td-color display-block" data-toggle="tooltip" th:title="${list.iq_title}" th:text="${list.iq_title}" ></a>
 							</td>
 						   	<td class="td-item td-color-gray text-center" 
 					          	th:if="${type == 'mine'}" 

@@ -90,4 +90,10 @@
 		INSERT INTO INQUIRY(IQ_TITLE, IQ_CONTENT, MB_ID, IQ_DATETIME1)VALUE
 		(#{inquiry.iq_title}, #{inquiry.iq_content}, #{inquiry.mb_id}, NOW());
 	</insert>
+	<select id="selectInquiry" resultType="InquiryVO">
+		SELECT *
+		FROM
+			INQUIRY
+		WHERE IQ_NUM = #{iq_num}
+	</select>
 </mapper>

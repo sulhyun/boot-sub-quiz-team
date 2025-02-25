@@ -27,4 +27,6 @@ public interface InfoDAO {
 
 	boolean insertInquiry(@Param("inquiry")InquiryVO inquiry);
 
+	InquiryVO selectInquiry(@Param("iq_num")int iq_num);
+
 }
