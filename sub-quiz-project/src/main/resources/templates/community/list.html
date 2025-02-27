@@ -9,17 +9,19 @@
 <link rel="stylesheet" href="/css/communityList.css">
 </head>
 <body>
-    <div layout:fragment="content" class="community-select-container">
-        <div class="community-header">
-            <h1 class="community-title">커뮤니티 목록</h1>
-        </div>
-        <div class="community-list">
-            <div class="community-item" th:each="list : ${list}">
-                <div class="community-name">
-	                <a class="community-link" th:text="${list.co_name}" th:href="@{/community/post/list/{co_num}(co_num=${list.co_num})}"></a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<main layout:fragment="content">
+	    <div class="community-select-container">
+	        <div class="community-header">
+	            <h1 class="community-title">커뮤니티 목록</h1>
+	        </div>
+	        <div class="community-list">
+	            <div class="community-item" th:each="list : ${list}">
+	                <div class="community-name">
+		                <a class="community-link" th:text="${list.co_name}" th:href="@{/community/post/list/{co_num}(co_num=${list.co_num})}"></a>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</main>
 </body>
 </html>

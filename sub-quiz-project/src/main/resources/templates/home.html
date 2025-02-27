@@ -2,14 +2,14 @@
 <html 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/layout.html}" layout:fragment="content">
+	layout:decorate="~{layout/layout.html}">
 <head>
 <meta charset="UTF-8">
 <title>메인</title>
 <link rel='stylesheet' href="/css/home.css">
 </head>
 <body>
-	<main>
+	<main layout:fragment="content">
 		<div id="container">
 			<div id="m_intro"></div>
 			<div id="m_community">
