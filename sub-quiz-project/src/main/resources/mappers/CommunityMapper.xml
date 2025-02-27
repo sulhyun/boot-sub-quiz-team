@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.spring.boot.dao.CommuDAO">
-	<select id="commuSelect" resultType="CommunityVO">
+<mapper namespace="kr.spring.boot.dao.CommunityDAO">
+	<select id="selectCommnunityList" resultType="CommunityVO">
 		SELECT * FROM COMMUNITY
 	</select>
-	<select id="postSelect" resultType="PostVO">
+	<select id="selectPostList" resultType="PostVO">
 		SELECT * FROM POST WHERE CO_NUM = #{co_num}
 	</select>
 </mapper>

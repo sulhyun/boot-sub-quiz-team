@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}" >
+<head>
+<meta charset="UTF-8">
+<title>퀴즈Q : 커뮤니티</title>
+<link rel="stylesheet" href="/css/postList.css">
+</head>
+<body>
+	<main layout:fragment="content" >
+	    <div class="board-container">
+	        <div class="co-header">
+	            <h1 class="board-title">커뮤니티</h1>
+	        </div>
+	        <div>
+				<nav class="board-nav">
+					<a href="#">인기글</a>
+					<a href="#">최신글</a>
+					<a href="#">게시글 등록</a>
+					<a href="#">커뮤니티 목록</a>
+	            </nav>
+	            <table class="board-table">
+                	<thead>
+                    	<tr>
+                        	<th>번호</th>
+	                        <th>커뮤니티</th>
+	                        <th>작성자</th>
+	                        <th>날짜</th>
+	                        <th>조회수</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+						<tr th:each="list : ${list}">
+							<td th:text="${list.co_num}"></td>
+							<td th:text="${list.co_name}"></td>
+							<td th:text="${list.mb_id}"></td>
+							<td th:text="${list.po_date}"></td>
+							<td th:text="${list.po_view}"></td>
+						</tr>
+	                </tbody>
+	            </table>
+	        </div>
+	        <div class="co-footer">
+	            &copy; 커뮤니티. All rights reserved.
+	        </div>
+	    </div>
+	</main>
+</body>
+</html>

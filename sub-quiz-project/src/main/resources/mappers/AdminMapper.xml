@@ -7,7 +7,6 @@
     		QUIZ_TYPE
     	ORDER BY QT_NUM DESC
     </select>
-    
     <insert id="insertQuizType">
     	INSERT INTO QUIZ_TYPE(QT_NAME) VALUES 
     	(#{qt_name})
@@ -33,7 +32,6 @@
    		WHERE 
    			QT_NUM = #{qt_num}
     </select>
-    
     <select id="selectQuizListByChoice" resultType="QuizChoiceVO">
     	SELECT *
     	FROM
@@ -43,7 +41,6 @@
     	ORDER BY QU_NUM DESC
     	LIMIT #{cri.pageStart}, #{cri.perPageNum}
     </select>
-    
     <select id="selectQuizListBySubjective" resultType="QuizSubjectiveVO">
     	SELECT *
     	FROM
@@ -53,7 +50,6 @@
     	ORDER BY QS_NUM DESC
     	LIMIT #{cri.pageStart}, #{cri.perPageNum}
     </select>
-    
     <select id="selectQuizTypeName" resultType="String">
     	SELECT QT_NAME
     	FROM
@@ -61,33 +57,26 @@
     	WHERE
     		QT_NUM = #{qt_num}
     </select>
-    
     <insert id="insertQuizChoice">
     	INSERT INTO QUIZ_CHOICE(QU_CONTENT, QU_ANSWER1, QU_ANSWER2, QU_ANSWER3, QU_ANSWER4, QU_CORRECT_ANSWER, QT_NUM) VALUES
     	(#{quiz.qu_content}, #{quiz.qu_answer1}, #{quiz.qu_answer2}, #{quiz.qu_answer3}, #{quiz.qu_answer4}, #{quiz.qu_correct_answer}, #{quiz.qt_num})
     </insert>
-    
     <insert id="insertQuizSubjective">
     	INSERT INTO QUIZ_SUBJECTIVE(QS_CONTENT, QS_CORRECT_ANSWER, QT_NUM) VALUES
     	(#{quiz.qs_content}, #{quiz.qs_correct_answer}, #{quiz.qt_num})
     </insert>
-    
     <delete id="deleteQuizChoice">
     	DELETE FROM QUIZ_CHOICE WHERE QU_NUM = #{quiz.qu_num}
     </delete>
-    
     <delete id="deleteQuizSubjective">
     	DELETE FROM QUIZ_SUBJECTIVE WHERE QS_NUM = #{quiz.qs_num}
     </delete>
-    
     <select id="selectQuizChoice" resultType="QuizChoiceVO">
     	SELECT * FROM QUIZ_CHOICE WHERE QU_NUM = #{qu_num}
     </select>
-    
     <select id="selectQuizSubjective" resultType="QuizSubjectiveVO">
     	SELECT * FROM QUIZ_SUBJECTIVE WHERE QS_NUM = #{qs_num}
     </select>
-    
     <update id="updateQuizChoice">
     	UPDATE QUIZ_CHOICE 
     	SET
@@ -100,7 +89,6 @@
     	WHERE
     		QU_NUM = ${quiz.qu_num}
     </update>
-    
     <update id="updateQuizSubjective">
     	UPDATE QUIZ_SUBJECTIVE
     	SET
@@ -109,7 +97,6 @@
     	WHERE
     		QS_NUM = #{quiz.qs_num}
     </update>
-    
     <select id="selectMemberList" resultType="MemberVO">
     	SELECT * 
 		FROM 
@@ -132,7 +119,6 @@
 		ORDER BY MB_NUM DESC
 		LIMIT #{cri.pageStart}, #{cri.perPageNum}
     </select>
-    
     <select id="selectMemberCount" resultType="int">
     	SELECT COUNT(*) 
 		FROM 
@@ -153,14 +139,12 @@
 			</otherwise>
 		</choose>
     </select>
-    
     <select id="selectMember" resultType="MemberVO">
     	SELECT *
     	FROM
     		MEMBER
     	WHERE MB_NUM = #{mb_num}
     </select>
-    
     <update id="deleteMember">
     	UPDATE MEMBER
     	SET
@@ -173,7 +157,6 @@
    		WHERE
    			MB_NUM = #{user.mb_num}
     </update>
-    
     <select id="selectPointList" resultType="PointVO">
     	SELECT * 
 		FROM 
@@ -193,7 +176,6 @@
 		ORDER BY PI_NUM DESC
 		LIMIT #{cri.pageStart}, #{cri.perPageNum}
     </select>
-    
     <select id="selectPointCount" resultType="int">
     	SELECT COUNT(*) 
 		FROM 
@@ -211,40 +193,32 @@
 			</otherwise>
 		</choose>
     </select>
-    
-    <select id="selectMemberById">
+    <select id="selectMemberById" resultType="MemberVO">
     	SELECT *
     	FROM
     		MEMBER
     	WHERE
     		MB_ID = #{mb_id}
     </select>
-    
     <update id="updateMemberPoint">
     	UPDATE MEMBER SET MB_POINT = MB_POINT + #{point.pi_no} WHERE MB_ID = #{point.mb_id} AND MB_POINT + #{point.pi_no} > 0
     </update>
-    
     <insert id="insertPoint">
     	INSERT INTO POINT(PI_NO, PI_CONTENT, PI_DATETIME, MB_ID) VALUES
     	(#{point.pi_no}, #{point.pi_content}, NOW(), #{point.mb_id})
     </insert>
-    
-    <select id="selectPoint">
+    <select id="selectPoint" resultType="PointVO">
     	SELECT * FROM POINT WHERE PI_NUM = #{pi_num}
     </select>
-    
     <update id="updatePoint">
     	UPDATE POINT SET PI_CONTENT = #{point.pi_content} WHERE PI_NUM = #{point.pi_num}
     </update>
-    
     <update id="deleteMemberPoint">
     	UPDATE MEMBER SET MB_POINT = MB_POINT - #{point.pi_no} WHERE MB_ID = #{point.mb_id} AND MB_POINT >= #{point.pi_no} 
     </update>
-    
     <delete id="deletPoint">
     	DELETE FROM POINT WHERE PI_NUM = #{point.pi_num}
     </delete>
-    
     <select id="selectInquiryList" resultType="InquiryVO">
     	SELECT * 
 		FROM 
@@ -264,7 +238,6 @@
 		ORDER BY IQ_NUM DESC
 		LIMIT #{cri.pageStart}, #{cri.perPageNum}
     </select>
-    
     <select id="selectInquiryCount" resultType="int">
     	SELECT COUNT(*) 
 		FROM 
@@ -282,20 +255,20 @@
 			</otherwise>
 		</choose>
     </select>
-    
     <insert id="insertInquiry">
     	INSERT INTO INQUIRY(MB_ID, IQ_TITLE, IQ_CONTENT, IQ_DATETIME1, IQ_COMMENT, IQ_DATETIME2) VALUE
     	(#{inquiry.mb_id}, #{inquiry.iq_title}, #{inquiry.iq_content}, NOW(), #{inquiry.iq_comment}, NOW())
     </insert>
-    
     <select id="selectInquiry" resultType="InquiryVO">
     	SELECT *
     	FROM
     		INQUIRY
     	WHERE IQ_NUM = #{iq_num}
     </select>
-    
     <update id="updateInquiry">
-    	UPDATE INQUIRY SET IQ_COMMENT = #{inquiry.iq_comment} WHERE IQ_NUM = #{inquiry.iq_num}
+    	UPDATE INQUIRY SET IQ_COMMENT = #{inquiry.iq_comment}, IQ_DATETIME2 = NOW() WHERE IQ_NUM = #{inquiry.iq_num}
     </update>
+    <delete id="deleteInquiry">
+    	DELETE FROM INQUIRY WHERE IQ_NUM = #{inquiry.iq_num}
+    </delete>
 </mapper>

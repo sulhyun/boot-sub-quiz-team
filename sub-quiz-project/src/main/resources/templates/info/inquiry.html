@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈Q : 문의</title>
+<link rel="stylesheet" type="text/css" href="/css/inquiry.css">
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:replace="~{layout/infoheader.html}"></div>
+		<div class="inquiry-wrapper">
+			<div class="header-box">
+				<div class="d-flex">
+					<h4 class="mr-auto">문의 내역</h4>
+					<div class="mt-1"><a href="/info/inquiry/insert">문의하기</a></div>					
+				</div>
+			</div>
+			<div class="d-flex">
+				<div class="btn-list mr-auto">
+					<ul class="list-group list-group-horizontal">
+						<li class="list-group-item list-group-item-light">
+							<a th:href="@{/info/inquiry/entire}">
+								<button type="button" th:class="${type == 'entire'} ? 'btn btn-info on':'btn btn-light'">전체</button>
+							</a>
+						</li>
+						<li class="list-group-item list-group-item-light">
+							<a th:href="@{/info/inquiry/mine}">
+								<button type="button" th:class="${type == 'mine'} ? 'btn btn-info on':'btn btn-light'">내 문의내역</button>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="mt-1">
+					<form class="form-container" th:action="@{/info/inquiry/{type}(type=${type})}" method="get">
+						<div class="input-group">
+							<input type="text" class="form-control col-sm-10" placeholder="검색어" name="search" th:value="${pm.cri.search}">
+							<div class="input-group-append">
+								<button type="submit" class="btn btn-outline-info col-12 del-radius">검색</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="inquiry-box">
+				<table class="table table-borderless table-hover">
+					<tbody>
+						<tr th:each="list:${list}" 
+							th:if="${(type == 'entire' and list.iq_comment != null and !#lists.isEmpty(list.iq_comment))or (type == 'mine')}">
+						    <td class="td-item td-color" th:text="${#dates.format(list.iq_datetime1,'yyyy-MM-dd')}"></td>
+							<td>
+							    <a th:href="@{/info/inquiry/detail/{iq_num}(iq_num=${list.iq_num})}" class="text-dark truncate td-color display-block" data-toggle="tooltip" th:title="${list.iq_title}" th:text="${list.iq_title}" ></a>
+							</td>
+						   	<td class="td-item td-color-gray text-center" 
+					          	th:if="${type == 'mine'}" 
+					          	th:text="${(list.iq_comment != null and !#lists.isEmpty(list.iq_comment)) ? '해결' : '검토중'}">
+     						</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="none-list" th:if="${list == null or #lists.isEmpty(list)}">
+					<div class="none-content">
+						<p class="no-title">내역이 없어요</p>
+					</div>
+				</div>
+			</div>
+			<div class="page_div">
+				<ul class="pagination justify-content-center center" 
+					th:object="${pm}" 
+					th:if="${pm.endPage != 0}">
+				    <li class="page-item" th:if="*{prev}">
+				    	<a class="page-link" th:href="@{/info/inquiry/{type}(type=${type}, page=*{startPage-1}, search=*{cri.search})}">이전</a>
+				    </li>
+				    <li class="page-item" 
+				    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
+				    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
+				    	<a class="page-link" th:href="@{/info/inquiry/{type}(type=${type}, page=${i}, search=*{cri.search})}" th:text="${i}"></a>
+				    </li>
+				    <li class="page-item" th:if="*{next}">
+				    	<a class="page-link" th:href="@{/info/inquiry/{type}(type=${type}, page=*{endPage+1}, search=*{cri.search})}">다음</a>
+				    </li>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('[data-toggle="tooltip"]').tooltip();
+			});
+		</script>
+	</main>
+</body>
+</html>

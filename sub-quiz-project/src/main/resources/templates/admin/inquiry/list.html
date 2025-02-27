@@ -13,7 +13,7 @@
 		<div class="flash-message" id="flash-message" th:if="${msg}" th:classappend="${msg.contains('성공') ? '' : 'error'}" >
 	    	<span th:text="${msg}"></span>
 		</div>
-		<div class="member-wrapper">
+		<div class="inquiry-wrapper">
 	    	<h1 class="heading">문의 목록</h1>
     		<div class="d-flex">
 		    	<form class="form-container mr-auto" action="/admin/inquiry/list" method="get">
@@ -35,7 +35,7 @@
 		    		</a>
 				</div>
     		</div>
-			<div class="member-box">
+			<div class="inquiry-box">
 				<table class="table table-hover">
 					<thead>
 						<tr>

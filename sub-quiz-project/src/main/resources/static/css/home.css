@@ -1,27 +1,6 @@
-#m_intro {
-	background-color: rgb(245, 144, 75);
-	width: 63%;
-	height: 837px;
-	float: left;
-}
-
-#m_community {
-	background-color: rgb(2, 215, 197);
-	width: 37%;
-	height: 279px;
-	float: right;
-}
-
-#m_quiz {
-	background-color: rgb(255, 201, 27);
-	width: 37%;
-	height: 279px;
-	float: right;
-}
-
-#m_event {
-	background-color: rgb(172, 142, 248);
-	width: 37%;
-	height: 279px;
-	float: right;
-}
+#m_intro {background-color: rgb(245, 144, 75);width: 63%;height: 837px;float: left;}
+#m_community {background-color: rgb(2, 215, 197);width: 37%;height: 279px;float: right;}
+#m_quiz {background-color: rgb(255, 201, 27);width: 37%;height: 279px;float: right;}
+#m_event {background-color: rgb(172, 142, 248);width: 37%;height: 279px;float: right;}
+.custom-button {display: flex;justify-content: center;align-items: center;width: 100%;height: 100%; font-size: 24px;font-weight: bold;text-decoration: none;color: white;transition: font-size 0.2s ease;}
+.custom-button:hover {font-size: 29px;color: white;}

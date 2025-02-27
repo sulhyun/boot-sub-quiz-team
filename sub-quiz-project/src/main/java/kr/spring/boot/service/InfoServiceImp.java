@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.spring.boot.dao.InfoDAO;
 import kr.spring.boot.dao.MemberDAO;
+import kr.spring.boot.model.vo.InquiryVO;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.pagination.Criteria;
@@ -90,8 +91,8 @@ public class InfoServiceImp implements InfoService {
 	}
 	
 	@Override
-	public PageMaker getPageMaker(Criteria cri, String mb_id) {
-		int count = infoDao.getCount(cri, mb_id);
+	public PageMaker getPageMakerByPoint(Criteria cri, String mb_id) {
+		int count = infoDao.getCountByPoint(cri, mb_id);
 		return new PageMaker(5, cri, count);
 	}
 
@@ -101,6 +102,33 @@ public class InfoServiceImp implements InfoService {
 			return null;
 		}
 		return infoDao.selectPointList(cri, mb_id);
+	}
+
+	@Override
+	public PageMaker getPageMakerByInquiry(Criteria cri, String mb_id) {
+		int count = infoDao.getCountByInquiry(cri, mb_id);
+		return new PageMaker(5, cri, count);
+	}
+
+	@Override
+	public List<PointVO> getInquiryList(Criteria cri, String mb_id) {
+		if(mb_id == null) {
+			return null;
+		}
+		return infoDao.selectInquiryList(cri, mb_id);
+	}
+
+	@Override
+	public boolean addInquiry(InquiryVO inquiry) {
+		if(inquiry == null) {
+			return false;
+		}
+		return infoDao.insertInquiry(inquiry);
+	}
+
+	@Override
+	public InquiryVO getInquiry(int iq_num) {
+		return infoDao.selectInquiry(iq_num);
 	}
 
 }

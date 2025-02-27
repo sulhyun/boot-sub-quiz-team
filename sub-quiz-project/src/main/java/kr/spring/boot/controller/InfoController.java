@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.spring.boot.model.util.CustomUtil;
+import kr.spring.boot.model.vo.InquiryVO;
 import kr.spring.boot.model.vo.MemberVO;
 import kr.spring.boot.model.vo.PointVO;
 import kr.spring.boot.pagination.Criteria;
@@ -25,7 +26,6 @@ import kr.spring.boot.pagination.PageMaker;
 import kr.spring.boot.service.InfoService;
 import kr.spring.boot.service.MemberService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @AllArgsConstructor
@@ -67,7 +67,7 @@ public class InfoController {
 	        logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
 		}
 		model.addAttribute("msg", res ? "탈퇴 성공!!" : "탈퇴 실패!!");
-		model.addAttribute("url", res ? "/member/login" : "/user/profile");
+		model.addAttribute("url", res ? "/member/login" : "/info/profile");
 		return "util/msg";
 	} // 회원 탈퇴
 	
@@ -75,11 +75,42 @@ public class InfoController {
 	public String point(Model model, Principal principal, Criteria cri, @PathVariable String type) {
 		cri.setPerPageNum(5);
 		MemberVO user = memberService.selectMember(principal.getName());
-		PageMaker pm = infoService.getPageMaker(cri, principal.getName());
+		PageMaker pm = infoService.getPageMakerByPoint(cri, principal.getName());
 		List<PointVO> list = infoService.getPointList(cri, principal.getName());
 		model.addAttribute("user", user);
 		model.addAttribute("pm", pm);
 		model.addAttribute("list", list);
 		return "info/point";
 	} // 포인트 내역 화면(페이지네이션)
+	
+	@GetMapping("/inquiry/{type}")
+	public String inquiry(Model model, Principal principal, Criteria cri, @PathVariable String type) {
+		cri.setPerPageNum(10);
+		PageMaker pm = infoService.getPageMakerByInquiry(cri, principal.getName());
+		List<PointVO> list = infoService.getInquiryList(cri, principal.getName());
+		model.addAttribute("pm", pm);
+		model.addAttribute("list", list);
+		return "info/inquiry";
+	} // 문의 내역 화면(페이지네이션)
+	
+	@GetMapping("/inquiry/insert")
+	public String inquiryInsert() {
+		return "info/inquiry/insert";
+	} // 문의 등록 화면
+	
+	@PostMapping("/inquiry/insert")
+	public String inquiryInsertPost(Model model, Principal principal, InquiryVO inquiry) {
+		inquiry.setMb_id(principal.getName());
+		boolean res = infoService.addInquiry(inquiry);
+		model.addAttribute("msg", res ? "문의 등록에 성공하셨습니다." : "문의 등록에 실패하셨습니다.");
+		model.addAttribute("url", "/info/inquiry/mine");
+		return "util/msg";
+	} // 문의 등록
+	
+	@GetMapping("/inquiry/detail/{iq_num}")
+	public String inquirtDeail(Model model, @PathVariable int iq_num) {
+		InquiryVO inquiry = infoService.getInquiry(iq_num);
+		model.addAttribute("inquiry", inquiry);
+		return "info/inquiry/detail";
+	} // 문의 상세
 }

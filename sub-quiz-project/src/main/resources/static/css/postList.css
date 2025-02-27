@@ -1,0 +1,91 @@
+
+.board-container {
+    width: 1350px;
+    margin: 20px auto; /* 화면 중앙 정렬, 상하 간격 추가 */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.co-header {
+    background-color: #096c8a;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.board-title {
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+.board-nav {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 2px solid #eee;
+    padding: 10px 0;
+}
+
+.board-nav a {
+    text-decoration: none;
+    color: #096c8a;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.board-nav a:hover {
+    background-color: #096c8a;
+    color: white;
+}
+
+.board-table {
+    width: 100%; /* 전체 폭 사용 */
+    border-collapse: collapse;
+}
+
+.board-table th, .board-table td {
+    padding: 15px;
+    text-align: center;
+}
+
+.board-table th {
+    background-color: #f1f1f1;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+.board-table tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s;
+}
+
+.board-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.board-table tbody td {
+    font-size: 14px;
+    color: #555;
+}
+
+.board-table a {
+    color: #096c8a;;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.board-table a:hover {
+    text-decoration: underline;
+    color: #ff4500;
+}
+
+.co-footer {
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+    padding: 10px 0;
+}
