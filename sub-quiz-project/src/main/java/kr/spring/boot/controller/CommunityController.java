@@ -27,14 +27,14 @@ public class CommunityController {
 		List<CommunityVO> list = communityService.getCommunityList();
 		model.addAttribute("list", list);
 		return "community/list";		
-	} // 커뮤니티 리스트 화면
+	} // 커뮤니티 목록 화면
 	
 	@GetMapping("/post/list/{co_num}")
 	public String postList(Model model, @PathVariable int co_num) {
 		List<PostVO> list = communityService.getPostList(co_num);
 		model.addAttribute("list", list);
-		return "community/post/list";		
-	} // 게시글 리스트 화면
+		return "community/post/list";	
+	} // 게시글 목록 화면
 	
 	@GetMapping("/post/detail/{co_num}/{po_num}")
 	public String detailList(Model model) {
