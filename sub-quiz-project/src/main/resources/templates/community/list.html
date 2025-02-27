@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>퀴즈Q : 커뮤니티</title>
+<link rel="stylesheet" href="/css/communityList.css">
+</head>
+<body>
+    <div layout:fragment="content" class="community-select-container">
+        <div class="community-header">
+            <h1 class="community-title">커뮤니티 목록</h1>
+        </div>
+        <div class="community-list">
+            <div class="community-item" th:each="list : ${list}">
+                <div class="community-name">
+	                <a class="community-link" th:text="${list.co_name}" th:href="@{/community/post/list/{co_num}(co_num=${list.co_num})}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

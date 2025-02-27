@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.spring.boot.model.vo.CommunityVO;
 import kr.spring.boot.model.vo.PostVO;
-import kr.spring.boot.service.CommuService;
+import kr.spring.boot.service.CommunityService;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -20,29 +20,26 @@ import lombok.AllArgsConstructor;
 public class CommunityController {
 
 	@Autowired
-	private CommuService commuService;
+	private CommunityService communityService;
 	
-	// 커뮤니티 리스트업 
-	@GetMapping("/commuPage/{co_num}")
-	public String commuList(Model model, @PathVariable int co_num) {
-		List<PostVO> commu = commuService.getPostList(co_num);
-		model.addAttribute("commu", commu);
-		return "/community/commuPage";		
-	}
+	@GetMapping("/list")
+	public String communityList(Model model) {
+		List<CommunityVO> list = communityService.getCommunityList();
+		model.addAttribute("list", list);
+		return "community/list";		
+	} // 커뮤니티 리스트 화면
 	
-	// 커뮤니티 게시글 정보 리스트업 
-	@GetMapping("/commuDetail")
+	@GetMapping("/post/list/{co_num}")
+	public String postList(Model model, @PathVariable int co_num) {
+		List<PostVO> list = communityService.getPostList(co_num);
+		model.addAttribute("list", list);
+		return "community/post/list";		
+	} // 게시글 리스트 화면
+	
+	@GetMapping("/post/detail/{co_num}/{po_num}")
 	public String detailList(Model model) {
 
-		return "/community/commuDetail";		
-	}
-	
-	// 커뮤홈 - 카테고리 리스트업 
-	@GetMapping("/commuHome")
-	public String commuLisst(Model model) {
-		List<CommunityVO> commu = commuService.getAllcoummu();
-		model.addAttribute("commu", commu);
-		return "/community/commuHome";		
-	}
+		return "community/post/detail";
+	} // 게시글 상세
 	
 }
