@@ -8,10 +8,6 @@
 		SELECT * FROM POST WHERE CO_NUM = #{co_num}
 	</select>
 	<select id="selectPostCount" resultType="int">
-		SELECT COUNT(*)
-		FROM
-			POST
-		WHERE
-			CO_NUM = #{co_num}
+		SELECT COUNT(*) FROM POST WHERE CO_NUM = #{cri.co_num}
 	</select>
 </mapper>

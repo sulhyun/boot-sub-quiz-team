@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import kr.spring.boot.dao.CommunityDAO;
 import kr.spring.boot.model.vo.CommunityVO;
 import kr.spring.boot.model.vo.PostVO;
-import kr.spring.boot.pagination.Criteria;
 import kr.spring.boot.pagination.PageMaker;
+import kr.spring.boot.pagination.PostCriteria;
 
 @Service
 public class CommunityServiceImp implements CommunityService {
@@ -23,16 +23,16 @@ public class CommunityServiceImp implements CommunityService {
 	}
 
 	@Override
-	public List<PostVO> getPostList(int co_num, Criteria cri) {
-		return communityDao.selectPostList(co_num);
+	public List<PostVO> getPostList(PostCriteria cri) {
+		return communityDao.selectPostList(cri.getCo_num());
 	}
 
 	@Override
-	public PageMaker getPageMaker(int co_num, Criteria cri) {
+	public PageMaker getPageMaker(PostCriteria cri) {
 		if(cri == null) {
 			return null;
 		}
-		int totalCount = communityDao.selectPostCount(co_num, cri);
+		int totalCount = communityDao.selectPostCount(cri);
 		return new PageMaker(3, cri, totalCount);
 	}
 
