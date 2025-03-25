@@ -10,39 +10,42 @@
 </head>
 <body>
 	<main layout:fragment="content" >
-	    <div class="board-container">
-	        <div class="co-header">
-	            <h1 class="board-title">커뮤니티</h1>
+	    <div class="post-container">
+	        <div class="post-header">
+	            <h1 class="post-title">커뮤니티</h1>
 	        </div>
 	        <div>
-				<nav class="board-nav">
+				<nav class="post-nav">
 					<a href="#">인기글</a>
 					<a href="#">최신글</a>
 					<a href="#">게시글 등록</a>
-					<a href="#">커뮤니티 목록</a>
+					<a href="/community/list">커뮤니티 목록</a>
 	            </nav>
-	            <table class="board-table">
+	            <table class="post-table">
                 	<thead>
                     	<tr>
                         	<th>번호</th>
-	                        <th>커뮤니티</th>
 	                        <th>작성자</th>
+	                        <th>제목</th>
 	                        <th>날짜</th>
 	                        <th>조회수</th>
 	                    </tr>
 	                </thead>
 	                <tbody>
 						<tr th:each="list : ${list}">
-							<td th:text="${list.co_num}"></td>
-							<td th:text="${list.co_name}"></td>
+							<td th:text="${list.po_num}"></td>
 							<td th:text="${list.mb_id}"></td>
+							<td th:text="${list.po_title}"></td>
 							<td th:text="${list.po_date}"></td>
 							<td th:text="${list.po_view}"></td>
+						</tr>
+						<tr class="text-center" th:if="${list == null or #lists.isEmpty(list)}">
+							<td colspan="5"><b>등록된 게시글이 없습니다.</b></td>
 						</tr>
 	                </tbody>
 	            </table>
 	        </div>
-	        <div class="co-footer">
+	        <div class="post-footer">
 	            &copy; 커뮤니티. All rights reserved.
 	        </div>
 	    </div>

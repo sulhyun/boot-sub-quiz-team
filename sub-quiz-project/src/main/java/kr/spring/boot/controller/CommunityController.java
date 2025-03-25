@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.spring.boot.model.vo.CommunityVO;
 import kr.spring.boot.model.vo.PostVO;
+import kr.spring.boot.pagination.Criteria;
+import kr.spring.boot.pagination.PageMaker;
 import kr.spring.boot.service.CommunityService;
 import lombok.AllArgsConstructor;
 
@@ -30,10 +32,13 @@ public class CommunityController {
 	} // 커뮤니티 목록 화면
 	
 	@GetMapping("/post/list/{co_num}")
-	public String postList(Model model, @PathVariable int co_num) {
-		List<PostVO> list = communityService.getPostList(co_num);
+	public String postList(Model model, @PathVariable int co_num, Criteria cri) {
+		cri.setPerPageNum(5);
+		List<PostVO> list = communityService.getPostList(co_num, cri);
+		PageMaker pm = communityService.getPageMaker(co_num, cri);
 		model.addAttribute("list", list);
-		return "community/post/list";	
+		model.addAttribute("pm", pm);
+		return "community/post/list";
 	} // 게시글 목록 화면
 	
 	@GetMapping("/post/detail/{co_num}/{po_num}")
