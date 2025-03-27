@@ -43,7 +43,7 @@ public class CommunityController {
 	
 	@GetMapping("/post/detail/{co_num}/{po_num}")
 	public String detailList(Model model) {
-
+		
 		return "community/post/detail";
 	} // 게시글 상세
 	
