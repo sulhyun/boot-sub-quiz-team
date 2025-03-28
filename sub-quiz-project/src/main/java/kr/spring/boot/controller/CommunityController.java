@@ -1,5 +1,6 @@
 package kr.spring.boot.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,23 @@ public class CommunityController {
 	public String postList(Model model, @PathVariable int co_num, PostCriteria cri) {
 		cri.setPerPageNum(5);
 		List<PostVO> list = communityService.getPostList(cri);
+		String co_name = communityService.getCommunityName(co_num);
 		PageMaker pm = communityService.getPageMaker(cri);
 		model.addAttribute("list", list);
+		model.addAttribute("co_name", co_name);
 		model.addAttribute("pm", pm);
 		return "community/post/list";
 	} // 게시글 목록 화면
+	
+	@GetMapping("/post/insert/{co_num}")
+	public String postInsert(Model model, Principal principal, @PathVariable int co_num) {
+		if(principal == null) {
+			model.addAttribute("msg", "회원만 이용 가능합니다.");
+			model.addAttribute("url", "/community/post/list/" + co_num);
+			return "util/msg";
+		}
+		return "community/post/insert";
+	} // 게시글 등록 화면
 	
 	@GetMapping("/post/detail/{co_num}/{po_num}")
 	public String detailList(Model model) {

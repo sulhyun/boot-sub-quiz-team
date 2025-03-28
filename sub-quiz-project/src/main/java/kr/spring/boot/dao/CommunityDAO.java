@@ -15,4 +15,6 @@ public interface CommunityDAO {
 	List<PostVO> selectPostList(@Param("co_num")int co_num);
 
 	int selectPostCount(@Param("cri")PostCriteria cri);
+
+	String selectCommunityName(@Param("co_num")int co_num);
 }

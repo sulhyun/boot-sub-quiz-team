@@ -15,4 +15,6 @@ public interface CommunityService {
 	
 	PageMaker getPageMaker(PostCriteria cri);
 
+	String getCommunityName(int co_num);
+
 }

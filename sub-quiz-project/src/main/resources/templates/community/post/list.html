@@ -12,13 +12,13 @@
 	<main layout:fragment="content" >
 	    <div class="post-container">
 	        <div class="post-header">
-	            <h1 class="post-title">커뮤니티</h1>
+	            <h1 class="post-title" th:text="${co_name} + ' 커뮤니티'"></h1>
 	        </div>
 	        <div>
 				<nav class="post-nav">
 					<a href="#">인기글</a>
 					<a href="#">최신글</a>
-					<a href="/commnunity/insert">게시글 등록</a>
+					<a th:href="@{/community/post/insert/{co_num}(co_num=${co_num})}">게시글 등록</a>
 					<a href="/community/list">커뮤니티 목록</a>
 	            </nav>
 	            <table class="post-table">
@@ -53,9 +53,7 @@
    			<li class="page-item" th:if="*{prev}">
    				<a class="page-link" th:href="@{/community/post/list/{co_num}(page=*{startPage - 1}, co_num=*{cri.co_num})}">이전</a>
    			</li>
-		    <li class="page-item" 
-		    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
-		    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
+		    <li class="page-item" th:each="i : *{#numbers.sequence(startPage, endPage)}" th:classappend="*{cri.page} == ${i} ? 'active' : ''">
 		   	 	<a class="page-link" th:href="@{/community/post/list/{co_num}(page=${i}, co_num=*{cri.co_num})}" th:text="${i}"></a>
 		    </li>
 		    <li class="page-item" th:if="*{next}">

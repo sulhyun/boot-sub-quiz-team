@@ -26,6 +26,11 @@ public class CommunityServiceImp implements CommunityService {
 	public List<PostVO> getPostList(PostCriteria cri) {
 		return communityDao.selectPostList(cri.getCo_num());
 	}
+	
+	@Override
+	public String getCommunityName(int co_num) {
+		return communityDao.selectCommunityName(co_num);
+	}
 
 	@Override
 	public PageMaker getPageMaker(PostCriteria cri) {

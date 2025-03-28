@@ -10,4 +10,7 @@
 	<select id="selectPostCount" resultType="int">
 		SELECT COUNT(*) FROM POST WHERE CO_NUM = #{cri.co_num}
 	</select>
+	<select id="selectCommunityName" resultType="String">
+		SELECT CO_NAME FROM COMMUNITY WHERE CO_NUM = #{co_num}
+	</select>
 </mapper>
