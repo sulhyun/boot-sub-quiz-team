@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.spring.boot.model.vo.CommunityVO;
 import kr.spring.boot.model.vo.PostVO;
@@ -48,11 +50,19 @@ public class CommunityController {
 	public String postInsert(Model model, Principal principal, @PathVariable int co_num) {
 		if(principal == null) {
 			model.addAttribute("msg", "회원만 이용 가능합니다.");
-			model.addAttribute("url", "/community/post/list/" + co_num);
+			model.addAttribute("url", "/member/login");
 			return "util/msg";
 		}
 		return "community/post/insert";
 	} // 게시글 등록 화면
+	
+	@PostMapping("/post/insert")
+	public String postInsertPost(Model model, Principal principal, PostVO post, MultipartFile[] fileList) {
+		System.out.println(post);
+		System.out.println(fileList);
+		
+		return "community/post/insert";
+	} // 게시글 등록
 	
 	@GetMapping("/post/detail/{co_num}/{po_num}")
 	public String detailList(Model model) {
