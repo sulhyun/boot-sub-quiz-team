@@ -5,7 +5,7 @@
 		SELECT * FROM COMMUNITY
 	</select>
 	<select id="selectPostList" resultType="PostVO">
-		SELECT * FROM POST WHERE CO_NUM = #{co_num}
+		SELECT * FROM POST WHERE CO_NUM = #{co_num} ORDER BY PO_DATE DESC
 	</select>
 	<select id="selectPostCount" resultType="int">
 		SELECT COUNT(*) FROM POST WHERE CO_NUM = #{cri.co_num}
@@ -13,4 +13,12 @@
 	<select id="selectCommunityName" resultType="String">
 		SELECT CO_NAME FROM COMMUNITY WHERE CO_NUM = #{co_num}
 	</select>
+	<insert id="insertPost" keyProperty="post.po_num" useGeneratedKeys="true">
+		INSERT INTO POST(PO_TITLE, PO_CONTENT, MB_ID, PO_DATE, CO_NUM) VALUES
+		(#{post.po_title}, #{post.po_content}, #{post.mb_id}, NOW(), #{post.co_num})
+	</insert>
+	<insert id="insertFile">
+		INSERT INTO FILE(FI_ORI_NAME, FI_PATH, FI_REG_NUM, FI_TYPE) VALUES
+		(#{file.fi_ori_name}, #{file.fi_path}, #{file.fi_reg_num}, #{file.fi_type})
+	</insert>
 </mapper>

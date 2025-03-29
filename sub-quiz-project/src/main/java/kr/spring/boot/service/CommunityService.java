@@ -2,6 +2,8 @@ package kr.spring.boot.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import kr.spring.boot.model.vo.CommunityVO;
 import kr.spring.boot.model.vo.PostVO;
 import kr.spring.boot.pagination.PageMaker;
@@ -16,5 +18,7 @@ public interface CommunityService {
 	PageMaker getPageMaker(PostCriteria cri);
 
 	String getCommunityName(int co_num);
+
+	boolean addPost(PostVO post, MultipartFile[] fileList);
 
 }

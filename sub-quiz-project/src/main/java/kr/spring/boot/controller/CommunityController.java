@@ -58,10 +58,16 @@ public class CommunityController {
 	
 	@PostMapping("/post/insert")
 	public String postInsertPost(Model model, Principal principal, PostVO post, MultipartFile[] fileList) {
-		System.out.println(post);
-		System.out.println(fileList);
-		
-		return "community/post/insert";
+		post.setMb_id(principal.getName());
+		boolean res = communityService.addPost(post, fileList);
+		if(res) {
+			model.addAttribute("msg", "게시글 등록에 성공하셨습니다.");
+			model.addAttribute("url", "/community/post/list/" + post.getCo_num());
+		} else {
+			model.addAttribute("msg", "게시글 등록에 실패하셨습니다.");
+			model.addAttribute("url", "/community/post/insert/" + post.getCo_num());
+		}
+		return "util/msg";
 	} // 게시글 등록
 	
 	@GetMapping("/post/detail/{co_num}/{po_num}")
