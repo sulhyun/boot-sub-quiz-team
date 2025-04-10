@@ -1,6 +1,7 @@
 .post-container {width: 1350px;margin: 20px auto;border-radius: 8px;box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);overflow: hidden;}
 .post-header {background-color: #17a2b8;color: white;padding: 20px;text-align: center;}
 .post-title {font-size: 28px;letter-spacing: 1px;}
+.search-width {width: 400px !important;}
 .post-nav {display: flex;justify-content: space-around;border-bottom: 2px solid #eee;padding: 10px 0;}
 .post-nav a {text-decoration: none;color: #17a2b8;font-size: 16px;font-weight: bold;padding: 10px 20px;border-radius: 4px;transition: background-color 0.3s, color 0.3s;}
 .post-nav a:hover {background-color: #17a2b8;color: white;}
@@ -13,3 +14,9 @@
 .post-table a {color: #096c8a;;font-weight: bold;text-decoration: none;}
 .post-table a:hover {text-decoration: underline;color: #ff4500;}
 .post-footer {text-align: center;font-size: 12px;color: #aaa;padding: 10px 0;}
+.post-table thead th:nth-child(1) {width: 10%;}
+.post-table thead th:nth-child(2) {width: 20%;}
+.post-table thead th:nth-child(3) {width: 50%;}
+.post-table thead th:nth-child(4) {width: 10%;}
+.post-table thead th:nth-child(5) {width: 10%;}
+.truncate{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 150px;}

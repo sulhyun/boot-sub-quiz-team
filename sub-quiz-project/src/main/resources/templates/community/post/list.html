@@ -13,6 +13,16 @@
 	    <div class="post-container">
 	        <div class="post-header">
 	            <h1 class="post-title" th:text="${co_name} + ' 커뮤니티'"></h1>
+            	<div class="d-flex justify-content-center">
+		            <form class="form-container" th:action="@{/community/post/list/{co_num}(co_num=${co_num})}" method="get">
+						<div class="input-group mb-3">
+							<input type="text" class="form-control search-width" placeholder="통합 검색" name="search" th:value="${pm.cri.search}">
+							<div class="input-group-append">
+								<button type="submit" class="btn btn-dark col-12">검색</button>
+							</div>
+						</div>
+					</form>
+				</div>
 	        </div>
 	        <div>
 				<nav class="post-nav">
@@ -35,8 +45,10 @@
 						<tr th:each="list : ${list}">
 							<td th:text="${list.po_num}"></td>
 							<td th:text="${list.mb_id}"></td>
-							<td th:text="${list.po_title}"></td>
-							<td th:text="${list.po_date}"></td>
+							<td class="truncate" th:text="${list.po_title}"></td>
+							<th:block th:with="today=${#dates.format(#dates.createNow(), 'yyyyMMdd')}, po_date=${#dates.format(list.po_date, 'yyyyMMdd')}">
+							    <td th:text="${#dates.format(list.po_date, po_date == today ? 'HH:mm' : 'MM-dd')}"></td>
+							</th:block>
 							<td th:text="${list.po_view}"></td>
 						</tr>
 						<tr class="text-center" th:if="${list == null or #lists.isEmpty(list)}">
