@@ -69,7 +69,6 @@ public class CommunityServiceImp implements CommunityService {
 			e.printStackTrace();
 			return false;
 		}
-		System.out.println(res);
 		if(!res) {
 			return false;
 		}
