@@ -1,1 +1,2 @@
 .post-container {width: 1100px;margin: 20px auto;border-radius: 8px;box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);overflow: hidden;padding: 25px;}
+.button-row {display: flex;justify-content: flex-end;}
