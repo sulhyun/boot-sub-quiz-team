@@ -13,7 +13,7 @@ public interface CommunityDAO {
 
 	List<CommunityVO> selectCommnunityList();
 
-	List<PostVO> selectPostList(@Param("co_num")int co_num);
+	List<PostVO> selectPostList(@Param("cri")PostCriteria cri);
 
 	int selectPostCount(@Param("cri")PostCriteria cri);
 

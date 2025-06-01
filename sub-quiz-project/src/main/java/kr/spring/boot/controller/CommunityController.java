@@ -36,7 +36,7 @@ public class CommunityController {
 	
 	@GetMapping("/post/list/{co_num}")
 	public String postList(Model model, @PathVariable int co_num, PostCriteria cri) {
-		cri.setPerPageNum(5);
+		cri.setPerPageNum(8);
 		List<PostVO> list = communityService.getPostList(cri);
 		String co_name = communityService.getCommunityName(co_num);
 		PageMaker pm = communityService.getPageMaker(cri);

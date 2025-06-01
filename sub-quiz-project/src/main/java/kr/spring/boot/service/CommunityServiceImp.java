@@ -31,7 +31,10 @@ public class CommunityServiceImp implements CommunityService {
 
 	@Override
 	public List<PostVO> getPostList(PostCriteria cri) {
-		return communityDao.selectPostList(cri.getCo_num());
+		if(cri == null) {
+			return null;
+		}
+		return communityDao.selectPostList(cri);
 	}
 	
 	@Override

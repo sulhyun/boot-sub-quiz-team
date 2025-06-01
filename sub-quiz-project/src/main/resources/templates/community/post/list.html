@@ -14,7 +14,7 @@
 	        <div class="post-header">
 	            <h1 class="post-title" th:text="${co_name} + ' 커뮤니티'"></h1>
             	<div class="d-flex justify-content-center">
-		            <form class="form-container" th:action="@{/community/post/list/{co_num}(co_num=${co_num})}" method="get">
+		            <form class="form-container mt-3" th:action="@{/community/post/list/{co_num}(co_num=${co_num})}" method="get">
 						<div class="input-group mb-3">
 							<input type="text" class="form-control search-width" placeholder="통합 검색" name="search" th:value="${pm.cri.search}">
 							<div class="input-group-append">
@@ -51,25 +51,22 @@
 							</th:block>
 							<td th:text="${list.po_view}"></td>
 						</tr>
-						<tr class="text-center" th:if="${list == null or #lists.isEmpty(list)}">
-							<td colspan="5"><b>등록된 게시글이 없습니다.</b></td>
-						</tr>
 	                </tbody>
 	            </table>
-	        </div>
-	        <div class="post-footer">
-	            <p>&copy; 퀴즈Q 커뮤니티. All rights reserved.</p>
+	            <div class="no-post-message" th:if="${list == null or #lists.isEmpty(list)}">
+				    <p>등록된 게시글이 없습니다.</p>
+				</div>
 	        </div>
 	    </div>
 	    <ul class="pagination justify-content-center" th:object="${pm}" th:if="${pm.endPage != 0}">
    			<li class="page-item" th:if="*{prev}">
-   				<a class="page-link" th:href="@{/community/post/list/{co_num}(page=*{startPage - 1}, co_num=*{cri.co_num})}">이전</a>
+   				<a class="page-link" th:href="@{/community/post/list/{co_num}(page=*{startPage - 1}, co_num=*{cri.co_num}, search=*{cri.search})}">이전</a>
    			</li>
 		    <li class="page-item" th:each="i : *{#numbers.sequence(startPage, endPage)}" th:classappend="*{cri.page} == ${i} ? 'active' : ''">
-		   	 	<a class="page-link" th:href="@{/community/post/list/{co_num}(page=${i}, co_num=*{cri.co_num})}" th:text="${i}"></a>
+		   	 	<a class="page-link" th:href="@{/community/post/list/{co_num}(page=${i}, co_num=*{cri.co_num}, search=*{cri.search})}" th:text="${i}"></a>
 		    </li>
 		    <li class="page-item" th:if="*{next}">
-		   		<a class="page-link" th:href="@{/community/post/list/{co_num}(page=*{endPage + 1}, co_num=*{cri.co_num})}">다음</a>
+		   		<a class="page-link" th:href="@{/community/post/list/{co_num}(page=*{endPage + 1}, co_num=*{cri.co_num}, search=*{cri.search})}">다음</a>
 		    </li>
   		</ul>
 	</main>

@@ -5,10 +5,32 @@
 		SELECT * FROM COMMUNITY
 	</select>
 	<select id="selectPostList" resultType="PostVO">
-		SELECT * FROM POST WHERE CO_NUM = #{co_num} ORDER BY PO_DATE DESC
+		SELECT * 
+		FROM 
+			POST 
+		WHERE 
+			CO_NUM = #{cri.co_num}
+			<if test="cri.search != null and cri.search != ''">
+				AND (
+					MB_ID LIKE CONCAT('%', #{cri.search}, '%') 
+					OR PO_TITLE LIKE CONCAT('%', #{cri.search}, '%')
+				)
+			</if>
+		ORDER BY PO_DATE DESC 
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<select id="selectPostCount" resultType="int">
-		SELECT COUNT(*) FROM POST WHERE CO_NUM = #{cri.co_num}
+		SELECT COUNT(*) 
+		FROM 
+			POST 
+		WHERE 
+			CO_NUM = #{cri.co_num}
+			<if test="cri.search != null and cri.search != ''">
+				AND (
+					MB_ID LIKE CONCAT('%', #{cri.search}, '%') 
+					OR PO_TITLE LIKE CONCAT('%', #{cri.search}, '%')
+				)
+			</if>
 	</select>
 	<select id="selectCommunityName" resultType="String">
 		SELECT CO_NAME FROM COMMUNITY WHERE CO_NUM = #{co_num}
